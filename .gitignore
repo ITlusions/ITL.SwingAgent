@@ -70,3 +70,6 @@ data/
 # Temporary files
 tmp/
 temp/
+
+# Documentation build
+site/
