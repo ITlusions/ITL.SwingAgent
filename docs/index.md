@@ -176,13 +176,27 @@ SwingAgent v1.6.1
 }
 ```
 
-## Next Steps
+## Getting Started
 
-- [Architecture Details](architecture.md) - Deep dive into system design
-- [API Reference](api-reference.md) - Complete function documentation  
-- [Configuration](configuration.md) - Setup and customization options
-- [Deployment](deployment.md) - Production deployment guide
-- [Troubleshooting](troubleshooting.md) - Common issues and solutions
+### For New Users
+- **[Getting Started Guide](getting-started.md)** - Complete setup and your first signal
+- **[Tutorial](tutorial.md)** - Hands-on walkthrough of your first week
+- **[FAQ](faq.md)** - Quick answers to common questions
+
+### For Active Traders  
+- **[Use Cases](use-cases.md)** - Real-world trading scenarios and strategies
+- **[Best Practices](best-practices.md)** - Professional tips and risk management
+- **[Glossary](glossary.md)** - Trading and technical terms explained
+
+### For Technical Users
+- **[API Reference](api-reference.md)** - Complete function documentation  
+- **[Configuration](configuration.md)** - Setup and customization options
+- **[Architecture](architecture.md)** - Deep dive into system design
+
+### For Deployment
+- **[Deployment](deployment.md)** - Production deployment guide
+- **[Security](security.md)** - Security best practices
+- **[Troubleshooting](troubleshooting.md)** - Common issues and solutions
 
 ## License
 

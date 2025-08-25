@@ -9,13 +9,68 @@
 - **Centralized database architecture with SQLAlchemy ORM**
 - **External database support (PostgreSQL, MySQL, etc.)**
 
-## Quickstart
+## Quick Start for New Users
+
+### 1. Installation
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -e .
-# optional LLM
-export OPENAI_API_KEY="sk-..."
-export SWING_LLM_MODEL="gpt-4o-mini"
+```
+
+### 2. Your First Signal
+```bash
+# Generate a trading signal for Apple stock
+python scripts/run_swing_agent.py --symbol AAPL --interval 30m --lookback-days 30
+```
+
+### 3. Learn the System
+- **New to SwingAgent?** Start with the [Getting Started Guide](docs/getting-started.md)
+- **Want hands-on experience?** Follow the [Tutorial](docs/tutorial.md)
+- **Have questions?** Check the [FAQ](docs/faq.md)
+
+## Documentation
+
+📚 **[Complete Documentation](docs/index.md)** - Everything you need to know
+
+### For Users
+- [Getting Started](docs/getting-started.md) - Setup and first signal
+- [Tutorial](docs/tutorial.md) - Your first week of trading
+- [Use Cases](docs/use-cases.md) - Real-world trading scenarios  
+- [Best Practices](docs/best-practices.md) - Professional tips
+- [FAQ](docs/faq.md) - Common questions
+- [Glossary](docs/glossary.md) - Trading terms explained
+
+### For Developers
+- [API Reference](docs/api-reference.md) - Function documentation
+- [Architecture](docs/architecture.md) - System design
+- [Configuration](docs/configuration.md) - Customization options
+- [Development](docs/development.md) - Contributing guide
+
+## What SwingAgent Does
+
+SwingAgent combines technical analysis, machine learning, and AI to generate 1-2 day swing trading signals:
+
+✅ **Technical Analysis**: Fibonacci retracements, trend analysis, momentum indicators  
+✅ **Pattern Recognition**: ML-based historical pattern matching  
+✅ **AI Insights**: OpenAI-powered explanations and action plans  
+✅ **Risk Management**: Automatic stop-loss and take-profit calculations
+
+## Example Signal Output
+
+```json
+{
+  "symbol": "AAPL",
+  "entry": {
+    "side": "long",
+    "entry_price": 185.50,
+    "stop_price": 182.20,
+    "take_profit": 190.80,
+    "r_multiple": 1.61
+  },
+  "confidence": 0.72,
+  "expected_winrate": 0.58,
+  "action_plan": "Strong uptrend with Fibonacci support..."
+}
 ```
 
 ## Database Configuration
