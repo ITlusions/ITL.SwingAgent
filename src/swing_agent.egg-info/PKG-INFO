@@ -42,12 +42,12 @@ export SWING_LLM_MODEL="gpt-4o-mini"
 
 ## Database Configuration
 
-SwingAgent now uses a centralized database architecture with SQLAlchemy ORM. By default, it uses a single SQLite file, but supports external databases for production deployments.
+SwingAgent v1.6.1 uses a centralized database architecture with SQLAlchemy ORM. By default, it uses a single SQLite file, but supports external databases for production deployments.
 
 ### Default (SQLite)
 ```bash
 # Uses data/swing_agent.sqlite automatically
-python scripts/run_swing_agent.py --symbol AMD
+python scripts/run_swing_agent.py --symbol AMD --interval 30m --lookback-days 30
 ```
 
 ### External Database (PostgreSQL/MySQL)
@@ -79,6 +79,12 @@ export SWING_DB_PASSWORD=your_password
 # Test configuration
 python scripts/test_cnpg.py
 ```
+
+### Features
+- **Centralized Storage**: Signals and vector patterns stored in single database
+- **Multiple Backends**: SQLite for development, PostgreSQL/MySQL for production
+- **Kubernetes Ready**: Native CloudNativePG (CNPG) support for scalable deployments
+- **Migration Tools**: Automated migration from legacy separate databases
 
 For detailed database setup:
 - [EXTERNAL_DATABASES.md](EXTERNAL_DATABASES.md) - PostgreSQL/MySQL setup
