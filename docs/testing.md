@@ -1,16 +1,17 @@
 # Testing Strategy & Implementation
 
-Comprehensive testing approach for SwingAgent to ensure reliability, correctness, and performance.
+Comprehensive testing approach for SwingAgent v1.6.1 to ensure reliability, correctness, and performance.
 
 ## Testing Philosophy
 
 SwingAgent uses a multi-layered testing strategy:
 
 1. **Unit Tests**: Individual component functionality
-2. **Integration Tests**: Component interaction and data flow
-3. **Property Tests**: Mathematical invariants and edge cases
-4. **Performance Tests**: Speed and memory usage validation
-5. **End-to-End Tests**: Complete workflow scenarios
+2. **Integration Tests**: Component interaction and data flow  
+3. **Database Tests**: Database operations and migrations
+4. **Property Tests**: Mathematical invariants and edge cases
+5. **Performance Tests**: Speed and memory usage validation
+6. **End-to-End Tests**: Complete workflow scenarios
 
 ## Test Structure
 
@@ -22,12 +23,19 @@ tests/
 │   ├── test_features.py     # Feature engineering tests
 │   ├── test_models.py       # Pydantic model validation
 │   ├── test_vectorstore.py  # Vector operations
+│   ├── test_config.py       # Configuration management
 │   └── test_llm.py         # LLM integration (mocked)
 ├── integration/             # Component interaction tests
 │   ├── test_agent.py        # Full agent workflow
 │   ├── test_database.py     # Database operations
+│   ├── test_migrations.py   # Database migration tests
 │   ├── test_pipeline.py     # Data processing pipeline
 │   └── test_signals.py      # Signal generation scenarios
+├── database/               # Database-specific tests
+│   ├── test_sqlite.py       # SQLite backend tests
+│   ├── test_postgresql.py   # PostgreSQL backend tests
+│   ├── test_mysql.py        # MySQL backend tests
+│   └── test_cnpg.py         # CloudNativePG tests
 ├── property/               # Property-based testing
 │   ├── test_math_properties.py  # Mathematical correctness
 │   └── test_invariants.py       # System invariants
@@ -37,8 +45,64 @@ tests/
 ├── fixtures/               # Shared test data
 │   ├── sample_data.py       # Market data fixtures
 │   ├── mock_responses.py    # API response mocks
+│   ├── test_databases.py    # Test database fixtures
 │   └── scenarios.py         # Trading scenarios
 └── conftest.py             # Pytest configuration
+```
+
+## Database Testing
+
+### Test Database Setup
+
+```python
+# tests/conftest.py
+import pytest
+from sqlalchemy import create_engine
+from swing_agent.database import Base, get_session
+from swing_agent.models_db import Signal, VectorStore
+
+@pytest.fixture(scope="session")
+def test_database():
+    """Create a test database for testing."""
+    engine = create_engine("sqlite:///:memory:")
+    Base.metadata.create_all(engine)
+    return engine
+
+@pytest.fixture
+def db_session(test_database):
+    """Provide a database session for tests."""
+    with get_session(test_database) as session:
+        yield session
+        session.rollback()
+```
+
+### Migration Testing
+
+```python
+# tests/integration/test_migrations.py
+import pytest
+from pathlib import Path
+from swing_agent.migrate import migrate_all_data
+from swing_agent.database import init_database
+
+def test_legacy_migration(tmp_path, db_session):
+    """Test migration from legacy separate databases."""
+    # Create legacy test databases
+    legacy_signals = tmp_path / "signals.sqlite"
+    legacy_vectors = tmp_path / "vectors.sqlite"
+    
+    # Setup test data in legacy format
+    # ... setup code ...
+    
+    # Test migration
+    migrate_all_data(
+        data_dir=tmp_path,
+        target_db_url="sqlite:///:memory:"
+    )
+    
+    # Verify migration success
+    signals = db_session.query(Signal).all()
+    assert len(signals) > 0
 ```
 
 ## Unit Testing
