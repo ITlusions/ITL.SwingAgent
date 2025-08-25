@@ -1,6 +1,6 @@
 # System Architecture
 
-This document provides a detailed overview of the SwingAgent system architecture, component responsibilities, and data flow.
+This document provides a detailed overview of the SwingAgent v1.6.1 system architecture, component responsibilities, and data flow.
 
 ## High-Level Architecture
 
@@ -13,11 +13,39 @@ graph TB
     C --> F[Signal Generation]
     D --> F
     E --> F
-    F --> G[Signal Database]
-    F --> H[Performance Tracking]
-    G --> I[Backtesting]
-    H --> I
+    F --> G[Centralized Database]
+    G --> H[Vector Store]
+    G --> I[Signal Storage]
+    H --> J[Performance Tracking]
+    I --> J
+    J --> K[Backtesting & Analytics]
 ```
+
+## Database Architecture
+
+SwingAgent v1.6.1 introduces a centralized database architecture using SQLAlchemy ORM:
+
+```mermaid
+graph LR
+    A[SwingAgent] --> B[Database Layer]
+    B --> C[SQLite Default]
+    B --> D[PostgreSQL]
+    B --> E[MySQL] 
+    B --> F[CNPG Kubernetes]
+    
+    G[Legacy Migration] --> B
+    G --> H[Signals DB]
+    G --> I[Vector DB]
+    H --> B
+    I --> B
+```
+
+### Database Features
+- **Unified Storage**: Single database for signals and vector patterns
+- **Multiple Backends**: SQLite, PostgreSQL, MySQL, CloudNativePG
+- **Migration Tools**: Automated migration from legacy separate databases
+- **SQLAlchemy ORM**: Type-safe database operations
+- **Production Ready**: Connection pooling, SSL support, Kubernetes integration
 
 ## Core Components
 
@@ -30,12 +58,14 @@ The main orchestrator that coordinates all system components.
 - Component orchestration
 - Multi-timeframe analysis coordination
 - Signal assembly and validation
+- Database session management
 
 **Key Methods:**
 - `analyze(symbol)`: Main entry point for signal generation
 - `analyze_df(symbol, df)`: Core analysis with pre-loaded data
 - `_rel_strength()`: Relative strength calculation
 - `_context_from_df()`: Market context extraction
+- `_multitimeframe_analysis()`: MTF trend alignment
 
 **Data Flow:**
 ```
@@ -48,6 +78,57 @@ Technical analysis (trend, indicators, Fibonacci)
 Multi-timeframe alignment check
 ↓
 Entry plan generation
+↓
+Vector pattern matching via centralized database
+↓
+LLM analysis (if enabled)
+↓
+Signal assembly and database storage
+```
+
+### 2. Database Layer (`database.py`, `models_db.py`)
+
+Centralized database management using SQLAlchemy ORM.
+
+**Key Components:**
+- `database.py`: Session management, connection configuration
+- `models_db.py`: SQLAlchemy models for signals and vectors
+- `migrate.py`: Migration utilities for legacy databases
+
+**Supported Backends:**
+- **SQLite**: Default for development (`data/swing_agent.sqlite`)
+- **PostgreSQL**: Production deployments with `psycopg2`
+- **MySQL**: Alternative production backend with `PyMySQL`
+- **CNPG**: CloudNativePG for Kubernetes deployments
+
+**Configuration Options:**
+```python
+# Environment variable configurations
+SWING_DATABASE_URL="postgresql://user:pass@host:5432/db"
+SWING_DB_TYPE="postgresql"  # sqlite, postgresql, mysql, cnpg
+SWING_DB_HOST="localhost"
+SWING_DB_NAME="swing_agent"
+SWING_DB_USER="username"
+SWING_DB_PASSWORD="password"
+```
+
+### 3. Configuration Management (`config.py`)
+
+Centralized parameter management for all trading thresholds.
+
+**Key Features:**
+- Eliminates magic numbers throughout codebase
+- Type-safe configuration with dataclasses
+- Consistent parameter access via `get_config()`
+
+**Configuration Categories:**
+- Trend detection thresholds
+- RSI momentum parameters
+- Risk management (ATR multipliers)
+- Volatility regime classification
+- Fibonacci analysis parameters
+- Multi-timeframe settings
+- Vector store configuration
 ↓
 Vector store lookup for historical patterns
 ↓

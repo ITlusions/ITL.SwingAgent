@@ -3,6 +3,7 @@ pyproject.toml
 src/swing_agent/__init__.py
 src/swing_agent/agent.py
 src/swing_agent/backtester.py
+src/swing_agent/config.py
 src/swing_agent/data.py
 src/swing_agent/database.py
 src/swing_agent/features.py

@@ -1,17 +1,100 @@
 # Security & Best Practices Guide
 
-Security considerations and best practices for SwingAgent deployment and development.
+Security considerations and best practices for SwingAgent v1.6.1 deployment and development.
 
 ## Security Overview
 
 SwingAgent handles sensitive financial data and integrates with external APIs. This guide covers security considerations for:
 
 - API key management and rotation
-- Database security and encryption
+- Database security and encryption  
+- Multi-backend database security (SQLite, PostgreSQL, MySQL, CNPG)
 - Input validation and sanitization
 - Network security and TLS
 - Logging and audit trails
 - Production deployment security
+- Kubernetes security for CNPG deployments
+
+## Database Security
+
+### Connection Security
+
+#### PostgreSQL Security
+```bash
+# Use SSL connections in production
+export SWING_DATABASE_URL="postgresql://user:pass@host:5432/swing_agent?sslmode=require"
+
+# Certificate-based authentication
+export SWING_DB_SSL_CERT="/path/to/client-cert.pem"
+export SWING_DB_SSL_KEY="/path/to/client-key.pem"
+export SWING_DB_SSL_CA="/path/to/ca-cert.pem"
+```
+
+#### CloudNativePG Security
+```bash
+# CNPG with SSL configuration
+export CNPG_SSL_MODE="require"
+export CNPG_SSL_CERT="/var/secrets/client-cert.pem"
+export CNPG_SSL_KEY="/var/secrets/client-key.pem"
+export CNPG_SSL_CA="/var/secrets/ca-cert.pem"
+```
+
+#### Database Credentials Management
+```python
+# Use environment variables, never hardcode
+from swing_agent.database import get_database_config
+
+# Recommended: Use secrets management
+import os
+from pathlib import Path
+
+def load_db_password():
+    """Load database password from secure source."""
+    # Option 1: Kubernetes secret
+    secret_path = Path("/var/secrets/db-password")
+    if secret_path.exists():
+        return secret_path.read_text().strip()
+    
+    # Option 2: Environment variable (development)
+    return os.getenv("SWING_DB_PASSWORD")
+
+# Set password securely
+os.environ["SWING_DB_PASSWORD"] = load_db_password()
+```
+
+### Data Encryption
+
+#### Database-Level Encryption
+```sql
+-- PostgreSQL: Enable transparent data encryption
+ALTER DATABASE swing_agent SET default_text_search_config = 'pg_catalog.english';
+
+-- Enable row-level security for sensitive data
+ALTER TABLE signals ENABLE ROW LEVEL SECURITY;
+CREATE POLICY signals_policy ON signals FOR ALL TO swing_user;
+```
+
+#### Application-Level Encryption
+```python
+# Encrypt sensitive fields before storage
+from cryptography.fernet import Fernet
+import os
+
+class SecureStorage:
+    def __init__(self):
+        key = os.getenv("SWING_ENCRYPTION_KEY")
+        if not key:
+            raise ValueError("SWING_ENCRYPTION_KEY required")
+        self.cipher = Fernet(key.encode())
+    
+    def encrypt_llm_data(self, data: str) -> str:
+        """Encrypt LLM responses before database storage."""
+        return self.cipher.encrypt(data.encode()).decode()
+    
+    def decrypt_llm_data(self, encrypted_data: str) -> str:
+        """Decrypt LLM responses after database retrieval."""
+        return self.cipher.decrypt(encrypted_data.encode()).decode()
+```
 
 ## API Key Security
 

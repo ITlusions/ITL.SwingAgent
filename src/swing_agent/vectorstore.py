@@ -38,7 +38,40 @@ def add_vector(
     exit_reason: Optional[str], 
     payload: Optional[Dict[str, Any]]
 ):
-    """Add a vector to the vector store using SQLAlchemy."""
+    """Add a feature vector to the centralized vector store.
+    
+    Stores a feature vector along with trading outcomes for future pattern matching.
+    Uses SQLAlchemy ORM with the centralized database architecture.
+    
+    Args:
+        db_path: Database path or URL (converted to centralized database).
+        vid: Unique vector identifier (e.g., "AAPL-2024-01-15T15:30:00Z").
+        ts_utc: UTC timestamp of the vector generation.
+        symbol: Trading symbol (e.g., "AAPL").
+        timeframe: Trading timeframe (e.g., "30m", "1h").
+        vec: Feature vector as numpy array.
+        realized_r: Actual R-multiple return achieved (None if not evaluated).
+        exit_reason: How the trade exited ("TP", "SL", "TIME", None if pending).
+        payload: Additional metadata (vol regime, MTF alignment, etc.).
+        
+    Example:
+        >>> vector = np.array([0.1, 0.8, 0.3, 0.6, 0.2])
+        >>> add_vector(
+        ...     "data/vec_store.sqlite",
+        ...     vid="AAPL-2024-01-15T15:30:00Z",
+        ...     ts_utc="2024-01-15T15:30:00Z",
+        ...     symbol="AAPL",
+        ...     timeframe="30m", 
+        ...     vec=vector,
+        ...     realized_r=1.5,
+        ...     exit_reason="TP",
+        ...     payload={"vol_regime": "M", "mtf_alignment": 2}
+        ... )
+        
+    Note:
+        Vectors are stored as JSON arrays in the database for cross-platform 
+        compatibility. If a vector with the same ID exists, it will be updated.
+    """
     _ensure_db(db_path)
     v = vec.astype(float).tolist()
     
@@ -99,7 +132,43 @@ def knn(
     k: int = 50, 
     symbol: Optional[str] = None
 ) -> List[Dict[str, Any]]:
-    """Find k nearest neighbors using cosine similarity."""
+    """Find k nearest neighbors using cosine similarity search.
+    
+    Performs vector similarity search in the centralized database to find
+    historical patterns most similar to the current market setup.
+    
+    Args:
+        db_path: Database path or URL (converted to centralized database).
+        query_vec: Feature vector to find similarities for.
+        k: Number of nearest neighbors to return (default: 50).
+        symbol: Optional symbol filter (None for all symbols).
+        
+    Returns:
+        List[Dict]: Sorted list of neighbors with similarity scores and metadata.
+        Each dict contains:
+        - id: Vector identifier
+        - symbol: Trading symbol  
+        - timeframe: Trading timeframe
+        - similarity: Cosine similarity score [0, 1]
+        - realized_r: Actual return achieved (if available)
+        - exit_reason: How trade exited (if available)
+        - payload: Additional metadata
+        
+    Example:
+        >>> query_vector = np.array([0.1, 0.8, 0.3, 0.6, 0.2])
+        >>> neighbors = knn(
+        ...     "data/vec_store.sqlite",
+        ...     query_vec=query_vector,
+        ...     k=50,
+        ...     symbol="AAPL"
+        ... )
+        >>> print(f"Best match: {neighbors[0]['similarity']:.3f}")
+        >>> print(f"Historical R: {neighbors[0]['realized_r']}")
+        
+    Note:
+        Results are sorted by similarity in descending order. Only returns
+        vectors that have valid similarity scores (non-zero norm vectors).
+    """
     _ensure_db(db_path)
     rows = []
     

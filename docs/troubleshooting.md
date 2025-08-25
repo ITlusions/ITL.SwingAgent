@@ -1,6 +1,89 @@
 # Troubleshooting Guide
 
-Common issues and solutions for the SwingAgent system.
+Common issues and solutions for the SwingAgent v1.6.1 system.
+
+## Database Issues
+
+### Database Connection Problems
+
+**Problem**: Cannot connect to database or database not found.
+
+```
+sqlalchemy.exc.OperationalError: no such table: signals
+```
+
+**Solutions**:
+```bash
+# Test database connection and configuration
+python scripts/db_info.py --info
+python scripts/db_info.py --test
+
+# Initialize database tables if missing  
+python scripts/db_info.py --init
+
+# Check environment variables
+echo $SWING_DATABASE_URL
+echo $SWING_DB_TYPE
+```
+
+### Migration Issues
+
+**Problem**: Error migrating from legacy separate databases.
+
+**Solutions**:
+```bash
+# Check if legacy databases exist
+ls -la data/signals.sqlite data/vec_store.sqlite
+
+# Migrate with explicit paths
+python -m swing_agent.migrate \
+  --signals-db data/signals.sqlite \
+  --vectors-db data/vec_store.sqlite
+
+# Check migration progress
+python scripts/db_info.py --info
+```
+
+### PostgreSQL Connection Issues
+
+**Problem**: Cannot connect to PostgreSQL database.
+
+**Solutions**:
+```bash
+# Install PostgreSQL dependencies
+pip install -e ".[postgresql]"
+
+# Test connection manually
+python -c "
+import psycopg2
+conn = psycopg2.connect('postgresql://user:pass@host:5432/swing_agent')
+print('Connection successful')
+conn.close()
+"
+
+# Check PostgreSQL service
+sudo systemctl status postgresql
+```
+
+### CNPG Kubernetes Issues
+
+**Problem**: Cannot connect to CloudNativePG cluster.
+
+**Solutions**:
+```bash
+# Test CNPG configuration
+python scripts/test_cnpg.py
+
+# Check cluster status
+kubectl get clusters -n swing-agent
+kubectl describe cluster swing-postgres -n swing-agent
+
+# Verify service names
+kubectl get svc -n swing-agent | grep postgres
+
+# Check credentials secret
+kubectl get secret swing-postgres-credentials -n swing-agent -o yaml
+```
 
 ## Installation Issues
 

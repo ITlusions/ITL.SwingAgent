@@ -9,9 +9,11 @@ nav:
   - Architecture: architecture.md
   - API Reference: api-reference.md
   - Configuration: configuration.md
+  - Development: development.md
   - Deployment: deployment.md
+  - Testing: testing.md
+  - Security: security.md
   - Troubleshooting: troubleshooting.md
-  - Code Review & Recommendations: ../recommendations.md
 
 theme:
   name: material

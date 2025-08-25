@@ -14,8 +14,6 @@ class SwingAgent:
         self,
         interval: str = "30m",
         lookback_days: int = 30,
-        log_db: str | None = None,
-        vec_db: str | None = None,
         use_llm: bool = True,
         llm_extras: bool = True,
         sector_symbol: str = "XLK"
@@ -25,11 +23,11 @@ class SwingAgent:
 **Parameters:**
 - `interval`: Trading timeframe ("15m", "30m", "1h", "1d")
 - `lookback_days`: Historical data period for analysis
-- `log_db`: Path to signals SQLite database (uses centralized db if None)
-- `vec_db`: Path to vector store SQLite database (uses centralized db if None)
 - `use_llm`: Enable OpenAI LLM integration
 - `llm_extras`: Enable additional LLM features (action plans, risk scenarios)
 - `sector_symbol`: Sector ETF for relative strength analysis (default: XLK)
+
+**Note**: Database configuration is now handled via environment variables. See [Configuration Guide](configuration.md) for details.
 
 **Methods:**
 
@@ -330,6 +328,154 @@ class SignalSide(str, Enum):
     SHORT = "short"
     NONE = "none"
 ```
+
+## Database Management
+
+### Database Configuration
+
+```python
+from swing_agent.database import (
+    get_database_config,
+    init_database,
+    get_session,
+    create_postgresql_url,
+    create_mysql_url,
+    create_cnpg_url
+)
+
+# Initialize database tables
+init_database()
+
+# Get database session for queries
+with get_session() as session:
+    # Database operations here
+    signals = session.query(Signal).all()
+
+# Create connection URLs
+postgres_url = create_postgresql_url(
+    host="localhost",
+    database="swing_agent", 
+    username="user",
+    password="pass"
+)
+
+mysql_url = create_mysql_url(
+    host="localhost",
+    database="swing_agent",
+    username="user", 
+    password="pass"
+)
+
+# CloudNativePG URL from environment
+cnpg_url = create_cnpg_url()
+```
+
+### Database Models
+
+SQLAlchemy models for centralized storage.
+
+```python
+from swing_agent.models_db import Signal, VectorStore
+
+# Query signals with filters
+with get_session() as session:
+    signals = session.query(Signal).filter(
+        Signal.symbol == "AAPL",
+        Signal.timeframe == "30m"
+    ).order_by(Signal.created_at_utc.desc()).limit(10).all()
+    
+    # Query vector patterns with outcomes
+    vectors = session.query(VectorStore).filter(
+        VectorStore.realized_r.isnot(None),
+        VectorStore.symbol == "AAPL"
+    ).all()
+```
+
+**Signal Model Fields:**
+- `id`: Unique signal identifier
+- `symbol`, `timeframe`, `asof`: Basic signal info
+- `trend_label`, `ema_slope`, `rsi14`: Technical analysis
+- `entry_price`, `stop_price`, `take_profit`: Entry plan
+- `confidence`, `reasoning`: Signal quality
+- `expected_r`, `expected_winrate`: ML expectations
+- `action_plan`, `risk_notes`: LLM insights
+- `mtf_alignment`, `vol_regime`: Market context
+- `realized_r`, `exit_reason`: Trade outcomes
+
+**VectorStore Model Fields:**
+- `vid`: Unique vector identifier
+- `ts_utc`: Vector timestamp
+- `symbol`, `timeframe`: Market context
+- `vector`: Feature vector as JSON array
+- `realized_r`, `exit_reason`: Outcomes
+- `payload_json`: Additional metadata
+
+### Migration Utilities
+
+```python
+from swing_agent.migrate import (
+    migrate_signals,
+    migrate_vectors, 
+    migrate_all_data
+)
+
+# Migrate from legacy separate databases
+migrate_all_data(
+    data_dir=Path("data/"),
+    target_db_url="postgresql://user:pass@host:5432/swing_agent"
+)
+
+# Migrate specific components
+migrate_signals(
+    old_signals_db=Path("data/signals.sqlite"),
+    target_db_url="postgresql://..."
+)
+
+migrate_vectors(
+    old_vectors_db=Path("data/vec_store.sqlite"),
+    target_db_url="postgresql://..."
+)
+```
+
+## Configuration Management
+
+### TradingConfig
+
+Centralized configuration for all trading parameters.
+
+```python
+from swing_agent.config import get_config, TradingConfig
+
+cfg = get_config()
+
+# Access trend detection thresholds
+ema_threshold_up = cfg.EMA_SLOPE_THRESHOLD_UP      # 0.01
+ema_threshold_strong = cfg.EMA_SLOPE_THRESHOLD_STRONG  # 0.02
+ema_lookback = cfg.EMA_SLOPE_LOOKBACK              # 6
+
+# RSI parameters
+rsi_oversold = cfg.RSI_OVERSOLD_THRESHOLD          # 35.0
+rsi_overbought = cfg.RSI_OVERBOUGHT_THRESHOLD      # 65.0
+rsi_period = cfg.RSI_PERIOD                        # 14
+
+# Risk management
+atr_stop_mult = cfg.ATR_STOP_MULTIPLIER            # 1.2
+atr_target_mult = cfg.ATR_TARGET_MULTIPLIER        # 2.0
+atr_period = cfg.ATR_PERIOD                        # 14
+
+# Fibonacci settings
+fib_lookback = cfg.FIB_LOOKBACK                    # 40
+golden_low = cfg.GOLDEN_POCKET_LOW                 # 0.618
+golden_high = cfg.GOLDEN_POCKET_HIGH               # 0.65
+```
+
+**Configuration Categories:**
+- **Trend Detection**: EMA slope thresholds, RSI levels
+- **Risk Management**: ATR multipliers for stops/targets
+- **Volatility Analysis**: Regime classification percentiles
+- **Fibonacci**: Lookback periods, golden pocket bounds
+- **Multi-timeframe**: Alignment scoring parameters
+- **Vector Store**: KNN search parameters
 
 ## Technical Indicators
 

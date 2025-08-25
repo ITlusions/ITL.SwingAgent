@@ -363,7 +363,23 @@ _db_config: Optional[DatabaseConfig] = None
 
 
 def get_database_config(database_url: Optional[str] = None) -> DatabaseConfig:
-    """Get the global database configuration."""
+    """Get the global database configuration.
+    
+    Returns a singleton DatabaseConfig instance that manages the centralized
+    database connection for the entire SwingAgent system.
+    
+    Args:
+        database_url: Optional database URL to override default configuration.
+                     If None, uses environment variables or defaults to SQLite.
+                     
+    Returns:
+        DatabaseConfig: Configured database instance with connection management.
+        
+    Example:
+        >>> config = get_database_config()
+        >>> print(f"Database type: {config.get_database_info()['type']}")
+        >>> print(f"Is external: {config.is_external}")
+    """
     global _db_config
     if _db_config is None or database_url is not None:
         _db_config = DatabaseConfig(database_url)
@@ -371,13 +387,57 @@ def get_database_config(database_url: Optional[str] = None) -> DatabaseConfig:
 
 
 def get_session() -> Generator[Session, None, None]:
-    """Get a database session from the global configuration."""
+    """Get a database session from the global configuration.
+    
+    Provides a SQLAlchemy session with automatic transaction management.
+    Sessions are automatically committed on success and rolled back on exceptions.
+    
+    Yields:
+        Session: SQLAlchemy database session with automatic cleanup.
+        
+    Example:
+        >>> from swing_agent.models_db import Signal
+        >>> with get_session() as session:
+        ...     signals = session.query(Signal).filter(
+        ...         Signal.symbol == "AAPL"
+        ...     ).all()
+        ...     print(f"Found {len(signals)} signals")
+        
+    Note:
+        This is the recommended way to interact with the database. The session
+        is automatically committed if no exceptions occur, and rolled back if
+        any exception is raised.
+    """
     db_config = get_database_config()
     yield from db_config.get_session()
 
 
 def init_database(database_url: Optional[str] = None):
-    """Initialize the database with the given URL."""
+    """Initialize the database with tables and configuration.
+    
+    Creates all necessary database tables if they don't exist. This is 
+    typically called once during setup or when migrating to a new database.
+    
+    Args:
+        database_url: Optional database URL. If None, uses environment 
+                     configuration or defaults to SQLite.
+                     
+    Example:
+        >>> # Initialize with default configuration
+        >>> init_database()
+        
+        >>> # Initialize with specific PostgreSQL database
+        >>> init_database("postgresql://user:pass@host:5432/swing_agent")
+        
+        >>> # Initialize with environment variables
+        >>> import os
+        >>> os.environ["SWING_DATABASE_URL"] = "postgresql://..."
+        >>> init_database()
+        
+    Note:
+        This function is idempotent - it's safe to call multiple times.
+        Tables that already exist will not be modified.
+    """
     db_config = get_database_config(database_url)
     db_config.ensure_db()
 

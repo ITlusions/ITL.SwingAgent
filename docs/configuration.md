@@ -1,8 +1,79 @@
 # Configuration Guide
 
-This guide covers all configuration options for the SwingAgent system.
+This guide covers all configuration options for the SwingAgent v1.6.1 system.
 
-## Environment Setup
+## Database Configuration
+
+### Environment Variables
+
+SwingAgent v1.6.1 uses a centralized database architecture. Configuration is handled via environment variables.
+
+#### Option 1: Direct Database URL
+```bash
+# SQLite (default)
+export SWING_DATABASE_URL="sqlite:///data/swing_agent.sqlite"
+
+# PostgreSQL
+export SWING_DATABASE_URL="postgresql://user:pass@localhost:5432/swing_agent"
+
+# MySQL
+export SWING_DATABASE_URL="mysql://user:pass@localhost:3306/swing_agent"
+```
+
+#### Option 2: Individual Components
+```bash
+# Database type
+export SWING_DB_TYPE="postgresql"  # sqlite, postgresql, mysql, cnpg
+
+# Connection details
+export SWING_DB_HOST="localhost"
+export SWING_DB_PORT="5432"
+export SWING_DB_NAME="swing_agent"
+export SWING_DB_USER="your_username"
+export SWING_DB_PASSWORD="your_password"
+```
+
+#### Option 3: CloudNativePG (Kubernetes)
+```bash
+export SWING_DB_TYPE="cnpg"
+export CNPG_CLUSTER_NAME="swing-postgres"
+export CNPG_NAMESPACE="default"
+export CNPG_SERVICE_TYPE="rw"  # rw (read-write) or ro (read-only)
+export SWING_DB_NAME="swing_agent"
+export SWING_DB_USER="swing_user"
+export SWING_DB_PASSWORD="your_password"
+
+# Optional SSL configuration
+export CNPG_SSL_MODE="require"
+export CNPG_SSL_CERT="/path/to/cert.pem"
+export CNPG_SSL_KEY="/path/to/key.pem"
+export CNPG_SSL_CA="/path/to/ca.pem"
+```
+
+### Database Migration
+
+#### From Legacy Separate Databases
+```bash
+# Migrate from old separate SQLite files
+python -m swing_agent.migrate --data-dir data/
+
+# Migrate specific databases
+python -m swing_agent.migrate \
+  --signals-db data/signals.sqlite \
+  --vectors-db data/vec_store.sqlite
+```
+
+#### From SQLite to External Database
+```bash
+# Set target database
+export SWING_DATABASE_URL="postgresql://user:pass@localhost:5432/swing_agent"
+
+# Migrate from centralized SQLite
+python -m swing_agent.migrate \
+  --sqlite-to-external "data/swing_agent.sqlite"
+```
+
+## LLM Configuration
 
 ### Required Environment Variables
 
@@ -10,13 +81,6 @@ This guide covers all configuration options for the SwingAgent system.
 # OpenAI API Configuration (required for LLM features)
 export OPENAI_API_KEY="sk-..."                # Your OpenAI API key
 export SWING_LLM_MODEL="gpt-4o-mini"          # LLM model selection
-
-# Optional: Centralized database path  
-export SWING_DATABASE_URL="sqlite:///data/swing_agent.sqlite"
-
-# Legacy environment variables (for migration)
-export SWING_SIGNALS_DB="data/signals.sqlite"  
-export SWING_VECTOR_DB="data/vec_store.sqlite"
 ```
 
 ### Supported LLM Models
@@ -26,14 +90,21 @@ export SWING_VECTOR_DB="data/vec_store.sqlite"
 - `gpt-4`: Legacy model, good performance
 - `gpt-3.5-turbo`: Fastest, lowest cost
 
-### Installation
+## Installation
 
+### Basic Installation
 ```bash
-# Basic installation
+# Standard installation
 pip install -e .
 
-# Development installation with optional dependencies
-pip install -e ".[dev,test]"
+# With PostgreSQL support
+pip install -e ".[postgresql]"
+
+# With MySQL support  
+pip install -e ".[mysql]"
+
+# With all external database support
+pip install -e ".[external-db]"
 ```
 
 ## Agent Configuration
@@ -46,8 +117,6 @@ from swing_agent.agent import SwingAgent
 agent = SwingAgent(
     interval="30m",              # Trading timeframe
     lookback_days=30,            # Historical data period
-    log_db="data/signals.sqlite", # Signal storage database
-    vec_db="data/vec_store.sqlite", # Vector store database
     use_llm=True,                # Enable LLM integration
     llm_extras=True,             # Enable additional LLM features
     sector_symbol="XLK"          # Sector ETF for relative strength
@@ -70,20 +139,6 @@ Historical data period for analysis.
   - 15m/30m: 30-60 days
   - 1h: 60-90 days  
   - 1d: 180-365 days
-
-#### `log_db` (str | None)
-Path to centralized database file.
-- **Default**: "data/swing_agent.sqlite" (centralized database)
-- **Format**: "path/to/swing_agent.sqlite" 
-- **Auto-creation**: Database and tables created if missing
-- **Note**: Same file as vec_db in centralized setup
-
-#### `vec_db` (str | None)
-Path to centralized database file (same as log_db).
-- **Default**: "data/swing_agent.sqlite" (centralized database)
-- **Format**: "path/to/swing_agent.sqlite"
-- **Impact**: Enables historical pattern matching and statistical expectations
-- **Note**: Same file as log_db in centralized setup
 
 #### `use_llm` (bool)
 Enable OpenAI LLM integration.
