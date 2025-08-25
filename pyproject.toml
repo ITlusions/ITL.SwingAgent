@@ -15,5 +15,10 @@ dependencies = [
   "sqlalchemy>=2.0.0",
 ]
 
+[project.optional-dependencies]
+postgresql = ["psycopg2-binary>=2.9.0"]
+mysql = ["PyMySQL>=1.0.0"]
+external-db = ["psycopg2-binary>=2.9.0", "PyMySQL>=1.0.0"]
+
 [tool.ruff]
 line-length = 100

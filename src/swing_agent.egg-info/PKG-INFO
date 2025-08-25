@@ -11,6 +11,7 @@ Requires-Dist: numpy>=1.26
 Requires-Dist: yfinance>=0.2.40
 Requires-Dist: openai>=1.40.0
 Requires-Dist: pydantic-ai-slim[openai]>=0.0.16
+Requires-Dist: sqlalchemy>=2.0.0
 
 # Swing Agent v1.6.1
 

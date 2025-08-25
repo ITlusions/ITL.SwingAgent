@@ -4,10 +4,13 @@ src/swing_agent/__init__.py
 src/swing_agent/agent.py
 src/swing_agent/backtester.py
 src/swing_agent/data.py
+src/swing_agent/database.py
 src/swing_agent/features.py
 src/swing_agent/indicators.py
 src/swing_agent/llm_predictor.py
+src/swing_agent/migrate.py
 src/swing_agent/models.py
+src/swing_agent/models_db.py
 src/swing_agent/storage.py
 src/swing_agent/strategy.py
 src/swing_agent/vectorstore.py
