@@ -5,20 +5,29 @@
 The SwingAgent system is a sophisticated 1-2 day swing trading platform that demonstrates strong technical foundations in combining traditional technical analysis, machine learning pattern matching, and LLM-driven insights. The codebase shows good architectural thinking with clear separation of concerns across data management, technical analysis, ML vector stores, and AI integration.
 
 **Strengths:**
-- Well-structured modular architecture
-- Comprehensive technical analysis implementation
-- Innovative ML pattern matching via vector similarity
+- Well-structured modular architecture with clear separation of concerns
+- Comprehensive technical analysis implementation with Fibonacci, RSI, EMA, ATR
+- Innovative ML pattern matching via vector similarity using SQLAlchemy ORM
 - Thoughtful LLM integration without letting AI control risk management
-- Proper data models using Pydantic for type safety
-- Complete signal tracking and evaluation framework
+- Proper data models using Pydantic v2 for type safety and validation
+- Complete signal tracking and evaluation framework with enrichments
+- Recently centralized database architecture improving maintainability
+- Good use of type hints and modern Python 3.10+ features
 
-**Areas for Improvement:**
-- Code complexity and maintainability
-- Performance optimization opportunities  
-- Operational robustness and monitoring
-- Testing infrastructure
-- Configuration management
-- Security hardening
+**Recent Improvements (v1.6.1):**
+- ✅ Database centralization with SQLAlchemy ORM replacing raw SQL
+- ✅ External database support (PostgreSQL, MySQL, CNPG)
+- ✅ Enhanced multi-timeframe analysis and enrichment features
+- ✅ Comprehensive documentation structure
+
+**Critical Areas for Improvement:**
+- Code complexity and maintainability (some functions >100 lines)
+- Missing comprehensive testing infrastructure
+- Limited error handling and recovery mechanisms
+- Performance optimization opportunities in vector operations
+- Configuration management and environment setup
+- Security hardening for production deployment
+- Monitoring and observability capabilities
 
 ## Detailed Recommendations
 
@@ -221,6 +230,158 @@ def build_entry(df: pd.DataFrame, trend: TrendState) -> Optional[EntryPlan]:
 ```
 
 ### 2. Architecture Improvements
+
+#### 2.1 Database Schema Evolution - MEDIUM PRIORITY
+
+**Current State**: Recently centralized with SQLAlchemy ORM, good foundation.
+
+**Additional Findings**:
+```python
+# models_db.py - Good practices observed
+class Signal(Base):
+    __tablename__ = "signals"
+    # Proper use of SQLAlchemy constraints and types
+    # JSON fields handled correctly with hybrid properties
+    
+class VectorStore(Base):
+    __tablename__ = "vec_store"
+    # Appropriate indexes for performance
+```
+
+**Recommendations**:
+1. **Migration Strategy**: Add schema versioning for future changes
+2. **Performance Indexes**: Consider composite indexes for common query patterns
+3. **Data Validation**: Add database-level constraints matching Pydantic models
+
+```python
+# Add to models_db.py
+__version__ = "1.6.1"
+
+class Migration(Base):
+    __tablename__ = "migrations"
+    version = Column(String, primary_key=True)
+    applied_at = Column(DateTime, default=datetime.utcnow)
+    description = Column(String)
+```
+
+#### 2.2 Configuration Management - HIGH PRIORITY
+
+**Issue**: Configuration scattered across multiple files and environment variables.
+
+**Current Pattern**:
+```python
+# agent.py
+model_name = os.getenv("SWING_LLM_MODEL", "gpt-4o-mini")
+
+# Multiple hardcoded defaults throughout codebase
+interval: str = "30m"
+lookback_days: int = 30
+```
+
+**Recommendation**: Centralized configuration system:
+```python
+# config.py
+from pydantic import BaseSettings
+
+class SwingAgentConfig(BaseSettings):
+    # Database
+    database_url: str = "sqlite:///data/swing_agent.sqlite"
+    
+    # LLM
+    llm_model: str = "gpt-4o-mini"
+    llm_enabled: bool = True
+    openai_api_key: str = ""
+    
+    # Trading
+    default_interval: str = "30m"
+    default_lookback_days: int = 30
+    default_sector: str = "XLK"
+    
+    # Technical Analysis Thresholds
+    ema_slope_threshold: float = 0.01
+    rsi_overbought: float = 70.0
+    rsi_oversold: float = 30.0
+    atr_stop_multiplier: float = 1.2
+    
+    class Config:
+        env_prefix = "SWING_"
+        env_file = ".env"
+
+# Usage throughout codebase
+config = SwingAgentConfig()
+```
+
+#### 2.3 Error Recovery and Resilience - HIGH PRIORITY
+
+**Issue**: Limited error handling could cause silent failures in production.
+
+**Current Gaps Identified**:
+```python
+# llm_predictor.py - No error handling
+def llm_extra_prediction(**features) -> LlmVote:
+    agent = _make_agent(model_name, sys, LlmVote)
+    res = agent.run(user_message="...", input=features)
+    return res.data  # Could raise unhandled exceptions
+
+# data.py - Basic error handling but could be improved
+def load_ohlcv(symbol: str, interval: str = "30m", lookback_days: int = 30):
+    # Handles empty data but not network timeouts, rate limits, etc.
+```
+
+**Recommendation**: Comprehensive error handling strategy:
+```python
+# errors.py
+from enum import Enum
+from typing import Optional
+import logging
+
+class ErrorSeverity(Enum):
+    LOW = "low"       # Degraded functionality, continue operation
+    MEDIUM = "medium" # Significant impact, log warning, use fallback
+    HIGH = "high"     # Critical failure, raise exception
+    CRITICAL = "critical" # System failure, immediate attention
+
+class SwingAgentError(Exception):
+    def __init__(self, message: str, severity: ErrorSeverity, component: str, 
+                 original_error: Optional[Exception] = None):
+        super().__init__(message)
+        self.severity = severity
+        self.component = component
+        self.original_error = original_error
+        
+        # Log based on severity
+        logger = logging.getLogger(f"swing_agent.{component}")
+        if severity == ErrorSeverity.CRITICAL:
+            logger.critical(message, exc_info=original_error)
+        elif severity == ErrorSeverity.HIGH:
+            logger.error(message, exc_info=original_error)
+        elif severity == ErrorSeverity.MEDIUM:
+            logger.warning(message)
+        else:
+            logger.info(message)
+
+# Enhanced error handling example
+def safe_llm_prediction(**features) -> Optional[LlmVote]:
+    try:
+        agent = _make_agent(model_name, sys, LlmVote)
+        res = agent.run(user_message="...", input=features)
+        return res.data
+    except openai.RateLimitError as e:
+        raise SwingAgentError(
+            "LLM rate limit exceeded, consider request throttling",
+            ErrorSeverity.MEDIUM, "llm", e
+        )
+    except openai.AuthenticationError as e:
+        raise SwingAgentError(
+            "LLM authentication failed, check API key",
+            ErrorSeverity.HIGH, "llm", e
+        )
+    except Exception as e:
+        raise SwingAgentError(
+            f"Unexpected LLM error: {e}",
+            ErrorSeverity.MEDIUM, "llm", e
+        )
+```
 
 #### 2.1 Dependency Injection - MEDIUM PRIORITY
 
@@ -1468,6 +1629,347 @@ def build_setup_vector(...):
 - Integration tests for strategy changes  
 - Property-based tests for mathematical functions
 - Performance tests for optimization work
+
+## Additional Code Review Findings (v1.6.1 Analysis)
+
+### 10. Code Quality Assessment
+
+#### 10.1 Positive Patterns Identified - MAINTAINED
+
+**Modern Python Practices**:
+```python
+# Good use of type hints throughout
+def label_trend(df: pd.DataFrame) -> TrendState:
+def build_entry(df: pd.DataFrame, trend: TrendState) -> Optional[EntryPlan]:
+
+# Proper use of Pydantic v2 models
+class TradeSignal(BaseModel):
+    symbol: str
+    timeframe: Literal["15m", "30m", "1h", "1d"] = "30m"
+    # Field validation and serialization
+
+# Clean enum usage
+class TrendLabel(str, Enum):
+    STRONG_UP = "strong_up"
+    UP = "up"
+    SIDEWAYS = "sideways"
+```
+
+**Database Architecture**:
+```python
+# Recently improved SQLAlchemy integration
+from .database import get_session
+from .models_db import Signal, VectorStore
+
+# Proper session management with context managers
+with get_session() as session:
+    signal = Signal(...)
+    session.add(signal)
+    session.commit()
+```
+
+#### 10.2 Areas Needing Attention - NEW FINDINGS
+
+**Function Complexity**:
+- `SwingAgent.analyze()` method: ~160 lines, multiple responsibilities
+- `build_entry()` in strategy.py: ~50 lines with complex branching logic
+- Vector similarity calculations could be optimized
+
+**Error Handling Gaps**:
+```python
+# llm_predictor.py - Potential silent failures
+def llm_extra_prediction(**features) -> LlmVote:
+    # No try/catch for API failures, rate limits, or validation errors
+    
+# data.py - Basic handling but missing edge cases
+def load_ohlcv(symbol: str, interval: str = "30m", lookback_days: int = 30):
+    # Handles empty data but not delisted symbols, weekend calls, etc.
+```
+
+**Performance Considerations**:
+```python
+# vectorstore.py - Vector operations not optimized
+def knn(db_path, query_vec, k=10):
+    # Loading all vectors into memory for similarity calculation
+    # Could benefit from approximate nearest neighbor algorithms
+```
+
+#### 10.3 Security Review - NEW SECTION
+
+**API Key Management**:
+- ✅ Environment variable usage: `os.getenv("OPENAI_API_KEY")`
+- ⚠️ No key validation or rotation support
+- ⚠️ No secrets masking in logs
+
+**Database Security**:
+- ✅ SQLAlchemy ORM prevents basic SQL injection
+- ⚠️ No database connection encryption configuration
+- ⚠️ No audit logging for data modifications
+
+**Input Validation**:
+```python
+# Current validation patterns are good but could be enhanced
+def load_ohlcv(symbol: str, interval: str = "30m", lookback_days: int = 30):
+    if interval not in VALID_INTERVALS:
+        raise ValueError(f"Unsupported interval: {interval}")
+    # Could add symbol format validation, reasonable lookback limits
+```
+
+#### 10.4 Documentation Quality - ASSESSMENT
+
+**Strengths**:
+- Comprehensive README with quickstart
+- Well-structured docs/ directory
+- API reference with examples
+- Deployment guides for multiple environments
+
+**Gaps Identified**:
+- Missing inline docstrings for complex functions
+- No architecture decision records (ADRs)
+- Limited troubleshooting scenarios for common issues
+- No performance tuning guide
+
+### 11. Development Workflow Improvements
+
+#### 11.1 Code Quality Tools - RECOMMENDED SETUP
+
+**Linting Configuration** (pyproject.toml):
+```toml
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "N",  # flake8-naming
+    "UP", # pyupgrade
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+```
+
+**Pre-commit Configuration** (.pre-commit-config.yaml):
+```yaml
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+  
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.6
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+  
+  - repo: https://github.com/psf/black
+    rev: 23.10.1
+    hooks:
+      - id: black
+```
+
+#### 11.2 Testing Infrastructure - IMPLEMENTATION PLAN
+
+**Phase 1: Unit Tests** (High Priority)
+```python
+# tests/test_indicators.py
+import pytest
+import pandas as pd
+import numpy as np
+from swing_agent.indicators import ema, rsi, atr, fibonacci_range
+
+class TestIndicators:
+    @pytest.fixture
+    def sample_ohlcv(self):
+        """Generate realistic OHLCV data for testing."""
+        dates = pd.date_range('2024-01-01', periods=100, freq='1h')
+        np.random.seed(42)
+        prices = 100 + np.cumsum(np.random.randn(100) * 0.01)
+        
+        return pd.DataFrame({
+            'open': prices * (1 + np.random.randn(100) * 0.001),
+            'high': prices * (1 + np.abs(np.random.randn(100)) * 0.002),
+            'low': prices * (1 - np.abs(np.random.randn(100)) * 0.002),
+            'close': prices,
+            'volume': np.random.randint(1000000, 10000000, 100)
+        }, index=dates)
+    
+    def test_ema_calculation(self, sample_ohlcv):
+        """Test EMA calculation correctness."""
+        ema_20 = ema(sample_ohlcv['close'], 20)
+        
+        # Basic validation
+        assert len(ema_20) == len(sample_ohlcv)
+        assert not ema_20.isna().all()
+        assert ema_20.iloc[-1] > 0
+        
+        # EMA should be smooth (less volatile than price)
+        price_volatility = sample_ohlcv['close'].pct_change().std()
+        ema_volatility = ema_20.pct_change().std()
+        assert ema_volatility < price_volatility
+```
+
+**Phase 2: Integration Tests** (Medium Priority)
+```python
+# tests/test_integration.py
+class TestSwingAgentIntegration:
+    def test_full_signal_generation(self, mock_data):
+        """Test complete signal generation pipeline."""
+        agent = SwingAgent(interval="30m", lookback_days=30, use_llm=False)
+        signal = agent.analyze_df("AAPL", mock_data)
+        
+        # Validate signal structure
+        assert signal.symbol == "AAPL"
+        assert signal.trend.label in list(TrendLabel)
+        assert 0 <= signal.confidence <= 1
+        
+        # If entry plan exists, validate risk/reward
+        if signal.entry:
+            assert signal.entry.r_multiple > 0
+            assert signal.entry.stop_price != signal.entry.entry_price
+```
+
+### 12. Monitoring and Observability
+
+#### 12.1 Logging Strategy - NEW RECOMMENDATION
+
+**Structured Logging Implementation**:
+```python
+# logging_config.py
+import logging
+import json
+from datetime import datetime
+from typing import Any, Dict
+
+class StructuredLogger:
+    def __init__(self, component: str):
+        self.logger = logging.getLogger(f"swing_agent.{component}")
+        self.component = component
+    
+    def log_signal_generated(self, symbol: str, signal: TradeSignal):
+        self.logger.info("signal_generated", extra={
+            "event_type": "signal_generated",
+            "symbol": symbol,
+            "trend_label": signal.trend.label.value,
+            "entry_side": signal.entry.side.value if signal.entry else None,
+            "confidence": signal.confidence,
+            "timestamp": datetime.utcnow().isoformat()
+        })
+    
+    def log_vector_search(self, query_type: str, results_count: int, search_time_ms: float):
+        self.logger.info("vector_search", extra={
+            "event_type": "vector_search",
+            "query_type": query_type,
+            "results_count": results_count,
+            "search_time_ms": search_time_ms
+        })
+```
+
+#### 12.2 Performance Metrics - NEW RECOMMENDATION
+
+**Key Metrics to Track**:
+```python
+# metrics.py
+from dataclasses import dataclass
+from typing import Dict, List
+import time
+
+@dataclass
+class PerformanceMetrics:
+    signal_generation_time_ms: float
+    vector_search_time_ms: float
+    llm_response_time_ms: float
+    database_query_time_ms: float
+    total_analysis_time_ms: float
+
+class MetricsCollector:
+    def __init__(self):
+        self.metrics: List[PerformanceMetrics] = []
+    
+    def time_operation(self, operation_name: str):
+        """Context manager for timing operations."""
+        # Implementation for performance tracking
+```
+
+### 13. Production Readiness Checklist
+
+#### 13.1 Environment Configuration - NEW SECTION
+
+**Development Environment**:
+```bash
+# .env.development
+SWING_DATABASE_URL=sqlite:///data/swing_agent_dev.sqlite
+SWING_LLM_MODEL=gpt-4o-mini
+SWING_LOG_LEVEL=DEBUG
+SWING_ENABLE_METRICS=true
+```
+
+**Production Environment**:
+```bash
+# .env.production
+SWING_DATABASE_URL=postgresql://user:pass@db:5432/swing_agent
+SWING_LLM_MODEL=gpt-4o
+SWING_LOG_LEVEL=INFO
+SWING_ENABLE_METRICS=true
+SWING_RATE_LIMIT_ENABLED=true
+```
+
+#### 13.2 Deployment Considerations - NEW SECTION
+
+**Docker Configuration**:
+```dockerfile
+# Dockerfile
+FROM python:3.10-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY src/ ./src/
+COPY scripts/ ./scripts/
+
+ENV PYTHONPATH=/app/src
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+  CMD python scripts/health_check.py
+
+CMD ["python", "scripts/run_swing_agent.py"]
+```
+
+**Health Check Implementation**:
+```python
+# scripts/health_check.py
+def health_check() -> bool:
+    """Verify system health for monitoring."""
+    try:
+        # Test database connection
+        with get_session() as session:
+            session.execute("SELECT 1")
+        
+        # Test data provider
+        load_ohlcv("SPY", "1d", 1)
+        
+        return True
+    except Exception as e:
+        print(f"Health check failed: {e}")
+        return False
+```
 ```
 
 ### 9. Future Enhancements
