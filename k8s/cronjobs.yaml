@@ -1,0 +1,84 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: swing-agent-premarket
+spec:
+  schedule: "0 15 * * *"
+  timeZone: "Europe/Amsterdam"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: premarket
+            image: itlusions/swing-agent:latest
+            command: ["python", "scripts/pre_market_scan.py"]
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: swing-agent-open
+spec:
+  schedule: "31 15 * * *"
+  timeZone: "Europe/Amsterdam"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: open
+            image: itlusions/swing-agent:latest
+            command: ["python", "scripts/run_swing_agent.py"]
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: swing-agent-midday
+spec:
+  schedule: "0 18 * * *"
+  timeZone: "Europe/Amsterdam"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: midday
+            image: itlusions/swing-agent:latest
+            command: ["python", "scripts/run_swing_agent.py", "--no-llm"]
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: swing-agent-late
+spec:
+  schedule: "30 21 * * *"
+  timeZone: "Europe/Amsterdam"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: late
+            image: itlusions/swing-agent:latest
+            command: ["python", "scripts/run_swing_agent.py", "--no-llm"]
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: swing-agent-eod
+spec:
+  schedule: "10 22 * * *"
+  timeZone: "Europe/Amsterdam"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: eod
+            image: itlusions/swing-agent:latest
+            command: ["sh", "-c", "python scripts/eval_signals.py && python scripts/analyze_performance.py"]
+          restartPolicy: OnFailure
