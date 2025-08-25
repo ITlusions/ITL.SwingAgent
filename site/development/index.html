@@ -1,0 +1,1884 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Comprehensive documentation for the SwingAgent trading system" name="description"/>
+<meta content="SwingAgent Team" name="author"/>
+<link href="../architecture/" rel="prev"/>
+<link href="../deployment/" rel="next"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.18" name="generator"/>
+<title>Development - SwingAgent Documentation</title>
+<link href="../assets/stylesheets/main.7e37652d.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#development-guide">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SwingAgent Documentation" class="md-header__button md-logo" data-md-component="logo" href=".." title="SwingAgent Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SwingAgent Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Development
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ITlusions/ITL.SwingAgent" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4" fill="currentColor"></path></svg>
+</div>
+<div class="md-source__repository">
+    ITL.SwingAgent
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started/">
+          
+  
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../api-reference/">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../architecture/">
+          
+  
+  
+  Advanced
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SwingAgent Documentation" class="md-nav__button md-logo" data-md-component="logo" href=".." title="SwingAgent Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    SwingAgent Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ITlusions/ITL.SwingAgent" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4" fill="currentColor"></path></svg>
+</div>
+<div class="md-source__repository">
+    ITL.SwingAgent
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    User Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started/">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tutorial/">
+<span class="md-ellipsis">
+    Tutorial
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../use-cases/">
+<span class="md-ellipsis">
+    Use Cases
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../best-practices/">
+<span class="md-ellipsis">
+    Best Practices
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../faq/">
+<span class="md-ellipsis">
+    FAQ
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary/">
+<span class="md-ellipsis">
+    Glossary
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configuration/">
+<span class="md-ellipsis">
+    Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    Advanced
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Advanced
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture-overview">
+<span class="md-ellipsis">
+      Architecture Overview
+    </span>
+</a>
+<nav aria-label="Architecture Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-architecture-changes-in-v161">
+<span class="md-ellipsis">
+      Key Architecture Changes in v1.6.1
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-design-principles">
+<span class="md-ellipsis">
+      Core Design Principles
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-components">
+<span class="md-ellipsis">
+      Key Components
+    </span>
+</a>
+<nav aria-label="Key Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-swingagent-orchestrator">
+<span class="md-ellipsis">
+      1. SwingAgent (Orchestrator)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-tradingconfig-configuration-management">
+<span class="md-ellipsis">
+      2. TradingConfig (Configuration Management)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-strategy-functions-enhanced">
+<span class="md-ellipsis">
+      3. Strategy Functions (Enhanced)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-database-layer-new-in-v161">
+<span class="md-ellipsis">
+      4. Database Layer (NEW in v1.6.1)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-enhanced-error-handling">
+<span class="md-ellipsis">
+      5. Enhanced Error Handling
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-setup">
+<span class="md-ellipsis">
+      Development Setup
+    </span>
+</a>
+<nav aria-label="Development Setup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+<span class="md-ellipsis">
+      Prerequisites
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#local-development-environment">
+<span class="md-ellipsis">
+      Local Development Environment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-configuration">
+<span class="md-ellipsis">
+      Environment Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-quality-standards">
+<span class="md-ellipsis">
+      Code Quality Standards
+    </span>
+</a>
+<nav aria-label="Code Quality Standards" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-style">
+<span class="md-ellipsis">
+      Code Style
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ruff-configuration">
+<span class="md-ellipsis">
+      Ruff Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#type-checking">
+<span class="md-ellipsis">
+      Type Checking
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#testing-strategy">
+<span class="md-ellipsis">
+      Testing Strategy
+    </span>
+</a>
+<nav aria-label="Testing Strategy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-structure">
+<span class="md-ellipsis">
+      Test Structure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#running-tests">
+<span class="md-ellipsis">
+      Running Tests
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-examples">
+<span class="md-ellipsis">
+      Test Examples
+    </span>
+</a>
+<nav aria-label="Test Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#unit-test-example">
+<span class="md-ellipsis">
+      Unit Test Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-test-example">
+<span class="md-ellipsis">
+      Integration Test Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#property-based-testing">
+<span class="md-ellipsis">
+      Property-Based Testing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extending-the-system">
+<span class="md-ellipsis">
+      Extending the System
+    </span>
+</a>
+<nav aria-label="Extending the System" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-new-indicators">
+<span class="md-ellipsis">
+      Adding New Indicators
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-new-entry-strategies">
+<span class="md-ellipsis">
+      Adding New Entry Strategies
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#customizing-configuration">
+<span class="md-ellipsis">
+      Customizing Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling-best-practices">
+<span class="md-ellipsis">
+      Error Handling Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-development">
+<span class="md-ellipsis">
+      Database Development
+    </span>
+</a>
+<nav aria-label="Database Development" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-migrations">
+<span class="md-ellipsis">
+      Database Migrations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-testing">
+<span class="md-ellipsis">
+      Database Testing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-testing">
+<span class="md-ellipsis">
+      Performance Testing
+    </span>
+</a>
+<nav aria-label="Performance Testing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#benchmarking">
+<span class="md-ellipsis">
+      Benchmarking
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentation-standards">
+<span class="md-ellipsis">
+      Documentation Standards
+    </span>
+</a>
+<nav aria-label="Documentation Standards" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#docstring-format">
+<span class="md-ellipsis">
+      Docstring Format
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-documentation">
+<span class="md-ellipsis">
+      API Documentation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#debugging">
+<span class="md-ellipsis">
+      Debugging
+    </span>
+</a>
+<nav aria-label="Debugging" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logging-configuration">
+<span class="md-ellipsis">
+      Logging Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#debug-utilities">
+<span class="md-ellipsis">
+      Debug Utilities
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#release-process">
+<span class="md-ellipsis">
+      Release Process
+    </span>
+</a>
+<nav aria-label="Release Process" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#version-management">
+<span class="md-ellipsis">
+      Version Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pre-release-checklist">
+<span class="md-ellipsis">
+      Pre-release Checklist
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#continuous-integration">
+<span class="md-ellipsis">
+      Continuous Integration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../deployment/">
+<span class="md-ellipsis">
+    Deployment
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../testing/">
+<span class="md-ellipsis">
+    Testing
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../security/">
+<span class="md-ellipsis">
+    Security
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture-overview">
+<span class="md-ellipsis">
+      Architecture Overview
+    </span>
+</a>
+<nav aria-label="Architecture Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-architecture-changes-in-v161">
+<span class="md-ellipsis">
+      Key Architecture Changes in v1.6.1
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-design-principles">
+<span class="md-ellipsis">
+      Core Design Principles
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-components">
+<span class="md-ellipsis">
+      Key Components
+    </span>
+</a>
+<nav aria-label="Key Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-swingagent-orchestrator">
+<span class="md-ellipsis">
+      1. SwingAgent (Orchestrator)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-tradingconfig-configuration-management">
+<span class="md-ellipsis">
+      2. TradingConfig (Configuration Management)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-strategy-functions-enhanced">
+<span class="md-ellipsis">
+      3. Strategy Functions (Enhanced)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-database-layer-new-in-v161">
+<span class="md-ellipsis">
+      4. Database Layer (NEW in v1.6.1)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-enhanced-error-handling">
+<span class="md-ellipsis">
+      5. Enhanced Error Handling
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-setup">
+<span class="md-ellipsis">
+      Development Setup
+    </span>
+</a>
+<nav aria-label="Development Setup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+<span class="md-ellipsis">
+      Prerequisites
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#local-development-environment">
+<span class="md-ellipsis">
+      Local Development Environment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-configuration">
+<span class="md-ellipsis">
+      Environment Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-quality-standards">
+<span class="md-ellipsis">
+      Code Quality Standards
+    </span>
+</a>
+<nav aria-label="Code Quality Standards" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-style">
+<span class="md-ellipsis">
+      Code Style
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ruff-configuration">
+<span class="md-ellipsis">
+      Ruff Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#type-checking">
+<span class="md-ellipsis">
+      Type Checking
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#testing-strategy">
+<span class="md-ellipsis">
+      Testing Strategy
+    </span>
+</a>
+<nav aria-label="Testing Strategy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-structure">
+<span class="md-ellipsis">
+      Test Structure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#running-tests">
+<span class="md-ellipsis">
+      Running Tests
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-examples">
+<span class="md-ellipsis">
+      Test Examples
+    </span>
+</a>
+<nav aria-label="Test Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#unit-test-example">
+<span class="md-ellipsis">
+      Unit Test Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-test-example">
+<span class="md-ellipsis">
+      Integration Test Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#property-based-testing">
+<span class="md-ellipsis">
+      Property-Based Testing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extending-the-system">
+<span class="md-ellipsis">
+      Extending the System
+    </span>
+</a>
+<nav aria-label="Extending the System" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-new-indicators">
+<span class="md-ellipsis">
+      Adding New Indicators
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-new-entry-strategies">
+<span class="md-ellipsis">
+      Adding New Entry Strategies
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#customizing-configuration">
+<span class="md-ellipsis">
+      Customizing Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling-best-practices">
+<span class="md-ellipsis">
+      Error Handling Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-development">
+<span class="md-ellipsis">
+      Database Development
+    </span>
+</a>
+<nav aria-label="Database Development" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-migrations">
+<span class="md-ellipsis">
+      Database Migrations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-testing">
+<span class="md-ellipsis">
+      Database Testing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-testing">
+<span class="md-ellipsis">
+      Performance Testing
+    </span>
+</a>
+<nav aria-label="Performance Testing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#benchmarking">
+<span class="md-ellipsis">
+      Benchmarking
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentation-standards">
+<span class="md-ellipsis">
+      Documentation Standards
+    </span>
+</a>
+<nav aria-label="Documentation Standards" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#docstring-format">
+<span class="md-ellipsis">
+      Docstring Format
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-documentation">
+<span class="md-ellipsis">
+      API Documentation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#debugging">
+<span class="md-ellipsis">
+      Debugging
+    </span>
+</a>
+<nav aria-label="Debugging" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logging-configuration">
+<span class="md-ellipsis">
+      Logging Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#debug-utilities">
+<span class="md-ellipsis">
+      Debug Utilities
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#release-process">
+<span class="md-ellipsis">
+      Release Process
+    </span>
+</a>
+<nav aria-label="Release Process" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#version-management">
+<span class="md-ellipsis">
+      Version Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pre-release-checklist">
+<span class="md-ellipsis">
+      Pre-release Checklist
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#continuous-integration">
+<span class="md-ellipsis">
+      Continuous Integration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="development-guide">Development Guide<a class="headerlink" href="#development-guide" title="Permanent link">¶</a></h1>
+<p>Complete guide for SwingAgent v1.6.1 development, architecture, and code quality standards.</p>
+<h2 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">¶</a></h2>
+<p>SwingAgent v1.6.1 follows a <strong>modular, layered architecture</strong> with centralized database management:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>┌─────────────────────────────────────┐
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>│            API Layer                │  
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>│  (Scripts + Agent Interface)        │
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>├─────────────────────────────────────┤
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>│          Business Logic             │
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>│  (Strategy + Indicators + Features) │
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>├─────────────────────────────────────┤
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>│         Data &amp; ML Layer             │
+<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>│  (Vector Store + LLM + Storage)     │
+<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a>├─────────────────────────────────────┤
+<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a>│      Database Layer (NEW)           │
+<a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a>│  (SQLAlchemy ORM + Migration)       │
+<a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a>├─────────────────────────────────────┤
+<a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a>│        Infrastructure              │
+<a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a>│  (Data Fetching + Configuration)    │
+<a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a>└─────────────────────────────────────┘
+</code></pre></div>
+<h3 id="key-architecture-changes-in-v161">Key Architecture Changes in v1.6.1<a class="headerlink" href="#key-architecture-changes-in-v161" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Centralized Database Layer</strong>: Single database for all storage needs</li>
+<li><strong>SQLAlchemy ORM</strong>: Type-safe database operations with relationship support</li>
+<li><strong>Multiple Database Backends</strong>: SQLite, PostgreSQL, MySQL, CloudNativePG</li>
+<li><strong>Configuration Management</strong>: Centralized <code>TradingConfig</code> class</li>
+<li><strong>Migration Framework</strong>: Automated migration from legacy databases</li>
+</ol>
+<h3 id="core-design-principles">Core Design Principles<a class="headerlink" href="#core-design-principles" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Separation of Concerns</strong>: Each module has a single, well-defined responsibility</li>
+<li><strong>Configurable Parameters</strong>: All magic numbers centralized in <code>TradingConfig</code></li>
+<li><strong>Comprehensive Error Handling</strong>: Custom exceptions with detailed error context</li>
+<li><strong>Type Safety</strong>: Complete type annotations throughout the codebase</li>
+<li><strong>Database Agnostic</strong>: Support for multiple backends via environment configuration</li>
+<li><strong>Backward Compatibility</strong>: Migration tools for legacy database formats</li>
+<li><strong>Documentation</strong>: Comprehensive docstrings with examples for all public APIs</li>
+</ol>
+<h3 id="key-components">Key Components<a class="headerlink" href="#key-components" title="Permanent link">¶</a></h3>
+<h4 id="1-swingagent-orchestrator">1. <code>SwingAgent</code> (Orchestrator)<a class="headerlink" href="#1-swingagent-orchestrator" title="Permanent link">¶</a></h4>
+<p><strong>File</strong>: <code>src/swing_agent/agent.py</code></p>
+<p>Main orchestrator that coordinates the entire analysis pipeline through focused methods:</p>
+<ul>
+<li><code>_build_market_context()</code> - Market data collection and enrichment</li>
+<li><code>_perform_technical_analysis()</code> - Core technical analysis</li>
+<li><code>_get_multitimeframe_analysis()</code> - MTF trend alignment</li>
+<li><code>_calculate_confidence()</code> - Base confidence scoring</li>
+<li><code>_get_ml_expectations()</code> - Vector similarity analysis</li>
+<li><code>_get_llm_insights()</code> - LLM analysis and action plans</li>
+<li><code>_assemble_signal()</code> - Final signal creation</li>
+</ul>
+<p><strong>Benefits of Refactored Design</strong>:
+- Each method has single responsibility (~20-40 lines vs 160+ original)
+- Easy to test individual components
+- Clear error handling and debugging
+- Better code reusability</p>
+<h4 id="2-tradingconfig-configuration-management">2. <code>TradingConfig</code> (Configuration Management)<a class="headerlink" href="#2-tradingconfig-configuration-management" title="Permanent link">¶</a></h4>
+<p><strong>File</strong>: <code>src/swing_agent/config.py</code></p>
+<p>Centralized configuration eliminates magic numbers and provides easy parameter tuning:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">swing_agent.config</span> <span class="kn">import</span> <span class="n">get_config</span><span class="p">,</span> <span class="n">update_config</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="c1"># Access configuration</span>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"EMA threshold: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">EMA_SLOPE_THRESHOLD_UP</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1"># Update parameters</span>
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="n">update_config</span><span class="p">(</span><span class="n">RSI_PERIOD</span><span class="o">=</span><span class="mi">21</span><span class="p">,</span> <span class="n">ATR_STOP_MULTIPLIER</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Configuration Groups</strong>:
+- <strong>Trend Detection</strong>: EMA/RSI thresholds
+- <strong>Risk Management</strong>: ATR multipliers
+- <strong>Fibonacci Analysis</strong>: Lookback periods
+- <strong>Volatility Analysis</strong>: Percentile thresholds
+- <strong>Confidence Scoring</strong>: Base levels and bonuses</p>
+<h4 id="3-strategy-functions-enhanced">3. Strategy Functions (Enhanced)<a class="headerlink" href="#3-strategy-functions-enhanced" title="Permanent link">¶</a></h4>
+<p><strong>File</strong>: <code>src/swing_agent/strategy.py</code></p>
+<ul>
+<li><code>label_trend()</code> - Uses configurable thresholds for trend classification</li>
+<li><code>build_entry()</code> - Three main strategies with comprehensive documentation:</li>
+<li>Fibonacci golden pocket pullbacks</li>
+<li>Momentum continuation breakouts</li>
+<li>Mean reversion from extremes</li>
+</ul>
+<h4 id="4-database-layer-new-in-v161">4. Database Layer (NEW in v1.6.1)<a class="headerlink" href="#4-database-layer-new-in-v161" title="Permanent link">¶</a></h4>
+<p><strong>Files</strong>: <code>src/swing_agent/database.py</code>, <code>src/swing_agent/models_db.py</code>, <code>src/swing_agent/migrate.py</code></p>
+<p>Centralized database management using SQLAlchemy ORM:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">swing_agent.database</span> <span class="kn">import</span> <span class="n">get_session</span><span class="p">,</span> <span class="n">init_database</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">swing_agent.models_db</span> <span class="kn">import</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">VectorStore</span>
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="c1"># Initialize database (creates tables if missing)</span>
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="n">init_database</span><span class="p">()</span>
+<a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>
+<a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="c1"># Use database session</span>
+<a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="k">with</span> <span class="n">get_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a>    <span class="n">signals</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Signal</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+<a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a>        <span class="n">Signal</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s2">"AAPL"</span>
+<a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a>    <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Signal</span><span class="o">.</span><span class="n">created_at_utc</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>Database Features</strong>:
+- <strong>Multiple Backends</strong>: SQLite (dev), PostgreSQL/MySQL (prod), CNPG (K8s)
+- <strong>Connection Management</strong>: SQLAlchemy engine with connection pooling
+- <strong>Type Safety</strong>: Pydantic models with SQLAlchemy ORM
+- <strong>Migration Support</strong>: Automated migration from legacy databases</p>
+<p><strong>Configuration Examples</strong>:
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># SQLite (default)</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SWING_DATABASE_URL</span><span class="o">=</span><span class="s2">"sqlite:///data/swing_agent.sqlite"</span>
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="c1"># PostgreSQL  </span>
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SWING_DATABASE_URL</span><span class="o">=</span><span class="s2">"postgresql://user:pass@host:5432/swing_agent"</span>
+<a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>
+<a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="c1"># CloudNativePG</span>
+<a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SWING_DB_TYPE</span><span class="o">=</span><span class="s2">"cnpg"</span>
+<a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CNPG_CLUSTER_NAME</span><span class="o">=</span><span class="s2">"swing-postgres"</span>
+</code></pre></div></p>
+<h4 id="5-enhanced-error-handling">5. Enhanced Error Handling<a class="headerlink" href="#5-enhanced-error-handling" title="Permanent link">¶</a></h4>
+<p><strong>File</strong>: <code>src/swing_agent/data.py</code></p>
+<p>Custom <code>SwingAgentDataError</code> provides context-specific error handling:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">try</span><span class="p">:</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">load_ohlcv</span><span class="p">(</span><span class="s2">"INVALID_SYMBOL"</span><span class="p">)</span>
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="k">except</span> <span class="n">SwingAgentDataError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>    <span class="k">if</span> <span class="s2">"not found"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>        <span class="c1"># Handle invalid symbol</span>
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="k">elif</span> <span class="s2">"rate limit"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a>        <span class="c1"># Handle API rate limiting</span>
+</code></pre></div>
+<h2 id="development-setup">Development Setup<a class="headerlink" href="#development-setup" title="Permanent link">¶</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h3>
+<ul>
+<li>Python 3.10+</li>
+<li>Git</li>
+<li>Virtual environment tool (venv, conda, etc.)</li>
+</ul>
+<h3 id="local-development-environment">Local Development Environment<a class="headerlink" href="#local-development-environment" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Clone and setup</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ITlusions/ITL.SwingAgent.git
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="nb">cd</span><span class="w"> </span>ITL.SwingAgent
+<a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="c1"># Create virtual environment</span>
+<a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">  </span><span class="c1"># On Windows: .venv\Scripts\activate</span>
+<a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a>
+<a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="c1"># Install in development mode</span>
+<a href="#__codelineno-5-10" id="__codelineno-5-10" name="__codelineno-5-10"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<a href="#__codelineno-5-11" id="__codelineno-5-11" name="__codelineno-5-11"></a>
+<a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="c1"># Install development dependencies</span>
+<a href="#__codelineno-5-13" id="__codelineno-5-13" name="__codelineno-5-13"></a>pip<span class="w"> </span>install<span class="w"> </span>pytest<span class="w"> </span>black<span class="w"> </span>ruff<span class="w"> </span>mypy<span class="w"> </span>pre-commit
+<a href="#__codelineno-5-14" id="__codelineno-5-14" name="__codelineno-5-14"></a>
+<a href="#__codelineno-5-15" id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="c1"># Set up pre-commit hooks</span>
+<a href="#__codelineno-5-16" id="__codelineno-5-16" name="__codelineno-5-16"></a>pre-commit<span class="w"> </span>install
+</code></pre></div>
+<h3 id="environment-configuration">Environment Configuration<a class="headerlink" href="#environment-configuration" title="Permanent link">¶</a></h3>
+<p>Create <code>.env</code> file for local development:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># .env</span>
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-your-key-here
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nv">SWING_LLM_MODEL</span><span class="o">=</span>gpt-4o-mini
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="nv">SWING_DATABASE_URL</span><span class="o">=</span>sqlite:///data/swing_agent_dev.sqlite
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="nv">SWING_LOG_LEVEL</span><span class="o">=</span>DEBUG
+</code></pre></div>
+<h2 id="code-quality-standards">Code Quality Standards<a class="headerlink" href="#code-quality-standards" title="Permanent link">¶</a></h2>
+<h3 id="code-style">Code Style<a class="headerlink" href="#code-style" title="Permanent link">¶</a></h3>
+<p>We use Ruff for fast linting and Black for code formatting:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># Check code quality</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>ruff<span class="w"> </span>check<span class="w"> </span>src/<span class="w"> </span>scripts/
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>ruff<span class="w"> </span>check<span class="w"> </span>--fix<span class="w"> </span>src/<span class="w"> </span>scripts/<span class="w">  </span><span class="c1"># Auto-fix issues</span>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a>
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="c1"># Format code</span>
+<a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a>black<span class="w"> </span>src/<span class="w"> </span>scripts/
+<a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a>
+<a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="c1"># Type checking</span>
+<a href="#__codelineno-7-9" id="__codelineno-7-9" name="__codelineno-7-9"></a>mypy<span class="w"> </span>src/
+</code></pre></div>
+<h3 id="ruff-configuration">Ruff Configuration<a class="headerlink" href="#ruff-configuration" title="Permanent link">¶</a></h3>
+<p>Located in <code>pyproject.toml</code>:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">[tool.ruff]</span>
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="n">line-length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="n">target-version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"py310"</span>
+<a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="n">select</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span><span class="s2">"E"</span><span class="p">,</span><span class="w">  </span><span class="c1"># pycodestyle errors</span>
+<a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">    </span><span class="s2">"W"</span><span class="p">,</span><span class="w">  </span><span class="c1"># pycodestyle warnings  </span>
+<a href="#__codelineno-8-7" id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">    </span><span class="s2">"F"</span><span class="p">,</span><span class="w">  </span><span class="c1"># pyflakes</span>
+<a href="#__codelineno-8-8" id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="w">    </span><span class="s2">"I"</span><span class="p">,</span><span class="w">  </span><span class="c1"># isort</span>
+<a href="#__codelineno-8-9" id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">    </span><span class="s2">"B"</span><span class="p">,</span><span class="w">  </span><span class="c1"># flake8-bugbear</span>
+<a href="#__codelineno-8-10" id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="w">    </span><span class="s2">"N"</span><span class="p">,</span><span class="w">  </span><span class="c1"># flake8-naming</span>
+<a href="#__codelineno-8-11" id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="w">    </span><span class="s2">"UP"</span><span class="p">,</span><span class="w"> </span><span class="c1"># pyupgrade</span>
+<a href="#__codelineno-8-12" id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="w">    </span><span class="s2">"C4"</span><span class="p">,</span><span class="w"> </span><span class="c1"># flake8-comprehensions</span>
+<a href="#__codelineno-8-13" id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">    </span><span class="s2">"PIE"</span><span class="p">,</span><span class="w"> </span><span class="c1"># flake8-pie</span>
+<a href="#__codelineno-8-14" id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="p">]</span>
+<a href="#__codelineno-8-15" id="__codelineno-8-15" name="__codelineno-8-15"></a>
+<a href="#__codelineno-8-16" id="__codelineno-8-16" name="__codelineno-8-16"></a><span class="n">ignore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a href="#__codelineno-8-17" id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="w">    </span><span class="s2">"E501"</span><span class="p">,</span><span class="w">  </span><span class="c1"># Line too long (handled by black)</span>
+<a href="#__codelineno-8-18" id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="w">    </span><span class="s2">"B008"</span><span class="p">,</span><span class="w">  </span><span class="c1"># Do not perform function calls in argument defaults</span>
+<a href="#__codelineno-8-19" id="__codelineno-8-19" name="__codelineno-8-19"></a><span class="p">]</span>
+<a href="#__codelineno-8-20" id="__codelineno-8-20" name="__codelineno-8-20"></a>
+<a href="#__codelineno-8-21" id="__codelineno-8-21" name="__codelineno-8-21"></a><span class="k">[tool.ruff.per-file-ignores]</span>
+<a href="#__codelineno-8-22" id="__codelineno-8-22" name="__codelineno-8-22"></a><span class="s2">"__init__.py"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"F401"</span><span class="p">]</span>
+<a href="#__codelineno-8-23" id="__codelineno-8-23" name="__codelineno-8-23"></a><span class="s2">"scripts/*.py"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"T201"</span><span class="p">]</span><span class="w">  </span><span class="c1"># Allow print statements in scripts</span>
+</code></pre></div>
+<h3 id="type-checking">Type Checking<a class="headerlink" href="#type-checking" title="Permanent link">¶</a></h3>
+<p>All new code should include type hints:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># Good</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="k">def</span> <span class="nf">fibonacci_range</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">lookback</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FibRange</span><span class="p">:</span>
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">    </span><span class="sd">"""Calculate Fibonacci retracement levels."""</span>
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="c1"># Implementation</span>
+<a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a>
+<a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="c1"># Avoid</span>
+<a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="k">def</span> <span class="nf">fibonacci_range</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">lookback</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+<a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a>    <span class="c1"># Missing type information</span>
+</code></pre></div>
+<h2 id="testing-strategy">Testing Strategy<a class="headerlink" href="#testing-strategy" title="Permanent link">¶</a></h2>
+<h3 id="test-structure">Test Structure<a class="headerlink" href="#test-structure" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a>tests/
+<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a>├── unit/
+<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a>│   ├── test_indicators.py
+<a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a>│   ├── test_strategy.py
+<a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a>│   ├── test_features.py
+<a href="#__codelineno-10-6" id="__codelineno-10-6" name="__codelineno-10-6"></a>│   └── test_models.py
+<a href="#__codelineno-10-7" id="__codelineno-10-7" name="__codelineno-10-7"></a>├── integration/
+<a href="#__codelineno-10-8" id="__codelineno-10-8" name="__codelineno-10-8"></a>│   ├── test_agent.py
+<a href="#__codelineno-10-9" id="__codelineno-10-9" name="__codelineno-10-9"></a>│   ├── test_vectorstore.py
+<a href="#__codelineno-10-10" id="__codelineno-10-10" name="__codelineno-10-10"></a>│   └── test_storage.py
+<a href="#__codelineno-10-11" id="__codelineno-10-11" name="__codelineno-10-11"></a>├── fixtures/
+<a href="#__codelineno-10-12" id="__codelineno-10-12" name="__codelineno-10-12"></a>│   ├── sample_data.py
+<a href="#__codelineno-10-13" id="__codelineno-10-13" name="__codelineno-10-13"></a>│   └── mock_responses.py
+<a href="#__codelineno-10-14" id="__codelineno-10-14" name="__codelineno-10-14"></a>└── conftest.py
+</code></pre></div>
+<h3 id="running-tests">Running Tests<a class="headerlink" href="#running-tests" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># Run all tests</span>
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>pytest
+<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a>
+<a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="c1"># Run with coverage</span>
+<a href="#__codelineno-11-5" id="__codelineno-11-5" name="__codelineno-11-5"></a>pytest<span class="w"> </span>--cov<span class="o">=</span>swing_agent<span class="w"> </span>--cov-report<span class="o">=</span>html
+<a href="#__codelineno-11-6" id="__codelineno-11-6" name="__codelineno-11-6"></a>
+<a href="#__codelineno-11-7" id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="c1"># Run specific test categories</span>
+<a href="#__codelineno-11-8" id="__codelineno-11-8" name="__codelineno-11-8"></a>pytest<span class="w"> </span>tests/unit/
+<a href="#__codelineno-11-9" id="__codelineno-11-9" name="__codelineno-11-9"></a>pytest<span class="w"> </span>tests/integration/
+<a href="#__codelineno-11-10" id="__codelineno-11-10" name="__codelineno-11-10"></a>
+<a href="#__codelineno-11-11" id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="c1"># Run tests matching pattern</span>
+<a href="#__codelineno-11-12" id="__codelineno-11-12" name="__codelineno-11-12"></a>pytest<span class="w"> </span>-k<span class="w"> </span><span class="s2">"test_fibonacci"</span>
+<a href="#__codelineno-11-13" id="__codelineno-11-13" name="__codelineno-11-13"></a>
+<a href="#__codelineno-11-14" id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="c1"># Verbose output</span>
+<a href="#__codelineno-11-15" id="__codelineno-11-15" name="__codelineno-11-15"></a>pytest<span class="w"> </span>-v
+</code></pre></div>
+<h3 id="test-examples">Test Examples<a class="headerlink" href="#test-examples" title="Permanent link">¶</a></h3>
+<h4 id="unit-test-example">Unit Test Example<a class="headerlink" href="#unit-test-example" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="c1"># tests/unit/test_indicators.py</span>
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="kn">import</span> <span class="nn">pytest</span>
+<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="kn">from</span> <span class="nn">swing_agent.indicators</span> <span class="kn">import</span> <span class="n">ema</span><span class="p">,</span> <span class="n">rsi</span><span class="p">,</span> <span class="n">atr</span><span class="p">,</span> <span class="n">fibonacci_range</span>
+<a href="#__codelineno-12-6" id="__codelineno-12-6" name="__codelineno-12-6"></a>
+<a href="#__codelineno-12-7" id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="k">class</span> <span class="nc">TestIndicators</span><span class="p">:</span>
+<a href="#__codelineno-12-8" id="__codelineno-12-8" name="__codelineno-12-8"></a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<a href="#__codelineno-12-9" id="__codelineno-12-9" name="__codelineno-12-9"></a>    <span class="k">def</span> <span class="nf">sample_ohlcv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a href="#__codelineno-12-10" id="__codelineno-12-10" name="__codelineno-12-10"></a><span class="w">        </span><span class="sd">"""Generate realistic OHLCV test data."""</span>
+<a href="#__codelineno-12-11" id="__codelineno-12-11" name="__codelineno-12-11"></a>        <span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">'2024-01-01'</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">'1h'</span><span class="p">)</span>
+<a href="#__codelineno-12-12" id="__codelineno-12-12" name="__codelineno-12-12"></a>        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>  <span class="c1"># Reproducible tests</span>
+<a href="#__codelineno-12-13" id="__codelineno-12-13" name="__codelineno-12-13"></a>
+<a href="#__codelineno-12-14" id="__codelineno-12-14" name="__codelineno-12-14"></a>        <span class="c1"># Generate trending price series</span>
+<a href="#__codelineno-12-15" id="__codelineno-12-15" name="__codelineno-12-15"></a>        <span class="n">trend</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<a href="#__codelineno-12-16" id="__codelineno-12-16" name="__codelineno-12-16"></a>        <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+<a href="#__codelineno-12-17" id="__codelineno-12-17" name="__codelineno-12-17"></a>        <span class="n">prices</span> <span class="o">=</span> <span class="n">trend</span> <span class="o">+</span> <span class="n">noise</span>
+<a href="#__codelineno-12-18" id="__codelineno-12-18" name="__codelineno-12-18"></a>
+<a href="#__codelineno-12-19" id="__codelineno-12-19" name="__codelineno-12-19"></a>        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<a href="#__codelineno-12-20" id="__codelineno-12-20" name="__codelineno-12-20"></a>            <span class="s1">'open'</span><span class="p">:</span> <span class="n">prices</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.001</span><span class="p">),</span>
+<a href="#__codelineno-12-21" id="__codelineno-12-21" name="__codelineno-12-21"></a>            <span class="s1">'high'</span><span class="p">:</span> <span class="n">prices</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.002</span><span class="p">),</span>
+<a href="#__codelineno-12-22" id="__codelineno-12-22" name="__codelineno-12-22"></a>            <span class="s1">'low'</span><span class="p">:</span> <span class="n">prices</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.002</span><span class="p">),</span> 
+<a href="#__codelineno-12-23" id="__codelineno-12-23" name="__codelineno-12-23"></a>            <span class="s1">'close'</span><span class="p">:</span> <span class="n">prices</span><span class="p">,</span>
+<a href="#__codelineno-12-24" id="__codelineno-12-24" name="__codelineno-12-24"></a>            <span class="s1">'volume'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000000</span><span class="p">,</span> <span class="mi">10000000</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<a href="#__codelineno-12-25" id="__codelineno-12-25" name="__codelineno-12-25"></a>        <span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">dates</span><span class="p">)</span>
+<a href="#__codelineno-12-26" id="__codelineno-12-26" name="__codelineno-12-26"></a>
+<a href="#__codelineno-12-27" id="__codelineno-12-27" name="__codelineno-12-27"></a>    <span class="k">def</span> <span class="nf">test_ema_calculation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_ohlcv</span><span class="p">):</span>
+<a href="#__codelineno-12-28" id="__codelineno-12-28" name="__codelineno-12-28"></a><span class="w">        </span><span class="sd">"""Test EMA calculation correctness and properties."""</span>
+<a href="#__codelineno-12-29" id="__codelineno-12-29" name="__codelineno-12-29"></a>        <span class="n">ema_20</span> <span class="o">=</span> <span class="n">ema</span><span class="p">(</span><span class="n">sample_ohlcv</span><span class="p">[</span><span class="s1">'close'</span><span class="p">],</span> <span class="mi">20</span><span class="p">)</span>
+<a href="#__codelineno-12-30" id="__codelineno-12-30" name="__codelineno-12-30"></a>
+<a href="#__codelineno-12-31" id="__codelineno-12-31" name="__codelineno-12-31"></a>        <span class="c1"># Basic validation</span>
+<a href="#__codelineno-12-32" id="__codelineno-12-32" name="__codelineno-12-32"></a>        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ema_20</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample_ohlcv</span><span class="p">)</span>
+<a href="#__codelineno-12-33" id="__codelineno-12-33" name="__codelineno-12-33"></a>        <span class="k">assert</span> <span class="ow">not</span> <span class="n">ema_20</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<a href="#__codelineno-12-34" id="__codelineno-12-34" name="__codelineno-12-34"></a>        <span class="k">assert</span> <span class="n">ema_20</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<a href="#__codelineno-12-35" id="__codelineno-12-35" name="__codelineno-12-35"></a>
+<a href="#__codelineno-12-36" id="__codelineno-12-36" name="__codelineno-12-36"></a>        <span class="c1"># EMA should be smooth (less volatile than price)</span>
+<a href="#__codelineno-12-37" id="__codelineno-12-37" name="__codelineno-12-37"></a>        <span class="n">price_volatility</span> <span class="o">=</span> <span class="n">sample_ohlcv</span><span class="p">[</span><span class="s1">'close'</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<a href="#__codelineno-12-38" id="__codelineno-12-38" name="__codelineno-12-38"></a>        <span class="n">ema_volatility</span> <span class="o">=</span> <span class="n">ema_20</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<a href="#__codelineno-12-39" id="__codelineno-12-39" name="__codelineno-12-39"></a>        <span class="k">assert</span> <span class="n">ema_volatility</span> <span class="o">&lt;</span> <span class="n">price_volatility</span>
+<a href="#__codelineno-12-40" id="__codelineno-12-40" name="__codelineno-12-40"></a>
+<a href="#__codelineno-12-41" id="__codelineno-12-41" name="__codelineno-12-41"></a>        <span class="c1"># EMA should lag price but follow trend</span>
+<a href="#__codelineno-12-42" id="__codelineno-12-42" name="__codelineno-12-42"></a>        <span class="n">final_price</span> <span class="o">=</span> <span class="n">sample_ohlcv</span><span class="p">[</span><span class="s1">'close'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<a href="#__codelineno-12-43" id="__codelineno-12-43" name="__codelineno-12-43"></a>        <span class="n">final_ema</span> <span class="o">=</span> <span class="n">ema_20</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<a href="#__codelineno-12-44" id="__codelineno-12-44" name="__codelineno-12-44"></a>        <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">final_price</span> <span class="o">-</span> <span class="n">final_ema</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">final_price</span> <span class="o">*</span> <span class="mf">0.1</span>  <span class="c1"># Within 10%</span>
+<a href="#__codelineno-12-45" id="__codelineno-12-45" name="__codelineno-12-45"></a>
+<a href="#__codelineno-12-46" id="__codelineno-12-46" name="__codelineno-12-46"></a>    <span class="k">def</span> <span class="nf">test_rsi_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_ohlcv</span><span class="p">):</span>
+<a href="#__codelineno-12-47" id="__codelineno-12-47" name="__codelineno-12-47"></a><span class="w">        </span><span class="sd">"""Test RSI stays within valid bounds."""</span>
+<a href="#__codelineno-12-48" id="__codelineno-12-48" name="__codelineno-12-48"></a>        <span class="n">rsi_14</span> <span class="o">=</span> <span class="n">rsi</span><span class="p">(</span><span class="n">sample_ohlcv</span><span class="p">[</span><span class="s1">'close'</span><span class="p">],</span> <span class="mi">14</span><span class="p">)</span>
+<a href="#__codelineno-12-49" id="__codelineno-12-49" name="__codelineno-12-49"></a>        <span class="n">rsi_values</span> <span class="o">=</span> <span class="n">rsi_14</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<a href="#__codelineno-12-50" id="__codelineno-12-50" name="__codelineno-12-50"></a>
+<a href="#__codelineno-12-51" id="__codelineno-12-51" name="__codelineno-12-51"></a>        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">val</span> <span class="o">&lt;=</span> <span class="mi">100</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">rsi_values</span><span class="p">)</span>
+<a href="#__codelineno-12-52" id="__codelineno-12-52" name="__codelineno-12-52"></a>        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rsi_values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<a href="#__codelineno-12-53" id="__codelineno-12-53" name="__codelineno-12-53"></a>
+<a href="#__codelineno-12-54" id="__codelineno-12-54" name="__codelineno-12-54"></a>    <span class="k">def</span> <span class="nf">test_fibonacci_levels_ordering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_ohlcv</span><span class="p">):</span>
+<a href="#__codelineno-12-55" id="__codelineno-12-55" name="__codelineno-12-55"></a><span class="w">        </span><span class="sd">"""Test Fibonacci levels are properly ordered."""</span>
+<a href="#__codelineno-12-56" id="__codelineno-12-56" name="__codelineno-12-56"></a>        <span class="n">fib</span> <span class="o">=</span> <span class="n">fibonacci_range</span><span class="p">(</span><span class="n">sample_ohlcv</span><span class="p">,</span> <span class="n">lookback</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<a href="#__codelineno-12-57" id="__codelineno-12-57" name="__codelineno-12-57"></a>
+<a href="#__codelineno-12-58" id="__codelineno-12-58" name="__codelineno-12-58"></a>        <span class="c1"># Levels should be ordered</span>
+<a href="#__codelineno-12-59" id="__codelineno-12-59" name="__codelineno-12-59"></a>        <span class="k">assert</span> <span class="n">fib</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="s2">"0.236"</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">fib</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="s2">"0.618"</span><span class="p">]</span>
+<a href="#__codelineno-12-60" id="__codelineno-12-60" name="__codelineno-12-60"></a>        <span class="k">assert</span> <span class="n">fib</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="s2">"0.618"</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">fib</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="s2">"1.0"</span><span class="p">]</span>
+<a href="#__codelineno-12-61" id="__codelineno-12-61" name="__codelineno-12-61"></a>        <span class="k">assert</span> <span class="n">fib</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="s2">"1.0"</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">fib</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="s2">"1.272"</span><span class="p">]</span>
+<a href="#__codelineno-12-62" id="__codelineno-12-62" name="__codelineno-12-62"></a>
+<a href="#__codelineno-12-63" id="__codelineno-12-63" name="__codelineno-12-63"></a>        <span class="c1"># Golden pocket should be within range</span>
+<a href="#__codelineno-12-64" id="__codelineno-12-64" name="__codelineno-12-64"></a>        <span class="k">assert</span> <span class="n">fib</span><span class="o">.</span><span class="n">golden_low</span> <span class="o">&lt;=</span> <span class="n">fib</span><span class="o">.</span><span class="n">golden_high</span>
+<a href="#__codelineno-12-65" id="__codelineno-12-65" name="__codelineno-12-65"></a>        <span class="k">assert</span> <span class="n">fib</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">fib</span><span class="o">.</span><span class="n">golden_low</span> <span class="o">&lt;=</span> <span class="n">fib</span><span class="o">.</span><span class="n">end</span>
+<a href="#__codelineno-12-66" id="__codelineno-12-66" name="__codelineno-12-66"></a>        <span class="k">assert</span> <span class="n">fib</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">fib</span><span class="o">.</span><span class="n">golden_high</span> <span class="o">&lt;=</span> <span class="n">fib</span><span class="o">.</span><span class="n">end</span>
+</code></pre></div>
+<h4 id="integration-test-example">Integration Test Example<a class="headerlink" href="#integration-test-example" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="c1"># tests/integration/test_agent.py</span>
+<a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="kn">import</span> <span class="nn">pytest</span>
+<a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="kn">from</span> <span class="nn">unittest.mock</span> <span class="kn">import</span> <span class="n">patch</span><span class="p">,</span> <span class="n">MagicMock</span>
+<a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="kn">from</span> <span class="nn">swing_agent.agent</span> <span class="kn">import</span> <span class="n">SwingAgent</span>
+<a href="#__codelineno-13-5" id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="kn">from</span> <span class="nn">swing_agent.models</span> <span class="kn">import</span> <span class="n">TrendLabel</span>
+<a href="#__codelineno-13-6" id="__codelineno-13-6" name="__codelineno-13-6"></a>
+<a href="#__codelineno-13-7" id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="k">class</span> <span class="nc">TestSwingAgentIntegration</span><span class="p">:</span>
+<a href="#__codelineno-13-8" id="__codelineno-13-8" name="__codelineno-13-8"></a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<a href="#__codelineno-13-9" id="__codelineno-13-9" name="__codelineno-13-9"></a>    <span class="k">def</span> <span class="nf">mock_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a href="#__codelineno-13-10" id="__codelineno-13-10" name="__codelineno-13-10"></a><span class="w">        </span><span class="sd">"""Create agent with mocked external dependencies."""</span>
+<a href="#__codelineno-13-11" id="__codelineno-13-11" name="__codelineno-13-11"></a>        <span class="k">return</span> <span class="n">SwingAgent</span><span class="p">(</span>
+<a href="#__codelineno-13-12" id="__codelineno-13-12" name="__codelineno-13-12"></a>            <span class="n">interval</span><span class="o">=</span><span class="s2">"30m"</span><span class="p">,</span>
+<a href="#__codelineno-13-13" id="__codelineno-13-13" name="__codelineno-13-13"></a>            <span class="n">lookback_days</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+<a href="#__codelineno-13-14" id="__codelineno-13-14" name="__codelineno-13-14"></a>            <span class="n">use_llm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Avoid API calls in tests</span>
+<a href="#__codelineno-13-15" id="__codelineno-13-15" name="__codelineno-13-15"></a>            <span class="n">log_db</span><span class="o">=</span><span class="s2">":memory:"</span><span class="p">,</span>  <span class="c1"># In-memory SQLite</span>
+<a href="#__codelineno-13-16" id="__codelineno-13-16" name="__codelineno-13-16"></a>            <span class="n">vec_db</span><span class="o">=</span><span class="s2">":memory:"</span>
+<a href="#__codelineno-13-17" id="__codelineno-13-17" name="__codelineno-13-17"></a>        <span class="p">)</span>
+<a href="#__codelineno-13-18" id="__codelineno-13-18" name="__codelineno-13-18"></a>
+<a href="#__codelineno-13-19" id="__codelineno-13-19" name="__codelineno-13-19"></a>    <span class="nd">@patch</span><span class="p">(</span><span class="s1">'swing_agent.data.load_ohlcv'</span><span class="p">)</span>
+<a href="#__codelineno-13-20" id="__codelineno-13-20" name="__codelineno-13-20"></a>    <span class="k">def</span> <span class="nf">test_signal_generation_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_load_ohlcv</span><span class="p">,</span> <span class="n">mock_agent</span><span class="p">,</span> <span class="n">sample_ohlcv</span><span class="p">):</span>
+<a href="#__codelineno-13-21" id="__codelineno-13-21" name="__codelineno-13-21"></a><span class="w">        </span><span class="sd">"""Test complete signal generation without external dependencies."""</span>
+<a href="#__codelineno-13-22" id="__codelineno-13-22" name="__codelineno-13-22"></a>        <span class="n">mock_load_ohlcv</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">sample_ohlcv</span>
+<a href="#__codelineno-13-23" id="__codelineno-13-23" name="__codelineno-13-23"></a>
+<a href="#__codelineno-13-24" id="__codelineno-13-24" name="__codelineno-13-24"></a>        <span class="n">signal</span> <span class="o">=</span> <span class="n">mock_agent</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="s2">"AAPL"</span><span class="p">)</span>
+<a href="#__codelineno-13-25" id="__codelineno-13-25" name="__codelineno-13-25"></a>
+<a href="#__codelineno-13-26" id="__codelineno-13-26" name="__codelineno-13-26"></a>        <span class="c1"># Validate signal structure</span>
+<a href="#__codelineno-13-27" id="__codelineno-13-27" name="__codelineno-13-27"></a>        <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s2">"AAPL"</span>
+<a href="#__codelineno-13-28" id="__codelineno-13-28" name="__codelineno-13-28"></a>        <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">timeframe</span> <span class="o">==</span> <span class="s2">"30m"</span>
+<a href="#__codelineno-13-29" id="__codelineno-13-29" name="__codelineno-13-29"></a>        <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">trend</span><span class="o">.</span><span class="n">label</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">TrendLabel</span><span class="p">)</span>
+<a href="#__codelineno-13-30" id="__codelineno-13-30" name="__codelineno-13-30"></a>        <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">signal</span><span class="o">.</span><span class="n">confidence</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+<a href="#__codelineno-13-31" id="__codelineno-13-31" name="__codelineno-13-31"></a>        <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">asof</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<a href="#__codelineno-13-32" id="__codelineno-13-32" name="__codelineno-13-32"></a>
+<a href="#__codelineno-13-33" id="__codelineno-13-33" name="__codelineno-13-33"></a>        <span class="c1"># If entry plan exists, validate risk/reward</span>
+<a href="#__codelineno-13-34" id="__codelineno-13-34" name="__codelineno-13-34"></a>        <span class="k">if</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+<a href="#__codelineno-13-35" id="__codelineno-13-35" name="__codelineno-13-35"></a>            <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">r_multiple</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<a href="#__codelineno-13-36" id="__codelineno-13-36" name="__codelineno-13-36"></a>            <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">stop_price</span> <span class="o">!=</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+<a href="#__codelineno-13-37" id="__codelineno-13-37" name="__codelineno-13-37"></a>            <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">take_profit</span> <span class="o">!=</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+<a href="#__codelineno-13-38" id="__codelineno-13-38" name="__codelineno-13-38"></a>
+<a href="#__codelineno-13-39" id="__codelineno-13-39" name="__codelineno-13-39"></a>            <span class="c1"># Validate long/short trade logic</span>
+<a href="#__codelineno-13-40" id="__codelineno-13-40" name="__codelineno-13-40"></a>            <span class="k">if</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">side</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"long"</span><span class="p">:</span>
+<a href="#__codelineno-13-41" id="__codelineno-13-41" name="__codelineno-13-41"></a>                <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">stop_price</span> <span class="o">&lt;</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+<a href="#__codelineno-13-42" id="__codelineno-13-42" name="__codelineno-13-42"></a>                <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">take_profit</span> <span class="o">&gt;</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+<a href="#__codelineno-13-43" id="__codelineno-13-43" name="__codelineno-13-43"></a>            <span class="k">elif</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">side</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">"short"</span><span class="p">:</span>
+<a href="#__codelineno-13-44" id="__codelineno-13-44" name="__codelineno-13-44"></a>                <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">stop_price</span> <span class="o">&gt;</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+<a href="#__codelineno-13-45" id="__codelineno-13-45" name="__codelineno-13-45"></a>                <span class="k">assert</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">take_profit</span> <span class="o">&lt;</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+</code></pre></div>
+<h3 id="property-based-testing">Property-Based Testing<a class="headerlink" href="#property-based-testing" title="Permanent link">¶</a></h3>
+<p>For mathematical functions, use hypothesis for property-based testing:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="c1"># tests/unit/test_properties.py</span>
+<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">given</span><span class="p">,</span> <span class="n">strategies</span> <span class="k">as</span> <span class="n">st</span>
+<a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="kn">import</span> <span class="nn">hypothesis.extra.pandas</span> <span class="k">as</span> <span class="nn">pdst</span>
+<a href="#__codelineno-14-4" id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="kn">from</span> <span class="nn">swing_agent.indicators</span> <span class="kn">import</span> <span class="n">ema</span><span class="p">,</span> <span class="n">rsi</span>
+<a href="#__codelineno-14-5" id="__codelineno-14-5" name="__codelineno-14-5"></a>
+<a href="#__codelineno-14-6" id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="k">class</span> <span class="nc">TestIndicatorProperties</span><span class="p">:</span>
+<a href="#__codelineno-14-7" id="__codelineno-14-7" name="__codelineno-14-7"></a>    <span class="nd">@given</span><span class="p">(</span>
+<a href="#__codelineno-14-8" id="__codelineno-14-8" name="__codelineno-14-8"></a>        <span class="n">prices</span><span class="o">=</span><span class="n">pdst</span><span class="o">.</span><span class="n">series</span><span class="p">(</span>
+<a href="#__codelineno-14-9" id="__codelineno-14-9" name="__codelineno-14-9"></a>            <span class="n">elements</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">floats</span><span class="p">(</span><span class="n">min_value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">),</span>
+<a href="#__codelineno-14-10" id="__codelineno-14-10" name="__codelineno-14-10"></a>            <span class="n">min_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+<a href="#__codelineno-14-11" id="__codelineno-14-11" name="__codelineno-14-11"></a>            <span class="n">max_size</span><span class="o">=</span><span class="mi">200</span>
+<a href="#__codelineno-14-12" id="__codelineno-14-12" name="__codelineno-14-12"></a>        <span class="p">),</span>
+<a href="#__codelineno-14-13" id="__codelineno-14-13" name="__codelineno-14-13"></a>        <span class="n">span</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">min_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<a href="#__codelineno-14-14" id="__codelineno-14-14" name="__codelineno-14-14"></a>    <span class="p">)</span>
+<a href="#__codelineno-14-15" id="__codelineno-14-15" name="__codelineno-14-15"></a>    <span class="k">def</span> <span class="nf">test_ema_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">span</span><span class="p">):</span>
+<a href="#__codelineno-14-16" id="__codelineno-14-16" name="__codelineno-14-16"></a><span class="w">        </span><span class="sd">"""Test EMA properties hold for any valid input."""</span>
+<a href="#__codelineno-14-17" id="__codelineno-14-17" name="__codelineno-14-17"></a>        <span class="n">ema_result</span> <span class="o">=</span> <span class="n">ema</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">span</span><span class="p">)</span>
+<a href="#__codelineno-14-18" id="__codelineno-14-18" name="__codelineno-14-18"></a>
+<a href="#__codelineno-14-19" id="__codelineno-14-19" name="__codelineno-14-19"></a>        <span class="c1"># EMA should have same length as input</span>
+<a href="#__codelineno-14-20" id="__codelineno-14-20" name="__codelineno-14-20"></a>        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ema_result</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+<a href="#__codelineno-14-21" id="__codelineno-14-21" name="__codelineno-14-21"></a>
+<a href="#__codelineno-14-22" id="__codelineno-14-22" name="__codelineno-14-22"></a>        <span class="c1"># EMA should not be more volatile than input</span>
+<a href="#__codelineno-14-23" id="__codelineno-14-23" name="__codelineno-14-23"></a>        <span class="n">input_std</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<a href="#__codelineno-14-24" id="__codelineno-14-24" name="__codelineno-14-24"></a>        <span class="n">ema_std</span> <span class="o">=</span> <span class="n">ema_result</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<a href="#__codelineno-14-25" id="__codelineno-14-25" name="__codelineno-14-25"></a>
+<a href="#__codelineno-14-26" id="__codelineno-14-26" name="__codelineno-14-26"></a>        <span class="c1"># Allow for numerical precision issues</span>
+<a href="#__codelineno-14-27" id="__codelineno-14-27" name="__codelineno-14-27"></a>        <span class="k">assert</span> <span class="n">ema_std</span> <span class="o">&lt;=</span> <span class="n">input_std</span> <span class="o">*</span> <span class="mf">1.1</span>
+</code></pre></div>
+<h2 id="extending-the-system">Extending the System<a class="headerlink" href="#extending-the-system" title="Permanent link">¶</a></h2>
+<h3 id="adding-new-indicators">Adding New Indicators<a class="headerlink" href="#adding-new-indicators" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Add calculation function to <code>indicators.py</code></strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="k">def</span> <span class="nf">your_indicator</span><span class="p">(</span><span class="n">series</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">    </span><span class="sd">"""Calculate your custom indicator.</span>
+<a href="#__codelineno-15-3" id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a href="#__codelineno-15-4" id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="sd">    Args:</span>
+<a href="#__codelineno-15-5" id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="sd">        series: Price series.</span>
+<a href="#__codelineno-15-6" id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="sd">        period: Calculation period.</span>
+<a href="#__codelineno-15-7" id="__codelineno-15-7" name="__codelineno-15-7"></a>
+<a href="#__codelineno-15-8" id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="sd">    Returns:</span>
+<a href="#__codelineno-15-9" id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="sd">        pd.Series: Indicator values.</span>
+<a href="#__codelineno-15-10" id="__codelineno-15-10" name="__codelineno-15-10"></a>
+<a href="#__codelineno-15-11" id="__codelineno-15-11" name="__codelineno-15-11"></a><span class="sd">    Examples:</span>
+<a href="#__codelineno-15-12" id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="sd">        &gt;&gt;&gt; indicator_values = your_indicator(df['close'], 20)</span>
+<a href="#__codelineno-15-13" id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="sd">        &gt;&gt;&gt; current_value = indicator_values.iloc[-1]</span>
+<a href="#__codelineno-15-14" id="__codelineno-15-14" name="__codelineno-15-14"></a><span class="sd">    """</span>
+<a href="#__codelineno-15-15" id="__codelineno-15-15" name="__codelineno-15-15"></a>    <span class="c1"># Implementation here</span>
+<a href="#__codelineno-15-16" id="__codelineno-15-16" name="__codelineno-15-16"></a>    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+<ol>
+<li><strong>Add to strategy logic in <code>strategy.py</code></strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="k">def</span> <span class="nf">label_trend</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TrendState</span><span class="p">:</span>
+<a href="#__codelineno-16-2" id="__codelineno-16-2" name="__codelineno-16-2"></a>    <span class="c1"># Existing code...</span>
+<a href="#__codelineno-16-3" id="__codelineno-16-3" name="__codelineno-16-3"></a>    <span class="n">your_value</span> <span class="o">=</span> <span class="n">your_indicator</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'close'</span><span class="p">],</span> <span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<a href="#__codelineno-16-4" id="__codelineno-16-4" name="__codelineno-16-4"></a>
+<a href="#__codelineno-16-5" id="__codelineno-16-5" name="__codelineno-16-5"></a>    <span class="c1"># Use in trend logic...</span>
+<a href="#__codelineno-16-6" id="__codelineno-16-6" name="__codelineno-16-6"></a>    <span class="c1"># Update trend classification if needed</span>
+</code></pre></div>
+<ol>
+<li><strong>Update feature vector in <code>features.py</code></strong> (if needed for ML):</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="k">def</span> <span class="nf">build_setup_vector</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a>    <span class="c1"># Add new feature</span>
+<a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a>    <span class="n">your_feature</span> <span class="o">=</span> <span class="n">your_value</span> <span class="o">/</span> <span class="mf">100.0</span>  <span class="c1"># Normalize appropriately</span>
+<a href="#__codelineno-17-4" id="__codelineno-17-4" name="__codelineno-17-4"></a>
+<a href="#__codelineno-17-5" id="__codelineno-17-5" name="__codelineno-17-5"></a>    <span class="n">vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<a href="#__codelineno-17-6" id="__codelineno-17-6" name="__codelineno-17-6"></a>        <span class="c1"># ... existing features ...</span>
+<a href="#__codelineno-17-7" id="__codelineno-17-7" name="__codelineno-17-7"></a>        <span class="n">your_feature</span><span class="p">,</span>  <span class="c1"># Add your feature</span>
+<a href="#__codelineno-17-8" id="__codelineno-17-8" name="__codelineno-17-8"></a>        <span class="mf">1.0</span>  <span class="c1"># Keep constant term last</span>
+<a href="#__codelineno-17-9" id="__codelineno-17-9" name="__codelineno-17-9"></a>    <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</code></pre></div>
+<ol>
+<li><strong>Update configuration</strong> (if parameters needed):</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="c1"># In config.py TradingConfig class</span>
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="n">YOUR_INDICATOR_PERIOD</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="n">YOUR_INDICATOR_THRESHOLD</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>
+</code></pre></div>
+<h3 id="adding-new-entry-strategies">Adding New Entry Strategies<a class="headerlink" href="#adding-new-entry-strategies" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Add strategy to <code>build_entry()</code> in <code>strategy.py</code></strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="k">def</span> <span class="nf">build_entry</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">trend</span><span class="p">:</span> <span class="n">TrendState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EntryPlan</span><span class="p">]:</span>
+<a href="#__codelineno-19-2" id="__codelineno-19-2" name="__codelineno-19-2"></a>    <span class="c1"># ... existing strategies ...</span>
+<a href="#__codelineno-19-3" id="__codelineno-19-3" name="__codelineno-19-3"></a>
+<a href="#__codelineno-19-4" id="__codelineno-19-4" name="__codelineno-19-4"></a>    <span class="c1"># Your new strategy</span>
+<a href="#__codelineno-19-5" id="__codelineno-19-5" name="__codelineno-19-5"></a>    <span class="k">if</span> <span class="n">your_strategy_condition</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">trend</span><span class="p">):</span>
+<a href="#__codelineno-19-6" id="__codelineno-19-6" name="__codelineno-19-6"></a>        <span class="n">entry</span> <span class="o">=</span> <span class="n">calculate_entry_price</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<a href="#__codelineno-19-7" id="__codelineno-19-7" name="__codelineno-19-7"></a>        <span class="n">sl</span> <span class="o">=</span> <span class="n">calculate_stop_loss</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+<a href="#__codelineno-19-8" id="__codelineno-19-8" name="__codelineno-19-8"></a>        <span class="n">tp</span> <span class="o">=</span> <span class="n">calculate_take_profit</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+<a href="#__codelineno-19-9" id="__codelineno-19-9" name="__codelineno-19-9"></a>        <span class="k">return</span> <span class="n">_plan</span><span class="p">(</span><span class="n">SignalSide</span><span class="o">.</span><span class="n">LONG</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">sl</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="s2">"Your strategy description"</span><span class="p">)</span>
+<a href="#__codelineno-19-10" id="__codelineno-19-10" name="__codelineno-19-10"></a>
+<a href="#__codelineno-19-11" id="__codelineno-19-11" name="__codelineno-19-11"></a>    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+<ol>
+<li><strong>Add supporting functions</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="k">def</span> <span class="nf">your_strategy_condition</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">trend</span><span class="p">:</span> <span class="n">TrendState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="w">    </span><span class="sd">"""Check if your strategy conditions are met."""</span>
+<a href="#__codelineno-20-3" id="__codelineno-20-3" name="__codelineno-20-3"></a>    <span class="n">cfg</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+<a href="#__codelineno-20-4" id="__codelineno-20-4" name="__codelineno-20-4"></a>    <span class="c1"># Use configuration parameters</span>
+<a href="#__codelineno-20-5" id="__codelineno-20-5" name="__codelineno-20-5"></a>    <span class="c1"># Return True if setup is valid</span>
+<a href="#__codelineno-20-6" id="__codelineno-20-6" name="__codelineno-20-6"></a>
+<a href="#__codelineno-20-7" id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="k">def</span> <span class="nf">calculate_entry_price</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<a href="#__codelineno-20-8" id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="w">    </span><span class="sd">"""Calculate optimal entry price for your strategy."""</span>
+<a href="#__codelineno-20-9" id="__codelineno-20-9" name="__codelineno-20-9"></a>    <span class="c1"># Implementation</span>
+</code></pre></div>
+<h3 id="customizing-configuration">Customizing Configuration<a class="headerlink" href="#customizing-configuration" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Update <code>config.py</code></strong> with new parameters:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="nd">@dataclass</span>
+<a href="#__codelineno-21-2" id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="k">class</span> <span class="nc">TradingConfig</span><span class="p">:</span>
+<a href="#__codelineno-21-3" id="__codelineno-21-3" name="__codelineno-21-3"></a>    <span class="c1"># ... existing parameters ...</span>
+<a href="#__codelineno-21-4" id="__codelineno-21-4" name="__codelineno-21-4"></a>
+<a href="#__codelineno-21-5" id="__codelineno-21-5" name="__codelineno-21-5"></a>    <span class="c1"># Your new parameters</span>
+<a href="#__codelineno-21-6" id="__codelineno-21-6" name="__codelineno-21-6"></a>    <span class="n">YOUR_STRATEGY_THRESHOLD</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.75</span>
+<a href="#__codelineno-21-7" id="__codelineno-21-7" name="__codelineno-21-7"></a>    <span class="n">YOUR_STRATEGY_LOOKBACK</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">14</span>
+<a href="#__codelineno-21-8" id="__codelineno-21-8" name="__codelineno-21-8"></a>    <span class="n">YOUR_STRATEGY_MULTIPLIER</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span>
+</code></pre></div>
+<ol>
+<li><strong>Use in your code</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="kn">from</span> <span class="nn">swing_agent.config</span> <span class="kn">import</span> <span class="n">get_config</span>
+<a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a>
+<a href="#__codelineno-22-3" id="__codelineno-22-3" name="__codelineno-22-3"></a><span class="k">def</span> <span class="nf">your_function</span><span class="p">():</span>
+<a href="#__codelineno-22-4" id="__codelineno-22-4" name="__codelineno-22-4"></a>    <span class="n">cfg</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+<a href="#__codelineno-22-5" id="__codelineno-22-5" name="__codelineno-22-5"></a>    <span class="k">if</span> <span class="n">some_value</span> <span class="o">&gt;</span> <span class="n">cfg</span><span class="o">.</span><span class="n">YOUR_STRATEGY_THRESHOLD</span><span class="p">:</span>
+<a href="#__codelineno-22-6" id="__codelineno-22-6" name="__codelineno-22-6"></a>        <span class="c1"># Use configured threshold</span>
+</code></pre></div>
+<ol>
+<li><strong>Update at runtime</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-23-1" id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="kn">from</span> <span class="nn">swing_agent.config</span> <span class="kn">import</span> <span class="n">update_config</span>
+<a href="#__codelineno-23-2" id="__codelineno-23-2" name="__codelineno-23-2"></a>
+<a href="#__codelineno-23-3" id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="c1"># Tune parameters for different market conditions</span>
+<a href="#__codelineno-23-4" id="__codelineno-23-4" name="__codelineno-23-4"></a><span class="n">update_config</span><span class="p">(</span>
+<a href="#__codelineno-23-5" id="__codelineno-23-5" name="__codelineno-23-5"></a>    <span class="n">YOUR_STRATEGY_THRESHOLD</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>  <span class="c1"># More conservative</span>
+<a href="#__codelineno-23-6" id="__codelineno-23-6" name="__codelineno-23-6"></a>    <span class="n">ATR_STOP_MULTIPLIER</span><span class="o">=</span><span class="mf">1.0</span>       <span class="c1"># Tighter stops</span>
+<a href="#__codelineno-23-7" id="__codelineno-23-7" name="__codelineno-23-7"></a><span class="p">)</span>
+</code></pre></div>
+<h3 id="error-handling-best-practices">Error Handling Best Practices<a class="headerlink" href="#error-handling-best-practices" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Use appropriate exception types</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="kn">from</span> <span class="nn">swing_agent.data</span> <span class="kn">import</span> <span class="n">SwingAgentDataError</span>
+<a href="#__codelineno-24-2" id="__codelineno-24-2" name="__codelineno-24-2"></a>
+<a href="#__codelineno-24-3" id="__codelineno-24-3" name="__codelineno-24-3"></a><span class="k">def</span> <span class="nf">your_data_function</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<a href="#__codelineno-24-4" id="__codelineno-24-4" name="__codelineno-24-4"></a>    <span class="k">try</span><span class="p">:</span>
+<a href="#__codelineno-24-5" id="__codelineno-24-5" name="__codelineno-24-5"></a>        <span class="c1"># Data processing</span>
+<a href="#__codelineno-24-6" id="__codelineno-24-6" name="__codelineno-24-6"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">process_data</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<a href="#__codelineno-24-7" id="__codelineno-24-7" name="__codelineno-24-7"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a href="#__codelineno-24-8" id="__codelineno-24-8" name="__codelineno-24-8"></a>        <span class="k">raise</span> <span class="n">SwingAgentDataError</span><span class="p">(</span>
+<a href="#__codelineno-24-9" id="__codelineno-24-9" name="__codelineno-24-9"></a>            <span class="sa">f</span><span class="s2">"Failed to process </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+<a href="#__codelineno-24-10" id="__codelineno-24-10" name="__codelineno-24-10"></a>            <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span>
+<a href="#__codelineno-24-11" id="__codelineno-24-11" name="__codelineno-24-11"></a>        <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+</code></pre></div>
+<ol>
+<li><strong>Graceful degradation</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="k">def</span> <span class="nf">your_optional_feature</span><span class="p">():</span>
+<a href="#__codelineno-25-2" id="__codelineno-25-2" name="__codelineno-25-2"></a>    <span class="k">try</span><span class="p">:</span>
+<a href="#__codelineno-25-3" id="__codelineno-25-3" name="__codelineno-25-3"></a>        <span class="c1"># Try enhanced feature</span>
+<a href="#__codelineno-25-4" id="__codelineno-25-4" name="__codelineno-25-4"></a>        <span class="k">return</span> <span class="n">enhanced_calculation</span><span class="p">()</span>
+<a href="#__codelineno-25-5" id="__codelineno-25-5" name="__codelineno-25-5"></a>    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<a href="#__codelineno-25-6" id="__codelineno-25-6" name="__codelineno-25-6"></a>        <span class="c1"># Fallback to basic version</span>
+<a href="#__codelineno-25-7" id="__codelineno-25-7" name="__codelineno-25-7"></a>        <span class="k">return</span> <span class="n">basic_calculation</span><span class="p">()</span>
+</code></pre></div>
+<ol>
+<li><strong>Detailed error context</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="k">def</span> <span class="nf">validate_data</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<a href="#__codelineno-26-2" id="__codelineno-26-2" name="__codelineno-26-2"></a>    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+<a href="#__codelineno-26-3" id="__codelineno-26-3" name="__codelineno-26-3"></a>        <span class="k">raise</span> <span class="n">SwingAgentDataError</span><span class="p">(</span>
+<a href="#__codelineno-26-4" id="__codelineno-26-4" name="__codelineno-26-4"></a>            <span class="sa">f</span><span class="s2">"No data available for </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">. Check if symbol is valid "</span>
+<a href="#__codelineno-26-5" id="__codelineno-26-5" name="__codelineno-26-5"></a>            <span class="sa">f</span><span class="s2">"and markets are open."</span><span class="p">,</span>
+<a href="#__codelineno-26-6" id="__codelineno-26-6" name="__codelineno-26-6"></a>            <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span>
+<a href="#__codelineno-26-7" id="__codelineno-26-7" name="__codelineno-26-7"></a>        <span class="p">)</span>
+<a href="#__codelineno-26-8" id="__codelineno-26-8" name="__codelineno-26-8"></a>
+<a href="#__codelineno-26-9" id="__codelineno-26-9" name="__codelineno-26-9"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+<a href="#__codelineno-26-10" id="__codelineno-26-10" name="__codelineno-26-10"></a>        <span class="k">raise</span> <span class="n">SwingAgentDataError</span><span class="p">(</span>
+<a href="#__codelineno-26-11" id="__codelineno-26-11" name="__codelineno-26-11"></a>            <span class="sa">f</span><span class="s2">"Insufficient data for </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">: only </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> bars. "</span>
+<a href="#__codelineno-26-12" id="__codelineno-26-12" name="__codelineno-26-12"></a>            <span class="sa">f</span><span class="s2">"Need at least 20 bars for analysis."</span><span class="p">,</span>
+<a href="#__codelineno-26-13" id="__codelineno-26-13" name="__codelineno-26-13"></a>            <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span>
+<a href="#__codelineno-26-14" id="__codelineno-26-14" name="__codelineno-26-14"></a>        <span class="p">)</span>
+</code></pre></div>
+<h2 id="database-development">Database Development<a class="headerlink" href="#database-development" title="Permanent link">¶</a></h2>
+<h3 id="database-migrations">Database Migrations<a class="headerlink" href="#database-migrations" title="Permanent link">¶</a></h3>
+<p>When modifying database schema:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="c1"># Add to migration script</span>
+<a href="#__codelineno-27-2" id="__codelineno-27-2" name="__codelineno-27-2"></a><span class="k">def</span> <span class="nf">upgrade_schema_to_v1_6_2</span><span class="p">():</span>
+<a href="#__codelineno-27-3" id="__codelineno-27-3" name="__codelineno-27-3"></a><span class="w">    </span><span class="sd">"""Upgrade database schema to version 1.6.2."""</span>
+<a href="#__codelineno-27-4" id="__codelineno-27-4" name="__codelineno-27-4"></a>    <span class="k">with</span> <span class="n">get_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a href="#__codelineno-27-5" id="__codelineno-27-5" name="__codelineno-27-5"></a>        <span class="c1"># Add new columns with appropriate defaults</span>
+<a href="#__codelineno-27-6" id="__codelineno-27-6" name="__codelineno-27-6"></a>        <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"""</span>
+<a href="#__codelineno-27-7" id="__codelineno-27-7" name="__codelineno-27-7"></a><span class="s2">            ALTER TABLE signals </span>
+<a href="#__codelineno-27-8" id="__codelineno-27-8" name="__codelineno-27-8"></a><span class="s2">            ADD COLUMN new_field TEXT DEFAULT '';</span>
+<a href="#__codelineno-27-9" id="__codelineno-27-9" name="__codelineno-27-9"></a><span class="s2">        """</span><span class="p">)</span>
+<a href="#__codelineno-27-10" id="__codelineno-27-10" name="__codelineno-27-10"></a>
+<a href="#__codelineno-27-11" id="__codelineno-27-11" name="__codelineno-27-11"></a>        <span class="c1"># Update schema version</span>
+<a href="#__codelineno-27-12" id="__codelineno-27-12" name="__codelineno-27-12"></a>        <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"""</span>
+<a href="#__codelineno-27-13" id="__codelineno-27-13" name="__codelineno-27-13"></a><span class="s2">            INSERT OR REPLACE INTO migrations (version, applied_at, description)</span>
+<a href="#__codelineno-27-14" id="__codelineno-27-14" name="__codelineno-27-14"></a><span class="s2">            VALUES ('1.6.2', datetime('now'), 'Added new_field to signals table');</span>
+<a href="#__codelineno-27-15" id="__codelineno-27-15" name="__codelineno-27-15"></a><span class="s2">        """</span><span class="p">)</span>
+<a href="#__codelineno-27-16" id="__codelineno-27-16" name="__codelineno-27-16"></a>        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="database-testing">Database Testing<a class="headerlink" href="#database-testing" title="Permanent link">¶</a></h3>
+<p>Use in-memory SQLite for fast database tests:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-28-1" id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<a href="#__codelineno-28-2" id="__codelineno-28-2" name="__codelineno-28-2"></a><span class="k">def</span> <span class="nf">temp_database</span><span class="p">():</span>
+<a href="#__codelineno-28-3" id="__codelineno-28-3" name="__codelineno-28-3"></a><span class="w">    </span><span class="sd">"""Create temporary database for testing."""</span>
+<a href="#__codelineno-28-4" id="__codelineno-28-4" name="__codelineno-28-4"></a>    <span class="kn">from</span> <span class="nn">swing_agent.database</span> <span class="kn">import</span> <span class="n">init_database</span>
+<a href="#__codelineno-28-5" id="__codelineno-28-5" name="__codelineno-28-5"></a>    <span class="n">db_url</span> <span class="o">=</span> <span class="s2">"sqlite:///:memory:"</span>
+<a href="#__codelineno-28-6" id="__codelineno-28-6" name="__codelineno-28-6"></a>    <span class="n">init_database</span><span class="p">(</span><span class="n">db_url</span><span class="p">)</span>
+<a href="#__codelineno-28-7" id="__codelineno-28-7" name="__codelineno-28-7"></a>    <span class="k">return</span> <span class="n">db_url</span>
+</code></pre></div>
+<h2 id="performance-testing">Performance Testing<a class="headerlink" href="#performance-testing" title="Permanent link">¶</a></h2>
+<h3 id="benchmarking">Benchmarking<a class="headerlink" href="#benchmarking" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-29-1" id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="c1"># tests/performance/test_benchmarks.py</span>
+<a href="#__codelineno-29-2" id="__codelineno-29-2" name="__codelineno-29-2"></a><span class="kn">import</span> <span class="nn">time</span>
+<a href="#__codelineno-29-3" id="__codelineno-29-3" name="__codelineno-29-3"></a><span class="kn">import</span> <span class="nn">pytest</span>
+<a href="#__codelineno-29-4" id="__codelineno-29-4" name="__codelineno-29-4"></a><span class="kn">from</span> <span class="nn">swing_agent.vectorstore</span> <span class="kn">import</span> <span class="n">knn</span>
+<a href="#__codelineno-29-5" id="__codelineno-29-5" name="__codelineno-29-5"></a>
+<a href="#__codelineno-29-6" id="__codelineno-29-6" name="__codelineno-29-6"></a><span class="k">class</span> <span class="nc">TestPerformance</span><span class="p">:</span>
+<a href="#__codelineno-29-7" id="__codelineno-29-7" name="__codelineno-29-7"></a>    <span class="k">def</span> <span class="nf">test_vector_search_performance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_vectors</span><span class="p">):</span>
+<a href="#__codelineno-29-8" id="__codelineno-29-8" name="__codelineno-29-8"></a><span class="w">        </span><span class="sd">"""Ensure vector search completes within acceptable time."""</span>
+<a href="#__codelineno-29-9" id="__codelineno-29-9" name="__codelineno-29-9"></a>        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a href="#__codelineno-29-10" id="__codelineno-29-10" name="__codelineno-29-10"></a>
+<a href="#__codelineno-29-11" id="__codelineno-29-11" name="__codelineno-29-11"></a>        <span class="n">results</span> <span class="o">=</span> <span class="n">knn</span><span class="p">(</span><span class="s2">":memory:"</span><span class="p">,</span> <span class="n">sample_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<a href="#__codelineno-29-12" id="__codelineno-29-12" name="__codelineno-29-12"></a>
+<a href="#__codelineno-29-13" id="__codelineno-29-13" name="__codelineno-29-13"></a>        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+<a href="#__codelineno-29-14" id="__codelineno-29-14" name="__codelineno-29-14"></a>        <span class="k">assert</span> <span class="n">elapsed</span> <span class="o">&lt;</span> <span class="mf">1.0</span>  <span class="c1"># Should complete within 1 second</span>
+<a href="#__codelineno-29-15" id="__codelineno-29-15" name="__codelineno-29-15"></a>        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">10</span>
+<a href="#__codelineno-29-16" id="__codelineno-29-16" name="__codelineno-29-16"></a>
+<a href="#__codelineno-29-17" id="__codelineno-29-17" name="__codelineno-29-17"></a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">slow</span>
+<a href="#__codelineno-29-18" id="__codelineno-29-18" name="__codelineno-29-18"></a>    <span class="k">def</span> <span class="nf">test_large_dataset_performance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a href="#__codelineno-29-19" id="__codelineno-29-19" name="__codelineno-29-19"></a><span class="w">        </span><span class="sd">"""Test performance with larger datasets."""</span>
+<a href="#__codelineno-29-20" id="__codelineno-29-20" name="__codelineno-29-20"></a>        <span class="c1"># Generate large test dataset</span>
+<a href="#__codelineno-29-21" id="__codelineno-29-21" name="__codelineno-29-21"></a>        <span class="c1"># Run performance benchmarks</span>
+<a href="#__codelineno-29-22" id="__codelineno-29-22" name="__codelineno-29-22"></a>        <span class="k">pass</span>
+</code></pre></div>
+<h2 id="documentation-standards">Documentation Standards<a class="headerlink" href="#documentation-standards" title="Permanent link">¶</a></h2>
+<h3 id="docstring-format">Docstring Format<a class="headerlink" href="#docstring-format" title="Permanent link">¶</a></h3>
+<p>Use Google-style docstrings:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-30-1" id="__codelineno-30-1" name="__codelineno-30-1"></a><span class="k">def</span> <span class="nf">build_entry</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">trend</span><span class="p">:</span> <span class="n">TrendState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EntryPlan</span><span class="p">]:</span>
+<a href="#__codelineno-30-2" id="__codelineno-30-2" name="__codelineno-30-2"></a><span class="w">    </span><span class="sd">"""Generate entry plan based on trend analysis and Fibonacci levels.</span>
+<a href="#__codelineno-30-3" id="__codelineno-30-3" name="__codelineno-30-3"></a>
+<a href="#__codelineno-30-4" id="__codelineno-30-4" name="__codelineno-30-4"></a><span class="sd">    This function implements three primary entry strategies:</span>
+<a href="#__codelineno-30-5" id="__codelineno-30-5" name="__codelineno-30-5"></a><span class="sd">    1. Fibonacci golden pocket pullbacks (highest probability)</span>
+<a href="#__codelineno-30-6" id="__codelineno-30-6" name="__codelineno-30-6"></a><span class="sd">    2. Momentum continuation breakouts</span>
+<a href="#__codelineno-30-7" id="__codelineno-30-7" name="__codelineno-30-7"></a><span class="sd">    3. Mean reversion from extreme RSI levels</span>
+<a href="#__codelineno-30-8" id="__codelineno-30-8" name="__codelineno-30-8"></a>
+<a href="#__codelineno-30-9" id="__codelineno-30-9" name="__codelineno-30-9"></a><span class="sd">    Args:</span>
+<a href="#__codelineno-30-10" id="__codelineno-30-10" name="__codelineno-30-10"></a><span class="sd">        df: OHLCV price data with at least 40 bars for Fibonacci calculation</span>
+<a href="#__codelineno-30-11" id="__codelineno-30-11" name="__codelineno-30-11"></a><span class="sd">        trend: Current trend state from label_trend()</span>
+<a href="#__codelineno-30-12" id="__codelineno-30-12" name="__codelineno-30-12"></a>
+<a href="#__codelineno-30-13" id="__codelineno-30-13" name="__codelineno-30-13"></a><span class="sd">    Returns:</span>
+<a href="#__codelineno-30-14" id="__codelineno-30-14" name="__codelineno-30-14"></a><span class="sd">        EntryPlan with entry, stop, target prices and risk metrics, or None if no setup</span>
+<a href="#__codelineno-30-15" id="__codelineno-30-15" name="__codelineno-30-15"></a>
+<a href="#__codelineno-30-16" id="__codelineno-30-16" name="__codelineno-30-16"></a><span class="sd">    Raises:</span>
+<a href="#__codelineno-30-17" id="__codelineno-30-17" name="__codelineno-30-17"></a><span class="sd">        ValueError: If df has insufficient data for analysis</span>
+<a href="#__codelineno-30-18" id="__codelineno-30-18" name="__codelineno-30-18"></a>
+<a href="#__codelineno-30-19" id="__codelineno-30-19" name="__codelineno-30-19"></a><span class="sd">    Examples:</span>
+<a href="#__codelineno-30-20" id="__codelineno-30-20" name="__codelineno-30-20"></a><span class="sd">        &gt;&gt;&gt; df = load_ohlcv("AAPL", "30m", 30)</span>
+<a href="#__codelineno-30-21" id="__codelineno-30-21" name="__codelineno-30-21"></a><span class="sd">        &gt;&gt;&gt; trend = label_trend(df)</span>
+<a href="#__codelineno-30-22" id="__codelineno-30-22" name="__codelineno-30-22"></a><span class="sd">        &gt;&gt;&gt; entry = build_entry(df, trend)</span>
+<a href="#__codelineno-30-23" id="__codelineno-30-23" name="__codelineno-30-23"></a><span class="sd">        &gt;&gt;&gt; if entry:</span>
+<a href="#__codelineno-30-24" id="__codelineno-30-24" name="__codelineno-30-24"></a><span class="sd">        ...     print(f"Entry: {entry.side} at {entry.entry_price}")</span>
+<a href="#__codelineno-30-25" id="__codelineno-30-25" name="__codelineno-30-25"></a>
+<a href="#__codelineno-30-26" id="__codelineno-30-26" name="__codelineno-30-26"></a><span class="sd">    Note:</span>
+<a href="#__codelineno-30-27" id="__codelineno-30-27" name="__codelineno-30-27"></a><span class="sd">        - All price levels are absolute values, not relative to current price</span>
+<a href="#__codelineno-30-28" id="__codelineno-30-28" name="__codelineno-30-28"></a><span class="sd">        - R-multiple calculation assumes proper position sizing</span>
+<a href="#__codelineno-30-29" id="__codelineno-30-29" name="__codelineno-30-29"></a>
+<a href="#__codelineno-30-30" id="__codelineno-30-30" name="__codelineno-30-30"></a><span class="sd">    See Also:</span>
+<a href="#__codelineno-30-31" id="__codelineno-30-31" name="__codelineno-30-31"></a><span class="sd">        label_trend(): Trend classification function</span>
+<a href="#__codelineno-30-32" id="__codelineno-30-32" name="__codelineno-30-32"></a><span class="sd">        fibonacci_range(): Fibonacci level calculation</span>
+<a href="#__codelineno-30-33" id="__codelineno-30-33" name="__codelineno-30-33"></a><span class="sd">    """</span>
+</code></pre></div>
+<h3 id="api-documentation">API Documentation<a class="headerlink" href="#api-documentation" title="Permanent link">¶</a></h3>
+<p>Generate API docs with Sphinx:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-31-1" id="__codelineno-31-1" name="__codelineno-31-1"></a><span class="c1"># Install sphinx and extensions</span>
+<a href="#__codelineno-31-2" id="__codelineno-31-2" name="__codelineno-31-2"></a>pip<span class="w"> </span>install<span class="w"> </span>sphinx<span class="w"> </span>sphinx-autodoc-typehints
+<a href="#__codelineno-31-3" id="__codelineno-31-3" name="__codelineno-31-3"></a>
+<a href="#__codelineno-31-4" id="__codelineno-31-4" name="__codelineno-31-4"></a><span class="c1"># Generate documentation</span>
+<a href="#__codelineno-31-5" id="__codelineno-31-5" name="__codelineno-31-5"></a>sphinx-quickstart<span class="w"> </span>docs/
+<a href="#__codelineno-31-6" id="__codelineno-31-6" name="__codelineno-31-6"></a>sphinx-apidoc<span class="w"> </span>-o<span class="w"> </span>docs/source/<span class="w"> </span>src/swing_agent/
+<a href="#__codelineno-31-7" id="__codelineno-31-7" name="__codelineno-31-7"></a><span class="nb">cd</span><span class="w"> </span>docs<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>html
+</code></pre></div>
+<h2 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">¶</a></h2>
+<h3 id="logging-configuration">Logging Configuration<a class="headerlink" href="#logging-configuration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-32-1" id="__codelineno-32-1" name="__codelineno-32-1"></a><span class="c1"># For development debugging</span>
+<a href="#__codelineno-32-2" id="__codelineno-32-2" name="__codelineno-32-2"></a><span class="kn">import</span> <span class="nn">logging</span>
+<a href="#__codelineno-32-3" id="__codelineno-32-3" name="__codelineno-32-3"></a><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+<a href="#__codelineno-32-4" id="__codelineno-32-4" name="__codelineno-32-4"></a>    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+<a href="#__codelineno-32-5" id="__codelineno-32-5" name="__codelineno-32-5"></a>    <span class="nb">format</span><span class="o">=</span><span class="s1">'</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">'</span>
+<a href="#__codelineno-32-6" id="__codelineno-32-6" name="__codelineno-32-6"></a><span class="p">)</span>
+<a href="#__codelineno-32-7" id="__codelineno-32-7" name="__codelineno-32-7"></a>
+<a href="#__codelineno-32-8" id="__codelineno-32-8" name="__codelineno-32-8"></a><span class="c1"># Component-specific debugging</span>
+<a href="#__codelineno-32-9" id="__codelineno-32-9" name="__codelineno-32-9"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"swing_agent.strategy"</span><span class="p">)</span>
+<a href="#__codelineno-32-10" id="__codelineno-32-10" name="__codelineno-32-10"></a><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="debug-utilities">Debug Utilities<a class="headerlink" href="#debug-utilities" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-33-1" id="__codelineno-33-1" name="__codelineno-33-1"></a><span class="c1"># Debug signal generation</span>
+<a href="#__codelineno-33-2" id="__codelineno-33-2" name="__codelineno-33-2"></a><span class="k">def</span> <span class="nf">debug_signal</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<a href="#__codelineno-33-3" id="__codelineno-33-3" name="__codelineno-33-3"></a><span class="w">    </span><span class="sd">"""Generate signal with debug information."""</span>
+<a href="#__codelineno-33-4" id="__codelineno-33-4" name="__codelineno-33-4"></a>    <span class="n">agent</span> <span class="o">=</span> <span class="n">SwingAgent</span><span class="p">(</span><span class="n">use_llm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># Avoid API costs</span>
+<a href="#__codelineno-33-5" id="__codelineno-33-5" name="__codelineno-33-5"></a>
+<a href="#__codelineno-33-6" id="__codelineno-33-6" name="__codelineno-33-6"></a>    <span class="c1"># Load data</span>
+<a href="#__codelineno-33-7" id="__codelineno-33-7" name="__codelineno-33-7"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">load_ohlcv</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="s2">"30m"</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<a href="#__codelineno-33-8" id="__codelineno-33-8" name="__codelineno-33-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-33-9" id="__codelineno-33-9" name="__codelineno-33-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Price range: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'close'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">'close'</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-33-10" id="__codelineno-33-10" name="__codelineno-33-10"></a>
+<a href="#__codelineno-33-11" id="__codelineno-33-11" name="__codelineno-33-11"></a>    <span class="c1"># Analyze trend</span>
+<a href="#__codelineno-33-12" id="__codelineno-33-12" name="__codelineno-33-12"></a>    <span class="n">trend</span> <span class="o">=</span> <span class="n">label_trend</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<a href="#__codelineno-33-13" id="__codelineno-33-13" name="__codelineno-33-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Trend: </span><span class="si">{</span><span class="n">trend</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">, RSI: </span><span class="si">{</span><span class="n">trend</span><span class="o">.</span><span class="n">rsi_14</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-33-14" id="__codelineno-33-14" name="__codelineno-33-14"></a>
+<a href="#__codelineno-33-15" id="__codelineno-33-15" name="__codelineno-33-15"></a>    <span class="c1"># Generate signal</span>
+<a href="#__codelineno-33-16" id="__codelineno-33-16" name="__codelineno-33-16"></a>    <span class="n">signal</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">analyze_df</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+<a href="#__codelineno-33-17" id="__codelineno-33-17" name="__codelineno-33-17"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Signal: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-33-18" id="__codelineno-33-18" name="__codelineno-33-18"></a>
+<a href="#__codelineno-33-19" id="__codelineno-33-19" name="__codelineno-33-19"></a>    <span class="k">return</span> <span class="n">signal</span>
+</code></pre></div>
+<h2 id="release-process">Release Process<a class="headerlink" href="#release-process" title="Permanent link">¶</a></h2>
+<h3 id="version-management">Version Management<a class="headerlink" href="#version-management" title="Permanent link">¶</a></h3>
+<ol>
+<li>Update version in <code>pyproject.toml</code></li>
+<li>Update <code>__version__</code> in <code>src/swing_agent/__init__.py</code></li>
+<li>Create release notes in <code>CHANGELOG.md</code></li>
+<li>Tag release: <code>git tag v1.6.2</code></li>
+</ol>
+<h3 id="pre-release-checklist">Pre-release Checklist<a class="headerlink" href="#pre-release-checklist" title="Permanent link">¶</a></h3>
+<ul>
+<li>[ ] All tests pass: <code>pytest</code></li>
+<li>[ ] Code quality checks: <code>ruff check &amp;&amp; black --check .</code></li>
+<li>[ ] Type checking: <code>mypy src/</code></li>
+<li>[ ] Documentation builds: <code>sphinx-build docs/ docs/_build/</code></li>
+<li>[ ] Manual testing of core scenarios</li>
+<li>[ ] Security review of changes</li>
+<li>[ ] Performance impact assessment</li>
+</ul>
+<h3 id="continuous-integration">Continuous Integration<a class="headerlink" href="#continuous-integration" title="Permanent link">¶</a></h3>
+<p>Recommended GitHub Actions workflow:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-34-1" id="__codelineno-34-1" name="__codelineno-34-1"></a><span class="c1"># .github/workflows/ci.yml</span>
+<a href="#__codelineno-34-2" id="__codelineno-34-2" name="__codelineno-34-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CI</span>
+<a href="#__codelineno-34-3" id="__codelineno-34-3" name="__codelineno-34-3"></a>
+<a href="#__codelineno-34-4" id="__codelineno-34-4" name="__codelineno-34-4"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+<a href="#__codelineno-34-5" id="__codelineno-34-5" name="__codelineno-34-5"></a>
+<a href="#__codelineno-34-6" id="__codelineno-34-6" name="__codelineno-34-6"></a><span class="nt">jobs</span><span class="p">:</span>
+<a href="#__codelineno-34-7" id="__codelineno-34-7" name="__codelineno-34-7"></a><span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+<a href="#__codelineno-34-8" id="__codelineno-34-8" name="__codelineno-34-8"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a href="#__codelineno-34-9" id="__codelineno-34-9" name="__codelineno-34-9"></a>
+<a href="#__codelineno-34-10" id="__codelineno-34-10" name="__codelineno-34-10"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a href="#__codelineno-34-11" id="__codelineno-34-11" name="__codelineno-34-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v3</span>
+<a href="#__codelineno-34-12" id="__codelineno-34-12" name="__codelineno-34-12"></a>
+<a href="#__codelineno-34-13" id="__codelineno-34-13" name="__codelineno-34-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Python</span>
+<a href="#__codelineno-34-14" id="__codelineno-34-14" name="__codelineno-34-14"></a><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v4</span>
+<a href="#__codelineno-34-15" id="__codelineno-34-15" name="__codelineno-34-15"></a><span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<a href="#__codelineno-34-16" id="__codelineno-34-16" name="__codelineno-34-16"></a><span class="w">        </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">'3.10'</span>
+<a href="#__codelineno-34-17" id="__codelineno-34-17" name="__codelineno-34-17"></a>
+<a href="#__codelineno-34-18" id="__codelineno-34-18" name="__codelineno-34-18"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
+<a href="#__codelineno-34-19" id="__codelineno-34-19" name="__codelineno-34-19"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a href="#__codelineno-34-20" id="__codelineno-34-20" name="__codelineno-34-20"></a><span class="w">        </span><span class="no">pip install -e .</span>
+<a href="#__codelineno-34-21" id="__codelineno-34-21" name="__codelineno-34-21"></a><span class="w">        </span><span class="no">pip install pytest ruff black mypy</span>
+<a href="#__codelineno-34-22" id="__codelineno-34-22" name="__codelineno-34-22"></a>
+<a href="#__codelineno-34-23" id="__codelineno-34-23" name="__codelineno-34-23"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Lint with ruff</span>
+<a href="#__codelineno-34-24" id="__codelineno-34-24" name="__codelineno-34-24"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ruff check src/ scripts/</span>
+<a href="#__codelineno-34-25" id="__codelineno-34-25" name="__codelineno-34-25"></a>
+<a href="#__codelineno-34-26" id="__codelineno-34-26" name="__codelineno-34-26"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Check formatting</span>
+<a href="#__codelineno-34-27" id="__codelineno-34-27" name="__codelineno-34-27"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">black --check src/ scripts/</span>
+<a href="#__codelineno-34-28" id="__codelineno-34-28" name="__codelineno-34-28"></a>
+<a href="#__codelineno-34-29" id="__codelineno-34-29" name="__codelineno-34-29"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Type check</span>
+<a href="#__codelineno-34-30" id="__codelineno-34-30" name="__codelineno-34-30"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypy src/</span>
+<a href="#__codelineno-34-31" id="__codelineno-34-31" name="__codelineno-34-31"></a>
+<a href="#__codelineno-34-32" id="__codelineno-34-32" name="__codelineno-34-32"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
+<a href="#__codelineno-34-33" id="__codelineno-34-33" name="__codelineno-34-33"></a><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest --cov=swing_agent</span>
+</code></pre></div>
+<p>This development guide ensures consistent code quality, comprehensive testing, and maintainable documentation across the SwingAgent project.</p>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/ITlusions/ITL.SwingAgent" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2" fill="currentColor"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+<script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+<script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
+</body>
+</html>

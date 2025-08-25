@@ -1,0 +1,2101 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Comprehensive documentation for the SwingAgent trading system" name="description"/>
+<meta content="SwingAgent Team" name="author"/>
+<link href="../glossary/" rel="prev"/>
+<link href="../configuration/" rel="next"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.18" name="generator"/>
+<title>API Reference - SwingAgent Documentation</title>
+<link href="../assets/stylesheets/main.7e37652d.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#api-reference">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SwingAgent Documentation" class="md-header__button md-logo" data-md-component="logo" href=".." title="SwingAgent Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SwingAgent Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              API Reference
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ITlusions/ITL.SwingAgent" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4" fill="currentColor"></path></svg>
+</div>
+<div class="md-source__repository">
+    ITL.SwingAgent
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started/">
+          
+  
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="./">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../architecture/">
+          
+  
+  
+  Advanced
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SwingAgent Documentation" class="md-nav__button md-logo" data-md-component="logo" href=".." title="SwingAgent Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    SwingAgent Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ITlusions/ITL.SwingAgent" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4" fill="currentColor"></path></svg>
+</div>
+<div class="md-source__repository">
+    ITL.SwingAgent
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    User Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started/">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tutorial/">
+<span class="md-ellipsis">
+    Tutorial
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../use-cases/">
+<span class="md-ellipsis">
+    Use Cases
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../best-practices/">
+<span class="md-ellipsis">
+    Best Practices
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../faq/">
+<span class="md-ellipsis">
+    FAQ
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary/">
+<span class="md-ellipsis">
+    Glossary
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-classes">
+<span class="md-ellipsis">
+      Core Classes
+    </span>
+</a>
+<nav aria-label="Core Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#swingagent">
+<span class="md-ellipsis">
+      SwingAgent
+    </span>
+</a>
+<nav aria-label="SwingAgent" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#analyzesymbol-str-tradesignal">
+<span class="md-ellipsis">
+      analyze(symbol: str) -&gt; TradeSignal
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#analyze_dfsymbol-str-df-pddataframe-tradesignal">
+<span class="md-ellipsis">
+      analyze_df(symbol: str, df: pd.DataFrame) -&gt; TradeSignal
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-management">
+<span class="md-ellipsis">
+      Configuration Management
+    </span>
+</a>
+<nav aria-label="Configuration Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tradingconfig">
+<span class="md-ellipsis">
+      TradingConfig
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      Error Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-models">
+<span class="md-ellipsis">
+      Data Models
+    </span>
+</a>
+<nav aria-label="Data Models" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tradesignal">
+<span class="md-ellipsis">
+      TradeSignal
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trendstate">
+<span class="md-ellipsis">
+      TrendState
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entryplan">
+<span class="md-ellipsis">
+      EntryPlan
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tradesignal_1">
+<span class="md-ellipsis">
+      TradeSignal
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trendstate_1">
+<span class="md-ellipsis">
+      TrendState
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entryplan_1">
+<span class="md-ellipsis">
+      EntryPlan
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enums">
+<span class="md-ellipsis">
+      Enums
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-management">
+<span class="md-ellipsis">
+      Database Management
+    </span>
+</a>
+<nav aria-label="Database Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-configuration">
+<span class="md-ellipsis">
+      Database Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-models">
+<span class="md-ellipsis">
+      Database Models
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#migration-utilities">
+<span class="md-ellipsis">
+      Migration Utilities
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-management_1">
+<span class="md-ellipsis">
+      Configuration Management
+    </span>
+</a>
+<nav aria-label="Configuration Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tradingconfig_1">
+<span class="md-ellipsis">
+      TradingConfig
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#technical-indicators">
+<span class="md-ellipsis">
+      Technical Indicators
+    </span>
+</a>
+<nav aria-label="Technical Indicators" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-functions">
+<span class="md-ellipsis">
+      Core Functions
+    </span>
+</a>
+<nav aria-label="Core Functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#emaseries-pdseries-span-int-pdseries">
+<span class="md-ellipsis">
+      ema(series: pd.Series, span: int) -&gt; pd.Series
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rsiseries-pdseries-length-int-14-pdseries">
+<span class="md-ellipsis">
+      rsi(series: pd.Series, length: int = 14) -&gt; pd.Series
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#atrdf-pddataframe-length-int-14-pdseries">
+<span class="md-ellipsis">
+      atr(df: pd.DataFrame, length: int = 14) -&gt; pd.Series
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fibonacci_rangedf-pddataframe-lookback-int-40-fibrange">
+<span class="md-ellipsis">
+      fibonacci_range(df: pd.DataFrame, lookback: int = 40) -&gt; FibRange
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fibrange-object">
+<span class="md-ellipsis">
+      FibRange Object
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#strategy-functions">
+<span class="md-ellipsis">
+      Strategy Functions
+    </span>
+</a>
+<nav aria-label="Strategy Functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#label_trenddf-pddataframe-trendstate">
+<span class="md-ellipsis">
+      label_trend(df: pd.DataFrame) -&gt; TrendState
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build_entrydf-pddataframe-trend-trendstate-optionalentryplan">
+<span class="md-ellipsis">
+      build_entry(df: pd.DataFrame, trend: TrendState) -&gt; Optional[EntryPlan]
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-store-api">
+<span class="md-ellipsis">
+      Vector Store API
+    </span>
+</a>
+<nav aria-label="Vector Store API" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#add_vectordb_path-vid-ts_utc-symbol-timeframe-vec-realized_r-exit_reason-payload">
+<span class="md-ellipsis">
+      add_vector(db_path, vid, ts_utc, symbol, timeframe, vec, realized_r, exit_reason, payload)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#knndb_path-query_vec-k50-symbolnone-listdict">
+<span class="md-ellipsis">
+      knn(db_path, query_vec, k=50, symbol=None) -&gt; List[Dict]
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extended_statsneighbors-listdict-dict">
+<span class="md-ellipsis">
+      extended_stats(neighbors: List[Dict]) -&gt; Dict
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#feature-engineering">
+<span class="md-ellipsis">
+      Feature Engineering
+    </span>
+</a>
+<nav aria-label="Feature Engineering" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build_setup_vectorprice-trend-entry-prev_range_pct-gap_pct-atr_pct-session_bin-llm_conf">
+<span class="md-ellipsis">
+      build_setup_vector(price, trend, entry, prev_range_pct, gap_pct, atr_pct, session_bin, llm_conf)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#time_of_day_bucketts-pdtimestamp-str">
+<span class="md-ellipsis">
+      time_of_day_bucket(ts: pd.Timestamp) -&gt; str
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vol_regime_from_seriesprice-pdseries-str">
+<span class="md-ellipsis">
+      vol_regime_from_series(price: pd.Series) -&gt; str
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-management">
+<span class="md-ellipsis">
+      Data Management
+    </span>
+</a>
+<nav aria-label="Data Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#load_ohlcvsymbol-interval30m-lookback_days30-pddataframe">
+<span class="md-ellipsis">
+      load_ohlcv(symbol, interval="30m", lookback_days=30) -&gt; pd.DataFrame
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm-integration">
+<span class="md-ellipsis">
+      LLM Integration
+    </span>
+</a>
+<nav aria-label="LLM Integration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm_extra_predictionfeatures-llmvote">
+<span class="md-ellipsis">
+      llm_extra_prediction(**features) -&gt; LlmVote
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm_build_action_plansignal_json-stylebalanced-llmactionplan">
+<span class="md-ellipsis">
+      llm_build_action_plan(signal_json, style="balanced") -&gt; LlmActionPlan
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#storage-api">
+<span class="md-ellipsis">
+      Storage API
+    </span>
+</a>
+<nav aria-label="Storage API" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#record_signalts-tradesignal-db_path-str-str">
+<span class="md-ellipsis">
+      record_signal(ts: TradeSignal, db_path: str) -&gt; str
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mark_evaluationsignal_id-db_path-exit_reason-exit_price-exit_time_utc-realized_r">
+<span class="md-ellipsis">
+      mark_evaluation(signal_id, db_path, exit_reason, exit_price, exit_time_utc, realized_r)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backtesting">
+<span class="md-ellipsis">
+      Backtesting
+    </span>
+</a>
+<nav aria-label="Backtesting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simulate_tradedf-open_idx-side-entry-stop-target-max_hold_bars">
+<span class="md-ellipsis">
+      simulate_trade(df, open_idx, side, entry, stop, target, max_hold_bars)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling_1">
+<span class="md-ellipsis">
+      Error Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-variables">
+<span class="md-ellipsis">
+      Environment Variables
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      Usage Examples
+    </span>
+</a>
+<nav aria-label="Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#complete-signal-generation">
+<span class="md-ellipsis">
+      Complete Signal Generation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-analysis-pipeline">
+<span class="md-ellipsis">
+      Custom Analysis Pipeline
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configuration/">
+<span class="md-ellipsis">
+    Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Advanced
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Advanced
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../development/">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../deployment/">
+<span class="md-ellipsis">
+    Deployment
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../testing/">
+<span class="md-ellipsis">
+    Testing
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../security/">
+<span class="md-ellipsis">
+    Security
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-classes">
+<span class="md-ellipsis">
+      Core Classes
+    </span>
+</a>
+<nav aria-label="Core Classes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#swingagent">
+<span class="md-ellipsis">
+      SwingAgent
+    </span>
+</a>
+<nav aria-label="SwingAgent" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#analyzesymbol-str-tradesignal">
+<span class="md-ellipsis">
+      analyze(symbol: str) -&gt; TradeSignal
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#analyze_dfsymbol-str-df-pddataframe-tradesignal">
+<span class="md-ellipsis">
+      analyze_df(symbol: str, df: pd.DataFrame) -&gt; TradeSignal
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-management">
+<span class="md-ellipsis">
+      Configuration Management
+    </span>
+</a>
+<nav aria-label="Configuration Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tradingconfig">
+<span class="md-ellipsis">
+      TradingConfig
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      Error Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-models">
+<span class="md-ellipsis">
+      Data Models
+    </span>
+</a>
+<nav aria-label="Data Models" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tradesignal">
+<span class="md-ellipsis">
+      TradeSignal
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trendstate">
+<span class="md-ellipsis">
+      TrendState
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entryplan">
+<span class="md-ellipsis">
+      EntryPlan
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tradesignal_1">
+<span class="md-ellipsis">
+      TradeSignal
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trendstate_1">
+<span class="md-ellipsis">
+      TrendState
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entryplan_1">
+<span class="md-ellipsis">
+      EntryPlan
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enums">
+<span class="md-ellipsis">
+      Enums
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-management">
+<span class="md-ellipsis">
+      Database Management
+    </span>
+</a>
+<nav aria-label="Database Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-configuration">
+<span class="md-ellipsis">
+      Database Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#database-models">
+<span class="md-ellipsis">
+      Database Models
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#migration-utilities">
+<span class="md-ellipsis">
+      Migration Utilities
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-management_1">
+<span class="md-ellipsis">
+      Configuration Management
+    </span>
+</a>
+<nav aria-label="Configuration Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tradingconfig_1">
+<span class="md-ellipsis">
+      TradingConfig
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#technical-indicators">
+<span class="md-ellipsis">
+      Technical Indicators
+    </span>
+</a>
+<nav aria-label="Technical Indicators" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-functions">
+<span class="md-ellipsis">
+      Core Functions
+    </span>
+</a>
+<nav aria-label="Core Functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#emaseries-pdseries-span-int-pdseries">
+<span class="md-ellipsis">
+      ema(series: pd.Series, span: int) -&gt; pd.Series
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rsiseries-pdseries-length-int-14-pdseries">
+<span class="md-ellipsis">
+      rsi(series: pd.Series, length: int = 14) -&gt; pd.Series
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#atrdf-pddataframe-length-int-14-pdseries">
+<span class="md-ellipsis">
+      atr(df: pd.DataFrame, length: int = 14) -&gt; pd.Series
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fibonacci_rangedf-pddataframe-lookback-int-40-fibrange">
+<span class="md-ellipsis">
+      fibonacci_range(df: pd.DataFrame, lookback: int = 40) -&gt; FibRange
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fibrange-object">
+<span class="md-ellipsis">
+      FibRange Object
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#strategy-functions">
+<span class="md-ellipsis">
+      Strategy Functions
+    </span>
+</a>
+<nav aria-label="Strategy Functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#label_trenddf-pddataframe-trendstate">
+<span class="md-ellipsis">
+      label_trend(df: pd.DataFrame) -&gt; TrendState
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build_entrydf-pddataframe-trend-trendstate-optionalentryplan">
+<span class="md-ellipsis">
+      build_entry(df: pd.DataFrame, trend: TrendState) -&gt; Optional[EntryPlan]
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-store-api">
+<span class="md-ellipsis">
+      Vector Store API
+    </span>
+</a>
+<nav aria-label="Vector Store API" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#add_vectordb_path-vid-ts_utc-symbol-timeframe-vec-realized_r-exit_reason-payload">
+<span class="md-ellipsis">
+      add_vector(db_path, vid, ts_utc, symbol, timeframe, vec, realized_r, exit_reason, payload)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#knndb_path-query_vec-k50-symbolnone-listdict">
+<span class="md-ellipsis">
+      knn(db_path, query_vec, k=50, symbol=None) -&gt; List[Dict]
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extended_statsneighbors-listdict-dict">
+<span class="md-ellipsis">
+      extended_stats(neighbors: List[Dict]) -&gt; Dict
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#feature-engineering">
+<span class="md-ellipsis">
+      Feature Engineering
+    </span>
+</a>
+<nav aria-label="Feature Engineering" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build_setup_vectorprice-trend-entry-prev_range_pct-gap_pct-atr_pct-session_bin-llm_conf">
+<span class="md-ellipsis">
+      build_setup_vector(price, trend, entry, prev_range_pct, gap_pct, atr_pct, session_bin, llm_conf)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#time_of_day_bucketts-pdtimestamp-str">
+<span class="md-ellipsis">
+      time_of_day_bucket(ts: pd.Timestamp) -&gt; str
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vol_regime_from_seriesprice-pdseries-str">
+<span class="md-ellipsis">
+      vol_regime_from_series(price: pd.Series) -&gt; str
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-management">
+<span class="md-ellipsis">
+      Data Management
+    </span>
+</a>
+<nav aria-label="Data Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#load_ohlcvsymbol-interval30m-lookback_days30-pddataframe">
+<span class="md-ellipsis">
+      load_ohlcv(symbol, interval="30m", lookback_days=30) -&gt; pd.DataFrame
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm-integration">
+<span class="md-ellipsis">
+      LLM Integration
+    </span>
+</a>
+<nav aria-label="LLM Integration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm_extra_predictionfeatures-llmvote">
+<span class="md-ellipsis">
+      llm_extra_prediction(**features) -&gt; LlmVote
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm_build_action_plansignal_json-stylebalanced-llmactionplan">
+<span class="md-ellipsis">
+      llm_build_action_plan(signal_json, style="balanced") -&gt; LlmActionPlan
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#storage-api">
+<span class="md-ellipsis">
+      Storage API
+    </span>
+</a>
+<nav aria-label="Storage API" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#record_signalts-tradesignal-db_path-str-str">
+<span class="md-ellipsis">
+      record_signal(ts: TradeSignal, db_path: str) -&gt; str
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mark_evaluationsignal_id-db_path-exit_reason-exit_price-exit_time_utc-realized_r">
+<span class="md-ellipsis">
+      mark_evaluation(signal_id, db_path, exit_reason, exit_price, exit_time_utc, realized_r)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backtesting">
+<span class="md-ellipsis">
+      Backtesting
+    </span>
+</a>
+<nav aria-label="Backtesting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simulate_tradedf-open_idx-side-entry-stop-target-max_hold_bars">
+<span class="md-ellipsis">
+      simulate_trade(df, open_idx, side, entry, stop, target, max_hold_bars)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling_1">
+<span class="md-ellipsis">
+      Error Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-variables">
+<span class="md-ellipsis">
+      Environment Variables
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      Usage Examples
+    </span>
+</a>
+<nav aria-label="Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#complete-signal-generation">
+<span class="md-ellipsis">
+      Complete Signal Generation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-analysis-pipeline">
+<span class="md-ellipsis">
+      Custom Analysis Pipeline
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="api-reference">API Reference<a class="headerlink" href="#api-reference" title="Permanent link">¶</a></h1>
+<p>Complete API documentation for all SwingAgent components.</p>
+<h2 id="core-classes">Core Classes<a class="headerlink" href="#core-classes" title="Permanent link">¶</a></h2>
+<h3 id="swingagent">SwingAgent<a class="headerlink" href="#swingagent" title="Permanent link">¶</a></h3>
+<p>Main orchestrator class that coordinates all system components using a modular, well-structured approach.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">class</span> <span class="nc">SwingAgent</span><span class="p">:</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>        <span class="bp">self</span><span class="p">,</span>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>        <span class="n">interval</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"30m"</span><span class="p">,</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="n">lookback_days</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>        <span class="n">use_llm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>        <span class="n">llm_extras</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>        <span class="n">sector_symbol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"XLK"</span>
+<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong>
+- <code>interval</code>: Trading timeframe ("15m", "30m", "1h", "1d")
+- <code>lookback_days</code>: Historical data period for analysis
+- <code>use_llm</code>: Enable OpenAI LLM integration
+- <code>llm_extras</code>: Enable additional LLM features (action plans, risk scenarios)
+- <code>sector_symbol</code>: Sector ETF for relative strength analysis (default: XLK)</p>
+<p><strong>Note</strong>: Database configuration is now handled via environment variables. See <a href="../configuration/">Configuration Guide</a> for details.</p>
+<p><strong>Methods:</strong></p>
+<h4 id="analyzesymbol-str-tradesignal"><code>analyze(symbol: str) -&gt; TradeSignal</code><a class="headerlink" href="#analyzesymbol-str-tradesignal" title="Permanent link">¶</a></h4>
+<p>Generate a comprehensive trading signal for the given symbol.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">agent</span> <span class="o">=</span> <span class="n">SwingAgent</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="s2">"30m"</span><span class="p">,</span> <span class="n">lookback_days</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">signal</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="s2">"AAPL"</span><span class="p">)</span>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Signal: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">side</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'No setup'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Confidence: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">confidence</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="analyze_dfsymbol-str-df-pddataframe-tradesignal"><code>analyze_df(symbol: str, df: pd.DataFrame) -&gt; TradeSignal</code><a class="headerlink" href="#analyze_dfsymbol-str-df-pddataframe-tradesignal" title="Permanent link">¶</a></h4>
+<p>Generate a signal using pre-loaded market data. This method orchestrates the entire analysis pipeline:</p>
+<ol>
+<li><strong>Market Context Building</strong> - Volatility, gaps, time of day, relative strength</li>
+<li><strong>Technical Analysis</strong> - Trend labeling and entry plan generation</li>
+<li><strong>Multi-timeframe Analysis</strong> - Trend alignment across 15m, 30m, 1h timeframes</li>
+<li><strong>ML Expectations</strong> - Vector similarity analysis for statistical priors</li>
+<li><strong>LLM Insights</strong> - AI-generated analysis and action plans</li>
+<li><strong>Signal Assembly</strong> - Final signal creation and persistence</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="n">df</span> <span class="o">=</span> <span class="n">load_ohlcv</span><span class="p">(</span><span class="s2">"AAPL"</span><span class="p">,</span> <span class="s2">"30m"</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="n">signal</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">analyze_df</span><span class="p">(</span><span class="s2">"AAPL"</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="configuration-management">Configuration Management<a class="headerlink" href="#configuration-management" title="Permanent link">¶</a></h2>
+<h3 id="tradingconfig">TradingConfig<a class="headerlink" href="#tradingconfig" title="Permanent link">¶</a></h3>
+<p>Centralized configuration class that eliminates magic numbers throughout the codebase.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">swing_agent.config</span> <span class="kn">import</span> <span class="n">get_config</span><span class="p">,</span> <span class="n">update_config</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="c1"># Get current configuration</span>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"EMA slope threshold: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">EMA_SLOPE_THRESHOLD_UP</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"RSI trend threshold: </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">RSI_TREND_UP_MIN</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a>
+<a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="c1"># Update configuration parameters</span>
+<a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="n">update_config</span><span class="p">(</span>
+<a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a>    <span class="n">EMA_SLOPE_THRESHOLD_UP</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span>  <span class="c1"># More sensitive trend detection</span>
+<a href="#__codelineno-3-11" id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="n">RSI_PERIOD</span><span class="o">=</span><span class="mi">21</span><span class="p">,</span>                 <span class="c1"># Longer RSI period</span>
+<a href="#__codelineno-3-12" id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">ATR_STOP_MULTIPLIER</span><span class="o">=</span><span class="mf">1.5</span>       <span class="c1"># Tighter stops</span>
+<a href="#__codelineno-3-13" id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="p">)</span>
+</code></pre></div>
+<p><strong>Key Configuration Groups:</strong></p>
+<ul>
+<li><strong>Trend Detection</strong>: EMA slope thresholds, RSI levels</li>
+<li><strong>Risk Management</strong>: ATR multipliers, stop/target ratios</li>
+<li><strong>Fibonacci Analysis</strong>: Lookback periods, golden pocket levels  </li>
+<li><strong>Volatility Regimes</strong>: Lookback periods, percentile thresholds</li>
+<li><strong>Confidence Scoring</strong>: Base levels, bonus factors</li>
+<li><strong>Vector Analysis</strong>: KNN parameters, similarity thresholds</li>
+</ul>
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">¶</a></h2>
+<p>Enhanced error handling with custom exceptions and detailed error messages:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">swing_agent.data</span> <span class="kn">import</span> <span class="n">SwingAgentDataError</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="k">try</span><span class="p">:</span>
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>    <span class="n">signal</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="s2">"INVALID_SYMBOL"</span><span class="p">)</span>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="k">except</span> <span class="n">SwingAgentDataError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data error for </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">symbol</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a>    <span class="c1"># Handle specific data issues (invalid symbol, no data, etc.)</span>
+<a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Analysis failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a>    <span class="c1"># Handle general analysis errors</span>
+</code></pre></div>
+<p><strong>Common Error Scenarios:</strong>
+- Invalid or delisted symbols
+- Insufficient historical data
+- Network connectivity issues
+- Rate limiting from data providers
+- Market closure during data requests</p>
+<h2 id="data-models">Data Models<a class="headerlink" href="#data-models" title="Permanent link">¶</a></h2>
+<h3 id="tradesignal">TradeSignal<a class="headerlink" href="#tradesignal" title="Permanent link">¶</a></h3>
+<p>Complete trading signal with technical analysis, ML expectations, and LLM insights.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">class</span> <span class="nc">TradeSignal</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>    <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span>
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="n">timeframe</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"15m"</span><span class="p">,</span> <span class="s2">"30m"</span><span class="p">,</span> <span class="s2">"1h"</span><span class="p">,</span> <span class="s2">"1d"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"30m"</span>
+<a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a>    <span class="n">asof</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Timestamp of analysis</span>
+<a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a>    <span class="n">trend</span><span class="p">:</span> <span class="n">TrendState</span>  <span class="c1"># Technical trend analysis</span>
+<a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>    <span class="n">entry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EntryPlan</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Entry plan if signal found</span>
+<a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a>    <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Overall signal confidence 0-1</span>
+<a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a>    <span class="n">reasoning</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>  <span class="c1"># Analysis reasoning</span>
+<a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a>
+<a href="#__codelineno-5-10" id="__codelineno-5-10" name="__codelineno-5-10"></a>    <span class="c1"># ML-derived expectations from vector similarity</span>
+<a href="#__codelineno-5-11" id="__codelineno-5-11" name="__codelineno-5-11"></a>    <span class="n">expected_r</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Expected R-multiple return</span>
+<a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a>    <span class="n">expected_winrate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Win rate from similar patterns</span>
+<a href="#__codelineno-5-13" id="__codelineno-5-13" name="__codelineno-5-13"></a>    <span class="n">expected_source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Source of expectations</span>
+<a href="#__codelineno-5-14" id="__codelineno-5-14" name="__codelineno-5-14"></a>    <span class="n">expected_notes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Additional context</span>
+<a href="#__codelineno-5-15" id="__codelineno-5-15" name="__codelineno-5-15"></a>
+<a href="#__codelineno-5-16" id="__codelineno-5-16" name="__codelineno-5-16"></a>    <span class="c1"># Holding time priors from historical patterns</span>
+<a href="#__codelineno-5-17" id="__codelineno-5-17" name="__codelineno-5-17"></a>    <span class="n">expected_hold_bars</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Expected bars to hold</span>
+<a href="#__codelineno-5-18" id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="n">expected_hold_days</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Expected days to hold</span>
+<a href="#__codelineno-5-19" id="__codelineno-5-19" name="__codelineno-5-19"></a>    <span class="n">expected_win_hold_bars</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Bars for winning trades</span>
+<a href="#__codelineno-5-20" id="__codelineno-5-20" name="__codelineno-5-20"></a>    <span class="n">expected_loss_hold_bars</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Bars for losing trades</span>
+<a href="#__codelineno-5-21" id="__codelineno-5-21" name="__codelineno-5-21"></a>
+<a href="#__codelineno-5-22" id="__codelineno-5-22" name="__codelineno-5-22"></a>    <span class="c1"># LLM insights and action planning</span>
+<a href="#__codelineno-5-23" id="__codelineno-5-23" name="__codelineno-5-23"></a>    <span class="n">llm_vote</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># LLM trend/bias assessment</span>
+<a href="#__codelineno-5-24" id="__codelineno-5-24" name="__codelineno-5-24"></a>    <span class="n">llm_explanation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># LLM reasoning</span>
+<a href="#__codelineno-5-25" id="__codelineno-5-25" name="__codelineno-5-25"></a>    <span class="n">action_plan</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Execution checklist</span>
+<a href="#__codelineno-5-26" id="__codelineno-5-26" name="__codelineno-5-26"></a>    <span class="n">risk_notes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Risk and invalidation scenarios</span>
+<a href="#__codelineno-5-27" id="__codelineno-5-27" name="__codelineno-5-27"></a>    <span class="n">scenarios</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Possible outcomes</span>
+<a href="#__codelineno-5-28" id="__codelineno-5-28" name="__codelineno-5-28"></a>
+<a href="#__codelineno-5-29" id="__codelineno-5-29" name="__codelineno-5-29"></a>    <span class="c1"># Market context enrichments</span>
+<a href="#__codelineno-5-30" id="__codelineno-5-30" name="__codelineno-5-30"></a>    <span class="n">mtf_15m_trend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 15-minute trend</span>
+<a href="#__codelineno-5-31" id="__codelineno-5-31" name="__codelineno-5-31"></a>    <span class="n">mtf_1h_trend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 1-hour trend</span>
+<a href="#__codelineno-5-32" id="__codelineno-5-32" name="__codelineno-5-32"></a>    <span class="n">mtf_alignment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Multi-timeframe alignment score</span>
+<a href="#__codelineno-5-33" id="__codelineno-5-33" name="__codelineno-5-33"></a>    <span class="n">rs_sector_20</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Relative strength vs sector</span>
+<a href="#__codelineno-5-34" id="__codelineno-5-34" name="__codelineno-5-34"></a>    <span class="n">rs_spy_20</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Relative strength vs SPY</span>
+<a href="#__codelineno-5-35" id="__codelineno-5-35" name="__codelineno-5-35"></a>    <span class="n">sector_symbol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Sector ETF symbol</span>
+<a href="#__codelineno-5-36" id="__codelineno-5-36" name="__codelineno-5-36"></a>    <span class="n">tod_bucket</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Time of day ("open", "mid", "close")</span>
+<a href="#__codelineno-5-37" id="__codelineno-5-37" name="__codelineno-5-37"></a>    <span class="n">atr_pct</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># ATR as percentage of price</span>
+<a href="#__codelineno-5-38" id="__codelineno-5-38" name="__codelineno-5-38"></a>    <span class="n">vol_regime</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Volatility regime ("L", "M", "H")</span>
+</code></pre></div>
+<p><strong>Example Usage:</strong>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">agent</span> <span class="o">=</span> <span class="n">SwingAgent</span><span class="p">()</span>
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="n">signal</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="s2">"AAPL"</span><span class="p">)</span>
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a>
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Symbol: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">symbol</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Trend: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">trend</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Confidence: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">confidence</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a>
+<a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="k">if</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+<a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Entry: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">side</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> at $</span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-6-10" id="__codelineno-6-10" name="__codelineno-6-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Stop: $</span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">stop_price</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-6-11" id="__codelineno-6-11" name="__codelineno-6-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Target: $</span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">take_profit</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-6-12" id="__codelineno-6-12" name="__codelineno-6-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"R-Multiple: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">r_multiple</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-6-13" id="__codelineno-6-13" name="__codelineno-6-13"></a>
+<a href="#__codelineno-6-14" id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="k">if</span> <span class="n">signal</span><span class="o">.</span><span class="n">expected_r</span><span class="p">:</span>
+<a href="#__codelineno-6-15" id="__codelineno-6-15" name="__codelineno-6-15"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected Return: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">expected_r</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">R"</span><span class="p">)</span>
+<a href="#__codelineno-6-16" id="__codelineno-6-16" name="__codelineno-6-16"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected Win Rate: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">expected_winrate</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="trendstate">TrendState<a class="headerlink" href="#trendstate" title="Permanent link">¶</a></h3>
+<p>Technical trend analysis with key momentum indicators.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">class</span> <span class="nc">TrendState</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>    <span class="n">label</span><span class="p">:</span> <span class="n">TrendLabel</span>  <span class="c1"># Classified trend direction</span>
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>    <span class="n">ema_slope</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># EMA20 slope as percentage</span>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a>    <span class="n">price_above_ema</span><span class="p">:</span> <span class="nb">bool</span>  <span class="c1"># Current price vs EMA20</span>
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a>    <span class="n">rsi_14</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># 14-period RSI value (0-100)</span>
+</code></pre></div>
+<p><strong>TrendLabel Classifications:</strong>
+- <code>STRONG_UP</code>: Strong uptrend (slope &gt; 2%, RSI ≥ 60, price above EMA)<br/>
+- <code>UP</code>: Uptrend (slope &gt; 1%, RSI ≥ 60, price above EMA)
+- <code>SIDEWAYS</code>: Consolidation or unclear direction
+- <code>DOWN</code>: Downtrend (slope &lt; -1%, RSI ≤ 40, price below EMA)
+- <code>STRONG_DOWN</code>: Strong downtrend (slope &lt; -2%, RSI ≤ 40, price below EMA)</p>
+<h3 id="entryplan">EntryPlan<a class="headerlink" href="#entryplan" title="Permanent link">¶</a></h3>
+<p>Trade entry specification with risk management levels.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">class</span> <span class="nc">EntryPlan</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>    <span class="n">side</span><span class="p">:</span> <span class="n">SignalSide</span>  <span class="c1"># "long", "short", or "none"</span>
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>    <span class="n">entry_price</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Specific entry price level</span>
+<a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a>    <span class="n">stop_price</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Stop loss price for risk management</span>
+<a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a>    <span class="n">take_profit</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Initial profit target</span>
+<a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a>    <span class="n">r_multiple</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Risk/reward ratio (target/risk)</span>
+<a href="#__codelineno-8-7" id="__codelineno-8-7" name="__codelineno-8-7"></a>    <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># Strategy description and context</span>
+<a href="#__codelineno-8-8" id="__codelineno-8-8" name="__codelineno-8-8"></a>
+<a href="#__codelineno-8-9" id="__codelineno-8-9" name="__codelineno-8-9"></a>    <span class="c1"># Fibonacci analysis context</span>
+<a href="#__codelineno-8-10" id="__codelineno-8-10" name="__codelineno-8-10"></a>    <span class="n">fib_golden_low</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 0.618 retracement level</span>
+<a href="#__codelineno-8-11" id="__codelineno-8-11" name="__codelineno-8-11"></a>    <span class="n">fib_golden_high</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 0.65 retracement level  </span>
+<a href="#__codelineno-8-12" id="__codelineno-8-12" name="__codelineno-8-12"></a>    <span class="n">fib_target_1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 1.272 extension target</span>
+<a href="#__codelineno-8-13" id="__codelineno-8-13" name="__codelineno-8-13"></a>    <span class="n">fib_target_2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 1.618 extension target</span>
+</code></pre></div>
+<p><strong>Entry Strategy Categories:</strong>
+1. <strong>Fibonacci Golden Pocket</strong>: Pullback to 0.618-0.65 retracement zone
+2. <strong>Momentum Continuation</strong>: Breakout above/below prior swing extremes
+3. <strong>Mean Reversion</strong>: RSI extreme reversals in sideways markets</p>
+<p><strong>Risk Management Validation:</strong>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># Long trade validation</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="s2">"long"</span><span class="p">:</span>
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="k">assert</span> <span class="n">entry</span><span class="o">.</span><span class="n">stop_price</span> <span class="o">&lt;</span> <span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="k">assert</span> <span class="n">entry</span><span class="o">.</span><span class="n">take_profit</span> <span class="o">&gt;</span> <span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+<a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a>
+<a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="c1"># Short trade validation  </span>
+<a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">side</span> <span class="o">==</span> <span class="s2">"short"</span><span class="p">:</span>
+<a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a>    <span class="k">assert</span> <span class="n">entry</span><span class="o">.</span><span class="n">stop_price</span> <span class="o">&gt;</span> <span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+<a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a>    <span class="k">assert</span> <span class="n">entry</span><span class="o">.</span><span class="n">take_profit</span> <span class="o">&lt;</span> <span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span>
+</code></pre></div></p>
+<h3 id="tradesignal_1">TradeSignal<a class="headerlink" href="#tradesignal_1" title="Permanent link">¶</a></h3>
+<p>Complete trading signal with technical analysis, ML expectations, and LLM insights.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="k">class</span> <span class="nc">TradeSignal</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a>    <span class="c1"># Core identification</span>
+<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a>    <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span>
+<a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a>    <span class="n">timeframe</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"15m"</span><span class="p">,</span> <span class="s2">"30m"</span><span class="p">,</span> <span class="s2">"1h"</span><span class="p">,</span> <span class="s2">"1d"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"30m"</span>
+<a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a>    <span class="n">asof</span><span class="p">:</span> <span class="nb">str</span>                              <span class="c1"># ISO timestamp</span>
+<a href="#__codelineno-10-6" id="__codelineno-10-6" name="__codelineno-10-6"></a>
+<a href="#__codelineno-10-7" id="__codelineno-10-7" name="__codelineno-10-7"></a>    <span class="c1"># Technical analysis</span>
+<a href="#__codelineno-10-8" id="__codelineno-10-8" name="__codelineno-10-8"></a>    <span class="n">trend</span><span class="p">:</span> <span class="n">TrendState</span>
+<a href="#__codelineno-10-9" id="__codelineno-10-9" name="__codelineno-10-9"></a>    <span class="n">entry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EntryPlan</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-10" id="__codelineno-10-10" name="__codelineno-10-10"></a>    <span class="n">confidence</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a href="#__codelineno-10-11" id="__codelineno-10-11" name="__codelineno-10-11"></a>    <span class="n">reasoning</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
+<a href="#__codelineno-10-12" id="__codelineno-10-12" name="__codelineno-10-12"></a>
+<a href="#__codelineno-10-13" id="__codelineno-10-13" name="__codelineno-10-13"></a>    <span class="c1"># ML expectations</span>
+<a href="#__codelineno-10-14" id="__codelineno-10-14" name="__codelineno-10-14"></a>    <span class="n">expected_r</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-15" id="__codelineno-10-15" name="__codelineno-10-15"></a>    <span class="n">expected_winrate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-16" id="__codelineno-10-16" name="__codelineno-10-16"></a>    <span class="n">expected_source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-17" id="__codelineno-10-17" name="__codelineno-10-17"></a>    <span class="n">expected_notes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-18" id="__codelineno-10-18" name="__codelineno-10-18"></a>    <span class="n">expected_hold_bars</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-19" id="__codelineno-10-19" name="__codelineno-10-19"></a>    <span class="n">expected_hold_days</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-20" id="__codelineno-10-20" name="__codelineno-10-20"></a>    <span class="n">expected_win_hold_bars</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-21" id="__codelineno-10-21" name="__codelineno-10-21"></a>    <span class="n">expected_loss_hold_bars</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-22" id="__codelineno-10-22" name="__codelineno-10-22"></a>
+<a href="#__codelineno-10-23" id="__codelineno-10-23" name="__codelineno-10-23"></a>    <span class="c1"># LLM outputs</span>
+<a href="#__codelineno-10-24" id="__codelineno-10-24" name="__codelineno-10-24"></a>    <span class="n">llm_vote</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-25" id="__codelineno-10-25" name="__codelineno-10-25"></a>    <span class="n">llm_explanation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-26" id="__codelineno-10-26" name="__codelineno-10-26"></a>    <span class="n">action_plan</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-27" id="__codelineno-10-27" name="__codelineno-10-27"></a>    <span class="n">risk_notes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-28" id="__codelineno-10-28" name="__codelineno-10-28"></a>    <span class="n">scenarios</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-29" id="__codelineno-10-29" name="__codelineno-10-29"></a>
+<a href="#__codelineno-10-30" id="__codelineno-10-30" name="__codelineno-10-30"></a>    <span class="c1"># Enrichments</span>
+<a href="#__codelineno-10-31" id="__codelineno-10-31" name="__codelineno-10-31"></a>    <span class="n">mtf_15m_trend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-32" id="__codelineno-10-32" name="__codelineno-10-32"></a>    <span class="n">mtf_1h_trend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-33" id="__codelineno-10-33" name="__codelineno-10-33"></a>    <span class="n">mtf_alignment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>      <span class="c1"># 0-2 timeframes aligned</span>
+<a href="#__codelineno-10-34" id="__codelineno-10-34" name="__codelineno-10-34"></a>    <span class="n">rs_sector_20</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># Relative strength vs sector</span>
+<a href="#__codelineno-10-35" id="__codelineno-10-35" name="__codelineno-10-35"></a>    <span class="n">rs_spy_20</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>        <span class="c1"># Relative strength vs SPY</span>
+<a href="#__codelineno-10-36" id="__codelineno-10-36" name="__codelineno-10-36"></a>    <span class="n">sector_symbol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-37" id="__codelineno-10-37" name="__codelineno-10-37"></a>    <span class="n">tod_bucket</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>         <span class="c1"># "open", "mid", "close"</span>
+<a href="#__codelineno-10-38" id="__codelineno-10-38" name="__codelineno-10-38"></a>    <span class="n">atr_pct</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-10-39" id="__codelineno-10-39" name="__codelineno-10-39"></a>    <span class="n">vol_regime</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>         <span class="c1"># "L", "M", "H"</span>
+</code></pre></div>
+<h3 id="trendstate_1">TrendState<a class="headerlink" href="#trendstate_1" title="Permanent link">¶</a></h3>
+<p>Technical trend analysis results.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="k">class</span> <span class="nc">TrendState</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>    <span class="n">label</span><span class="p">:</span> <span class="n">TrendLabel</span>                        <span class="c1"># Trend classification</span>
+<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a>    <span class="n">ema_slope</span><span class="p">:</span> <span class="nb">float</span>                         <span class="c1"># EMA20 slope (normalized)</span>
+<a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a>    <span class="n">price_above_ema</span><span class="p">:</span> <span class="nb">bool</span>                    <span class="c1"># Price vs EMA20 position</span>
+<a href="#__codelineno-11-5" id="__codelineno-11-5" name="__codelineno-11-5"></a>    <span class="n">rsi_14</span><span class="p">:</span> <span class="nb">float</span>                           <span class="c1"># RSI(14) current value</span>
+</code></pre></div>
+<h3 id="entryplan_1">EntryPlan<a class="headerlink" href="#entryplan_1" title="Permanent link">¶</a></h3>
+<p>Trade entry plan with risk management.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="k">class</span> <span class="nc">EntryPlan</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a>    <span class="n">side</span><span class="p">:</span> <span class="n">SignalSide</span>                         <span class="c1"># "long", "short", "none"</span>
+<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a>    <span class="n">entry_price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a>    <span class="n">stop_price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a>    <span class="n">take_profit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a href="#__codelineno-12-6" id="__codelineno-12-6" name="__codelineno-12-6"></a>    <span class="n">r_multiple</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>     <span class="c1"># Risk-reward ratio</span>
+<a href="#__codelineno-12-7" id="__codelineno-12-7" name="__codelineno-12-7"></a>    <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>                        <span class="c1"># Strategy description</span>
+<a href="#__codelineno-12-8" id="__codelineno-12-8" name="__codelineno-12-8"></a>
+<a href="#__codelineno-12-9" id="__codelineno-12-9" name="__codelineno-12-9"></a>    <span class="c1"># Fibonacci levels</span>
+<a href="#__codelineno-12-10" id="__codelineno-12-10" name="__codelineno-12-10"></a>    <span class="n">fib_golden_low</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-12-11" id="__codelineno-12-11" name="__codelineno-12-11"></a>    <span class="n">fib_golden_high</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-12-12" id="__codelineno-12-12" name="__codelineno-12-12"></a>    <span class="n">fib_target_1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># 1.272 extension</span>
+<a href="#__codelineno-12-13" id="__codelineno-12-13" name="__codelineno-12-13"></a>    <span class="n">fib_target_2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># 1.618 extension</span>
+</code></pre></div>
+<h3 id="enums">Enums<a class="headerlink" href="#enums" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="k">class</span> <span class="nc">TrendLabel</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a>    <span class="n">STRONG_UP</span> <span class="o">=</span> <span class="s2">"strong_up"</span>
+<a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a>    <span class="n">UP</span> <span class="o">=</span> <span class="s2">"up"</span>
+<a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a>    <span class="n">SIDEWAYS</span> <span class="o">=</span> <span class="s2">"sideways"</span> 
+<a href="#__codelineno-13-5" id="__codelineno-13-5" name="__codelineno-13-5"></a>    <span class="n">DOWN</span> <span class="o">=</span> <span class="s2">"down"</span>
+<a href="#__codelineno-13-6" id="__codelineno-13-6" name="__codelineno-13-6"></a>    <span class="n">STRONG_DOWN</span> <span class="o">=</span> <span class="s2">"strong_down"</span>
+<a href="#__codelineno-13-7" id="__codelineno-13-7" name="__codelineno-13-7"></a>
+<a href="#__codelineno-13-8" id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="k">class</span> <span class="nc">SignalSide</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<a href="#__codelineno-13-9" id="__codelineno-13-9" name="__codelineno-13-9"></a>    <span class="n">LONG</span> <span class="o">=</span> <span class="s2">"long"</span>
+<a href="#__codelineno-13-10" id="__codelineno-13-10" name="__codelineno-13-10"></a>    <span class="n">SHORT</span> <span class="o">=</span> <span class="s2">"short"</span>
+<a href="#__codelineno-13-11" id="__codelineno-13-11" name="__codelineno-13-11"></a>    <span class="n">NONE</span> <span class="o">=</span> <span class="s2">"none"</span>
+</code></pre></div>
+<h2 id="database-management">Database Management<a class="headerlink" href="#database-management" title="Permanent link">¶</a></h2>
+<h3 id="database-configuration">Database Configuration<a class="headerlink" href="#database-configuration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="kn">from</span> <span class="nn">swing_agent.database</span> <span class="kn">import</span> <span class="p">(</span>
+<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a>    <span class="n">get_database_config</span><span class="p">,</span>
+<a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a>    <span class="n">init_database</span><span class="p">,</span>
+<a href="#__codelineno-14-4" id="__codelineno-14-4" name="__codelineno-14-4"></a>    <span class="n">get_session</span><span class="p">,</span>
+<a href="#__codelineno-14-5" id="__codelineno-14-5" name="__codelineno-14-5"></a>    <span class="n">create_postgresql_url</span><span class="p">,</span>
+<a href="#__codelineno-14-6" id="__codelineno-14-6" name="__codelineno-14-6"></a>    <span class="n">create_mysql_url</span><span class="p">,</span>
+<a href="#__codelineno-14-7" id="__codelineno-14-7" name="__codelineno-14-7"></a>    <span class="n">create_cnpg_url</span>
+<a href="#__codelineno-14-8" id="__codelineno-14-8" name="__codelineno-14-8"></a><span class="p">)</span>
+<a href="#__codelineno-14-9" id="__codelineno-14-9" name="__codelineno-14-9"></a>
+<a href="#__codelineno-14-10" id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="c1"># Initialize database tables</span>
+<a href="#__codelineno-14-11" id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="n">init_database</span><span class="p">()</span>
+<a href="#__codelineno-14-12" id="__codelineno-14-12" name="__codelineno-14-12"></a>
+<a href="#__codelineno-14-13" id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="c1"># Get database session for queries</span>
+<a href="#__codelineno-14-14" id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="k">with</span> <span class="n">get_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a href="#__codelineno-14-15" id="__codelineno-14-15" name="__codelineno-14-15"></a>    <span class="c1"># Database operations here</span>
+<a href="#__codelineno-14-16" id="__codelineno-14-16" name="__codelineno-14-16"></a>    <span class="n">signals</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Signal</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<a href="#__codelineno-14-17" id="__codelineno-14-17" name="__codelineno-14-17"></a>
+<a href="#__codelineno-14-18" id="__codelineno-14-18" name="__codelineno-14-18"></a><span class="c1"># Create connection URLs</span>
+<a href="#__codelineno-14-19" id="__codelineno-14-19" name="__codelineno-14-19"></a><span class="n">postgres_url</span> <span class="o">=</span> <span class="n">create_postgresql_url</span><span class="p">(</span>
+<a href="#__codelineno-14-20" id="__codelineno-14-20" name="__codelineno-14-20"></a>    <span class="n">host</span><span class="o">=</span><span class="s2">"localhost"</span><span class="p">,</span>
+<a href="#__codelineno-14-21" id="__codelineno-14-21" name="__codelineno-14-21"></a>    <span class="n">database</span><span class="o">=</span><span class="s2">"swing_agent"</span><span class="p">,</span> 
+<a href="#__codelineno-14-22" id="__codelineno-14-22" name="__codelineno-14-22"></a>    <span class="n">username</span><span class="o">=</span><span class="s2">"user"</span><span class="p">,</span>
+<a href="#__codelineno-14-23" id="__codelineno-14-23" name="__codelineno-14-23"></a>    <span class="n">password</span><span class="o">=</span><span class="s2">"pass"</span>
+<a href="#__codelineno-14-24" id="__codelineno-14-24" name="__codelineno-14-24"></a><span class="p">)</span>
+<a href="#__codelineno-14-25" id="__codelineno-14-25" name="__codelineno-14-25"></a>
+<a href="#__codelineno-14-26" id="__codelineno-14-26" name="__codelineno-14-26"></a><span class="n">mysql_url</span> <span class="o">=</span> <span class="n">create_mysql_url</span><span class="p">(</span>
+<a href="#__codelineno-14-27" id="__codelineno-14-27" name="__codelineno-14-27"></a>    <span class="n">host</span><span class="o">=</span><span class="s2">"localhost"</span><span class="p">,</span>
+<a href="#__codelineno-14-28" id="__codelineno-14-28" name="__codelineno-14-28"></a>    <span class="n">database</span><span class="o">=</span><span class="s2">"swing_agent"</span><span class="p">,</span>
+<a href="#__codelineno-14-29" id="__codelineno-14-29" name="__codelineno-14-29"></a>    <span class="n">username</span><span class="o">=</span><span class="s2">"user"</span><span class="p">,</span> 
+<a href="#__codelineno-14-30" id="__codelineno-14-30" name="__codelineno-14-30"></a>    <span class="n">password</span><span class="o">=</span><span class="s2">"pass"</span>
+<a href="#__codelineno-14-31" id="__codelineno-14-31" name="__codelineno-14-31"></a><span class="p">)</span>
+<a href="#__codelineno-14-32" id="__codelineno-14-32" name="__codelineno-14-32"></a>
+<a href="#__codelineno-14-33" id="__codelineno-14-33" name="__codelineno-14-33"></a><span class="c1"># CloudNativePG URL from environment</span>
+<a href="#__codelineno-14-34" id="__codelineno-14-34" name="__codelineno-14-34"></a><span class="n">cnpg_url</span> <span class="o">=</span> <span class="n">create_cnpg_url</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="database-models">Database Models<a class="headerlink" href="#database-models" title="Permanent link">¶</a></h3>
+<p>SQLAlchemy models for centralized storage.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="kn">from</span> <span class="nn">swing_agent.models_db</span> <span class="kn">import</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">VectorStore</span>
+<a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a>
+<a href="#__codelineno-15-3" id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="c1"># Query signals with filters</span>
+<a href="#__codelineno-15-4" id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="k">with</span> <span class="n">get_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<a href="#__codelineno-15-5" id="__codelineno-15-5" name="__codelineno-15-5"></a>    <span class="n">signals</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Signal</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+<a href="#__codelineno-15-6" id="__codelineno-15-6" name="__codelineno-15-6"></a>        <span class="n">Signal</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s2">"AAPL"</span><span class="p">,</span>
+<a href="#__codelineno-15-7" id="__codelineno-15-7" name="__codelineno-15-7"></a>        <span class="n">Signal</span><span class="o">.</span><span class="n">timeframe</span> <span class="o">==</span> <span class="s2">"30m"</span>
+<a href="#__codelineno-15-8" id="__codelineno-15-8" name="__codelineno-15-8"></a>    <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Signal</span><span class="o">.</span><span class="n">created_at_utc</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<a href="#__codelineno-15-9" id="__codelineno-15-9" name="__codelineno-15-9"></a>
+<a href="#__codelineno-15-10" id="__codelineno-15-10" name="__codelineno-15-10"></a>    <span class="c1"># Query vector patterns with outcomes</span>
+<a href="#__codelineno-15-11" id="__codelineno-15-11" name="__codelineno-15-11"></a>    <span class="n">vectors</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">VectorStore</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+<a href="#__codelineno-15-12" id="__codelineno-15-12" name="__codelineno-15-12"></a>        <span class="n">VectorStore</span><span class="o">.</span><span class="n">realized_r</span><span class="o">.</span><span class="n">isnot</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
+<a href="#__codelineno-15-13" id="__codelineno-15-13" name="__codelineno-15-13"></a>        <span class="n">VectorStore</span><span class="o">.</span><span class="n">symbol</span> <span class="o">==</span> <span class="s2">"AAPL"</span>
+<a href="#__codelineno-15-14" id="__codelineno-15-14" name="__codelineno-15-14"></a>    <span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>Signal Model Fields:</strong>
+- <code>id</code>: Unique signal identifier
+- <code>symbol</code>, <code>timeframe</code>, <code>asof</code>: Basic signal info
+- <code>trend_label</code>, <code>ema_slope</code>, <code>rsi14</code>: Technical analysis
+- <code>entry_price</code>, <code>stop_price</code>, <code>take_profit</code>: Entry plan
+- <code>confidence</code>, <code>reasoning</code>: Signal quality
+- <code>expected_r</code>, <code>expected_winrate</code>: ML expectations
+- <code>action_plan</code>, <code>risk_notes</code>: LLM insights
+- <code>mtf_alignment</code>, <code>vol_regime</code>: Market context
+- <code>realized_r</code>, <code>exit_reason</code>: Trade outcomes</p>
+<p><strong>VectorStore Model Fields:</strong>
+- <code>vid</code>: Unique vector identifier
+- <code>ts_utc</code>: Vector timestamp
+- <code>symbol</code>, <code>timeframe</code>: Market context
+- <code>vector</code>: Feature vector as JSON array
+- <code>realized_r</code>, <code>exit_reason</code>: Outcomes
+- <code>payload_json</code>: Additional metadata</p>
+<h3 id="migration-utilities">Migration Utilities<a class="headerlink" href="#migration-utilities" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="kn">from</span> <span class="nn">swing_agent.migrate</span> <span class="kn">import</span> <span class="p">(</span>
+<a href="#__codelineno-16-2" id="__codelineno-16-2" name="__codelineno-16-2"></a>    <span class="n">migrate_signals</span><span class="p">,</span>
+<a href="#__codelineno-16-3" id="__codelineno-16-3" name="__codelineno-16-3"></a>    <span class="n">migrate_vectors</span><span class="p">,</span> 
+<a href="#__codelineno-16-4" id="__codelineno-16-4" name="__codelineno-16-4"></a>    <span class="n">migrate_all_data</span>
+<a href="#__codelineno-16-5" id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="p">)</span>
+<a href="#__codelineno-16-6" id="__codelineno-16-6" name="__codelineno-16-6"></a>
+<a href="#__codelineno-16-7" id="__codelineno-16-7" name="__codelineno-16-7"></a><span class="c1"># Migrate from legacy separate databases</span>
+<a href="#__codelineno-16-8" id="__codelineno-16-8" name="__codelineno-16-8"></a><span class="n">migrate_all_data</span><span class="p">(</span>
+<a href="#__codelineno-16-9" id="__codelineno-16-9" name="__codelineno-16-9"></a>    <span class="n">data_dir</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">"data/"</span><span class="p">),</span>
+<a href="#__codelineno-16-10" id="__codelineno-16-10" name="__codelineno-16-10"></a>    <span class="n">target_db_url</span><span class="o">=</span><span class="s2">"postgresql://user:pass@host:5432/swing_agent"</span>
+<a href="#__codelineno-16-11" id="__codelineno-16-11" name="__codelineno-16-11"></a><span class="p">)</span>
+<a href="#__codelineno-16-12" id="__codelineno-16-12" name="__codelineno-16-12"></a>
+<a href="#__codelineno-16-13" id="__codelineno-16-13" name="__codelineno-16-13"></a><span class="c1"># Migrate specific components</span>
+<a href="#__codelineno-16-14" id="__codelineno-16-14" name="__codelineno-16-14"></a><span class="n">migrate_signals</span><span class="p">(</span>
+<a href="#__codelineno-16-15" id="__codelineno-16-15" name="__codelineno-16-15"></a>    <span class="n">old_signals_db</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">"data/signals.sqlite"</span><span class="p">),</span>
+<a href="#__codelineno-16-16" id="__codelineno-16-16" name="__codelineno-16-16"></a>    <span class="n">target_db_url</span><span class="o">=</span><span class="s2">"postgresql://..."</span>
+<a href="#__codelineno-16-17" id="__codelineno-16-17" name="__codelineno-16-17"></a><span class="p">)</span>
+<a href="#__codelineno-16-18" id="__codelineno-16-18" name="__codelineno-16-18"></a>
+<a href="#__codelineno-16-19" id="__codelineno-16-19" name="__codelineno-16-19"></a><span class="n">migrate_vectors</span><span class="p">(</span>
+<a href="#__codelineno-16-20" id="__codelineno-16-20" name="__codelineno-16-20"></a>    <span class="n">old_vectors_db</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">"data/vec_store.sqlite"</span><span class="p">),</span>
+<a href="#__codelineno-16-21" id="__codelineno-16-21" name="__codelineno-16-21"></a>    <span class="n">target_db_url</span><span class="o">=</span><span class="s2">"postgresql://..."</span>
+<a href="#__codelineno-16-22" id="__codelineno-16-22" name="__codelineno-16-22"></a><span class="p">)</span>
+</code></pre></div>
+<h2 id="configuration-management_1">Configuration Management<a class="headerlink" href="#configuration-management_1" title="Permanent link">¶</a></h2>
+<h3 id="tradingconfig_1">TradingConfig<a class="headerlink" href="#tradingconfig_1" title="Permanent link">¶</a></h3>
+<p>Centralized configuration for all trading parameters.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="kn">from</span> <span class="nn">swing_agent.config</span> <span class="kn">import</span> <span class="n">get_config</span><span class="p">,</span> <span class="n">TradingConfig</span>
+<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a>
+<a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="n">cfg</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+<a href="#__codelineno-17-4" id="__codelineno-17-4" name="__codelineno-17-4"></a>
+<a href="#__codelineno-17-5" id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="c1"># Access trend detection thresholds</span>
+<a href="#__codelineno-17-6" id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="n">ema_threshold_up</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">EMA_SLOPE_THRESHOLD_UP</span>      <span class="c1"># 0.01</span>
+<a href="#__codelineno-17-7" id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="n">ema_threshold_strong</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">EMA_SLOPE_THRESHOLD_STRONG</span>  <span class="c1"># 0.02</span>
+<a href="#__codelineno-17-8" id="__codelineno-17-8" name="__codelineno-17-8"></a><span class="n">ema_lookback</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">EMA_SLOPE_LOOKBACK</span>              <span class="c1"># 6</span>
+<a href="#__codelineno-17-9" id="__codelineno-17-9" name="__codelineno-17-9"></a>
+<a href="#__codelineno-17-10" id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="c1"># RSI parameters</span>
+<a href="#__codelineno-17-11" id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="n">rsi_oversold</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">RSI_OVERSOLD_THRESHOLD</span>          <span class="c1"># 35.0</span>
+<a href="#__codelineno-17-12" id="__codelineno-17-12" name="__codelineno-17-12"></a><span class="n">rsi_overbought</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">RSI_OVERBOUGHT_THRESHOLD</span>      <span class="c1"># 65.0</span>
+<a href="#__codelineno-17-13" id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="n">rsi_period</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">RSI_PERIOD</span>                        <span class="c1"># 14</span>
+<a href="#__codelineno-17-14" id="__codelineno-17-14" name="__codelineno-17-14"></a>
+<a href="#__codelineno-17-15" id="__codelineno-17-15" name="__codelineno-17-15"></a><span class="c1"># Risk management</span>
+<a href="#__codelineno-17-16" id="__codelineno-17-16" name="__codelineno-17-16"></a><span class="n">atr_stop_mult</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">ATR_STOP_MULTIPLIER</span>            <span class="c1"># 1.2</span>
+<a href="#__codelineno-17-17" id="__codelineno-17-17" name="__codelineno-17-17"></a><span class="n">atr_target_mult</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">ATR_TARGET_MULTIPLIER</span>        <span class="c1"># 2.0</span>
+<a href="#__codelineno-17-18" id="__codelineno-17-18" name="__codelineno-17-18"></a><span class="n">atr_period</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">ATR_PERIOD</span>                        <span class="c1"># 14</span>
+<a href="#__codelineno-17-19" id="__codelineno-17-19" name="__codelineno-17-19"></a>
+<a href="#__codelineno-17-20" id="__codelineno-17-20" name="__codelineno-17-20"></a><span class="c1"># Fibonacci settings</span>
+<a href="#__codelineno-17-21" id="__codelineno-17-21" name="__codelineno-17-21"></a><span class="n">fib_lookback</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">FIB_LOOKBACK</span>                    <span class="c1"># 40</span>
+<a href="#__codelineno-17-22" id="__codelineno-17-22" name="__codelineno-17-22"></a><span class="n">golden_low</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">GOLDEN_POCKET_LOW</span>                 <span class="c1"># 0.618</span>
+<a href="#__codelineno-17-23" id="__codelineno-17-23" name="__codelineno-17-23"></a><span class="n">golden_high</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">GOLDEN_POCKET_HIGH</span>               <span class="c1"># 0.65</span>
+</code></pre></div>
+<p><strong>Configuration Categories:</strong>
+- <strong>Trend Detection</strong>: EMA slope thresholds, RSI levels
+- <strong>Risk Management</strong>: ATR multipliers for stops/targets
+- <strong>Volatility Analysis</strong>: Regime classification percentiles
+- <strong>Fibonacci</strong>: Lookback periods, golden pocket bounds
+- <strong>Multi-timeframe</strong>: Alignment scoring parameters
+- <strong>Vector Store</strong>: KNN search parameters</p>
+<h2 id="technical-indicators">Technical Indicators<a class="headerlink" href="#technical-indicators" title="Permanent link">¶</a></h2>
+<h3 id="core-functions">Core Functions<a class="headerlink" href="#core-functions" title="Permanent link">¶</a></h3>
+<h4 id="emaseries-pdseries-span-int-pdseries"><code>ema(series: pd.Series, span: int) -&gt; pd.Series</code><a class="headerlink" href="#emaseries-pdseries-span-int-pdseries" title="Permanent link">¶</a></h4>
+<p>Exponential Moving Average calculation.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="kn">from</span> <span class="nn">swing_agent.indicators</span> <span class="kn">import</span> <span class="n">ema</span>
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a>
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="n">close_prices</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"close"</span><span class="p">]</span>
+<a href="#__codelineno-18-4" id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="n">ema_20</span> <span class="o">=</span> <span class="n">ema</span><span class="p">(</span><span class="n">close_prices</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="rsiseries-pdseries-length-int-14-pdseries"><code>rsi(series: pd.Series, length: int = 14) -&gt; pd.Series</code><a class="headerlink" href="#rsiseries-pdseries-length-int-14-pdseries" title="Permanent link">¶</a></h4>
+<p>Relative Strength Index momentum oscillator.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="kn">from</span> <span class="nn">swing_agent.indicators</span> <span class="kn">import</span> <span class="n">rsi</span>
+<a href="#__codelineno-19-2" id="__codelineno-19-2" name="__codelineno-19-2"></a>
+<a href="#__codelineno-19-3" id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="n">rsi_values</span> <span class="o">=</span> <span class="n">rsi</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"close"</span><span class="p">],</span> <span class="mi">14</span><span class="p">)</span>
+<a href="#__codelineno-19-4" id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="n">current_rsi</span> <span class="o">=</span> <span class="n">rsi_values</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+<h4 id="atrdf-pddataframe-length-int-14-pdseries"><code>atr(df: pd.DataFrame, length: int = 14) -&gt; pd.Series</code><a class="headerlink" href="#atrdf-pddataframe-length-int-14-pdseries" title="Permanent link">¶</a></h4>
+<p>Average True Range volatility indicator.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="kn">from</span> <span class="nn">swing_agent.indicators</span> <span class="kn">import</span> <span class="n">atr</span>
+<a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a>
+<a href="#__codelineno-20-3" id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="n">atr_values</span> <span class="o">=</span> <span class="n">atr</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<a href="#__codelineno-20-4" id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="n">current_atr</span> <span class="o">=</span> <span class="n">atr_values</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+<h4 id="fibonacci_rangedf-pddataframe-lookback-int-40-fibrange"><code>fibonacci_range(df: pd.DataFrame, lookback: int = 40) -&gt; FibRange</code><a class="headerlink" href="#fibonacci_rangedf-pddataframe-lookback-int-40-fibrange" title="Permanent link">¶</a></h4>
+<p>Calculate Fibonacci retracement and extension levels.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="kn">from</span> <span class="nn">swing_agent.indicators</span> <span class="kn">import</span> <span class="n">fibonacci_range</span>
+<a href="#__codelineno-21-2" id="__codelineno-21-2" name="__codelineno-21-2"></a>
+<a href="#__codelineno-21-3" id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="n">fib</span> <span class="o">=</span> <span class="n">fibonacci_range</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">lookback</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<a href="#__codelineno-21-4" id="__codelineno-21-4" name="__codelineno-21-4"></a><span class="n">golden_pocket</span> <span class="o">=</span> <span class="p">(</span><span class="n">fib</span><span class="o">.</span><span class="n">golden_low</span><span class="p">,</span> <span class="n">fib</span><span class="o">.</span><span class="n">golden_high</span><span class="p">)</span>
+<a href="#__codelineno-21-5" id="__codelineno-21-5" name="__codelineno-21-5"></a><span class="n">extension_1272</span> <span class="o">=</span> <span class="n">fib</span><span class="o">.</span><span class="n">levels</span><span class="p">[</span><span class="s2">"1.272"</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="fibrange-object">FibRange Object<a class="headerlink" href="#fibrange-object" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="nd">@dataclass</span>
+<a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a><span class="k">class</span> <span class="nc">FibRange</span><span class="p">:</span>
+<a href="#__codelineno-22-3" id="__codelineno-22-3" name="__codelineno-22-3"></a>    <span class="n">start</span><span class="p">:</span> <span class="nb">float</span>                    <span class="c1"># Swing start price</span>
+<a href="#__codelineno-22-4" id="__codelineno-22-4" name="__codelineno-22-4"></a>    <span class="n">end</span><span class="p">:</span> <span class="nb">float</span>                      <span class="c1"># Swing end price  </span>
+<a href="#__codelineno-22-5" id="__codelineno-22-5" name="__codelineno-22-5"></a>    <span class="n">dir_up</span><span class="p">:</span> <span class="nb">bool</span>                    <span class="c1"># True if upward swing</span>
+<a href="#__codelineno-22-6" id="__codelineno-22-6" name="__codelineno-22-6"></a>    <span class="n">levels</span><span class="p">:</span> <span class="nb">dict</span>                    <span class="c1"># All Fibonacci levels</span>
+<a href="#__codelineno-22-7" id="__codelineno-22-7" name="__codelineno-22-7"></a>    <span class="n">golden_low</span><span class="p">:</span> <span class="nb">float</span>               <span class="c1"># 0.618 level</span>
+<a href="#__codelineno-22-8" id="__codelineno-22-8" name="__codelineno-22-8"></a>    <span class="n">golden_high</span><span class="p">:</span> <span class="nb">float</span>              <span class="c1"># 0.65 level</span>
+</code></pre></div>
+<p><strong>Available Fibonacci Levels:</strong>
+- Retracements: 0.236, 0.382, 0.5, 0.618, 0.65, 0.786
+- Extensions: 1.0, 1.272, 1.414, 1.618</p>
+<h2 id="strategy-functions">Strategy Functions<a class="headerlink" href="#strategy-functions" title="Permanent link">¶</a></h2>
+<h3 id="label_trenddf-pddataframe-trendstate"><code>label_trend(df: pd.DataFrame) -&gt; TrendState</code><a class="headerlink" href="#label_trenddf-pddataframe-trendstate" title="Permanent link">¶</a></h3>
+<p>Classify market trend based on EMA slope, price position, and RSI using configurable thresholds.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-23-1" id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="kn">from</span> <span class="nn">swing_agent.strategy</span> <span class="kn">import</span> <span class="n">label_trend</span>
+<a href="#__codelineno-23-2" id="__codelineno-23-2" name="__codelineno-23-2"></a>
+<a href="#__codelineno-23-3" id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="n">trend</span> <span class="o">=</span> <span class="n">label_trend</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<a href="#__codelineno-23-4" id="__codelineno-23-4" name="__codelineno-23-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Trend: </span><span class="si">{</span><span class="n">trend</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">, RSI: </span><span class="si">{</span><span class="n">trend</span><span class="o">.</span><span class="n">rsi_14</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-23-5" id="__codelineno-23-5" name="__codelineno-23-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"EMA Slope: </span><span class="si">{</span><span class="n">trend</span><span class="o">.</span><span class="n">ema_slope</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-23-6" id="__codelineno-23-6" name="__codelineno-23-6"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Price above EMA: </span><span class="si">{</span><span class="n">trend</span><span class="o">.</span><span class="n">price_above_ema</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Trend Classification Logic:</strong>
+Uses three main trend categories with configurable thresholds from <code>TradingConfig</code>:</p>
+<ol>
+<li><strong>Strong/Up Trends</strong>:</li>
+<li>EMA20 slope &gt; <code>EMA_SLOPE_THRESHOLD_UP</code> (default: 0.01)</li>
+<li>Price above EMA20</li>
+<li>RSI ≥ <code>RSI_TREND_UP_MIN</code> (default: 60)</li>
+<li>
+<p><strong>STRONG_UP</strong> if slope &gt; <code>EMA_SLOPE_THRESHOLD_STRONG</code> (default: 0.02)</p>
+</li>
+<li>
+<p><strong>Strong/Down Trends</strong>:</p>
+</li>
+<li>EMA20 slope &lt; <code>EMA_SLOPE_THRESHOLD_DOWN</code> (default: -0.01)</li>
+<li>Price below EMA20</li>
+<li>RSI ≤ <code>RSI_TREND_DOWN_MAX</code> (default: 40)</li>
+<li>
+<p><strong>STRONG_DOWN</strong> if slope &lt; <code>EMA_SLOPE_THRESHOLD_STRONG_DOWN</code> (default: -0.02)</p>
+</li>
+<li>
+<p><strong>SIDEWAYS</strong>: All other conditions</p>
+</li>
+</ol>
+<h3 id="build_entrydf-pddataframe-trend-trendstate-optionalentryplan"><code>build_entry(df: pd.DataFrame, trend: TrendState) -&gt; Optional[EntryPlan]</code><a class="headerlink" href="#build_entrydf-pddataframe-trend-trendstate-optionalentryplan" title="Permanent link">¶</a></h3>
+<p>Generate entry plan using three main strategies with configurable risk management.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="kn">from</span> <span class="nn">swing_agent.strategy</span> <span class="kn">import</span> <span class="n">build_entry</span><span class="p">,</span> <span class="n">label_trend</span>
+<a href="#__codelineno-24-2" id="__codelineno-24-2" name="__codelineno-24-2"></a>
+<a href="#__codelineno-24-3" id="__codelineno-24-3" name="__codelineno-24-3"></a><span class="n">trend</span> <span class="o">=</span> <span class="n">label_trend</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<a href="#__codelineno-24-4" id="__codelineno-24-4" name="__codelineno-24-4"></a><span class="n">entry</span> <span class="o">=</span> <span class="n">build_entry</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">trend</span><span class="p">)</span>
+<a href="#__codelineno-24-5" id="__codelineno-24-5" name="__codelineno-24-5"></a>
+<a href="#__codelineno-24-6" id="__codelineno-24-6" name="__codelineno-24-6"></a><span class="k">if</span> <span class="n">entry</span><span class="p">:</span>
+<a href="#__codelineno-24-7" id="__codelineno-24-7" name="__codelineno-24-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Strategy: </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">comment</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-24-8" id="__codelineno-24-8" name="__codelineno-24-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Entry: </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">side</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> @ </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-24-9" id="__codelineno-24-9" name="__codelineno-24-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Stop: </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">stop_price</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Target: </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">take_profit</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-24-10" id="__codelineno-24-10" name="__codelineno-24-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"R-Multiple: </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">r_multiple</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-24-11" id="__codelineno-24-11" name="__codelineno-24-11"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Golden Pocket: </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">fib_golden_low</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">fib_golden_high</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Entry Strategies:</strong></p>
+<ol>
+<li><strong>Fibonacci Golden Pocket Pullbacks</strong> (Highest Probability):</li>
+<li>Triggers when price is within 61.8%-65% retracement of recent swing</li>
+<li><strong>LONG</strong>: In uptrend, price pullback to golden pocket</li>
+<li><strong>SHORT</strong>: In downtrend, price pullback to golden pocket</li>
+<li>Stop: Golden pocket boundary + <code>ATR_STOP_BUFFER</code> × ATR (default: 0.2)</li>
+<li>
+<p>Target: Previous swing point or Fibonacci extension</p>
+</li>
+<li>
+<p><strong>Momentum Continuation Breakouts</strong>:</p>
+</li>
+<li><strong>LONG</strong>: In uptrend, breakout above previous high</li>
+<li><strong>SHORT</strong>: In downtrend, breakdown below previous low</li>
+<li>Stop: Entry ± <code>ATR_STOP_MULTIPLIER</code> × ATR (default: 1.2)</li>
+<li>
+<p>Target: Fibonacci extension or <code>ATR_TARGET_MULTIPLIER</code> × ATR (default: 2.0)</p>
+</li>
+<li>
+<p><strong>Mean Reversion from Extremes</strong>:</p>
+</li>
+<li>Triggers in sideways markets only</li>
+<li><strong>LONG</strong>: RSI &lt; <code>RSI_OVERSOLD_THRESHOLD</code> (default: 35)</li>
+<li><strong>SHORT</strong>: RSI &gt; <code>RSI_OVERBOUGHT_THRESHOLD</code> (default: 65)</li>
+<li>Stop: <code>ATR_MEAN_REVERSION_STOP</code> × ATR (default: 1.0)</li>
+<li>Target: <code>ATR_MEAN_REVERSION_TARGET</code> × ATR (default: 1.5)</li>
+</ol>
+<p><strong>Risk Management Features:</strong>
+- All stops and targets use ATR-based calculations
+- R-multiple automatically calculated for each setup
+- Fibonacci levels included for context and additional targets
+- Configuration allows easy tuning of all parameters</p>
+<h2 id="vector-store-api">Vector Store API<a class="headerlink" href="#vector-store-api" title="Permanent link">¶</a></h2>
+<h3 id="add_vectordb_path-vid-ts_utc-symbol-timeframe-vec-realized_r-exit_reason-payload"><code>add_vector(db_path, vid, ts_utc, symbol, timeframe, vec, realized_r, exit_reason, payload)</code><a class="headerlink" href="#add_vectordb_path-vid-ts_utc-symbol-timeframe-vec-realized_r-exit_reason-payload" title="Permanent link">¶</a></h3>
+<p>Store a feature vector with outcomes.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="kn">from</span> <span class="nn">swing_agent.vectorstore</span> <span class="kn">import</span> <span class="n">add_vector</span>
+<a href="#__codelineno-25-2" id="__codelineno-25-2" name="__codelineno-25-2"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<a href="#__codelineno-25-3" id="__codelineno-25-3" name="__codelineno-25-3"></a>
+<a href="#__codelineno-25-4" id="__codelineno-25-4" name="__codelineno-25-4"></a><span class="n">vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<a href="#__codelineno-25-5" id="__codelineno-25-5" name="__codelineno-25-5"></a><span class="n">add_vector</span><span class="p">(</span>
+<a href="#__codelineno-25-6" id="__codelineno-25-6" name="__codelineno-25-6"></a>    <span class="n">db_path</span><span class="o">=</span><span class="s2">"data/vec_store.sqlite"</span><span class="p">,</span>
+<a href="#__codelineno-25-7" id="__codelineno-25-7" name="__codelineno-25-7"></a>    <span class="n">vid</span><span class="o">=</span><span class="s2">"AAPL-2024-01-15T15:30:00Z"</span><span class="p">,</span>
+<a href="#__codelineno-25-8" id="__codelineno-25-8" name="__codelineno-25-8"></a>    <span class="n">ts_utc</span><span class="o">=</span><span class="s2">"2024-01-15T15:30:00Z"</span><span class="p">,</span>
+<a href="#__codelineno-25-9" id="__codelineno-25-9" name="__codelineno-25-9"></a>    <span class="n">symbol</span><span class="o">=</span><span class="s2">"AAPL"</span><span class="p">,</span>
+<a href="#__codelineno-25-10" id="__codelineno-25-10" name="__codelineno-25-10"></a>    <span class="n">timeframe</span><span class="o">=</span><span class="s2">"30m"</span><span class="p">,</span>
+<a href="#__codelineno-25-11" id="__codelineno-25-11" name="__codelineno-25-11"></a>    <span class="n">vec</span><span class="o">=</span><span class="n">vector</span><span class="p">,</span>
+<a href="#__codelineno-25-12" id="__codelineno-25-12" name="__codelineno-25-12"></a>    <span class="n">realized_r</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+<a href="#__codelineno-25-13" id="__codelineno-25-13" name="__codelineno-25-13"></a>    <span class="n">exit_reason</span><span class="o">=</span><span class="s2">"TP"</span><span class="p">,</span>
+<a href="#__codelineno-25-14" id="__codelineno-25-14" name="__codelineno-25-14"></a>    <span class="n">payload</span><span class="o">=</span><span class="p">{</span><span class="s2">"vol_regime"</span><span class="p">:</span> <span class="s2">"M"</span><span class="p">,</span> <span class="s2">"mtf_alignment"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<a href="#__codelineno-25-15" id="__codelineno-25-15" name="__codelineno-25-15"></a><span class="p">)</span>
+</code></pre></div>
+<h3 id="knndb_path-query_vec-k50-symbolnone-listdict"><code>knn(db_path, query_vec, k=50, symbol=None) -&gt; List[Dict]</code><a class="headerlink" href="#knndb_path-query_vec-k50-symbolnone-listdict" title="Permanent link">¶</a></h3>
+<p>Find k most similar historical patterns.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="kn">from</span> <span class="nn">swing_agent.vectorstore</span> <span class="kn">import</span> <span class="n">knn</span>
+<a href="#__codelineno-26-2" id="__codelineno-26-2" name="__codelineno-26-2"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<a href="#__codelineno-26-3" id="__codelineno-26-3" name="__codelineno-26-3"></a>
+<a href="#__codelineno-26-4" id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="n">query_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<a href="#__codelineno-26-5" id="__codelineno-26-5" name="__codelineno-26-5"></a><span class="n">neighbors</span> <span class="o">=</span> <span class="n">knn</span><span class="p">(</span>
+<a href="#__codelineno-26-6" id="__codelineno-26-6" name="__codelineno-26-6"></a>    <span class="n">db_path</span><span class="o">=</span><span class="s2">"data/vec_store.sqlite"</span><span class="p">,</span>
+<a href="#__codelineno-26-7" id="__codelineno-26-7" name="__codelineno-26-7"></a>    <span class="n">query_vec</span><span class="o">=</span><span class="n">query_vector</span><span class="p">,</span>
+<a href="#__codelineno-26-8" id="__codelineno-26-8" name="__codelineno-26-8"></a>    <span class="n">k</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+<a href="#__codelineno-26-9" id="__codelineno-26-9" name="__codelineno-26-9"></a>    <span class="n">symbol</span><span class="o">=</span><span class="s2">"AAPL"</span>  <span class="c1"># Optional: filter by symbol</span>
+<a href="#__codelineno-26-10" id="__codelineno-26-10" name="__codelineno-26-10"></a><span class="p">)</span>
+<a href="#__codelineno-26-11" id="__codelineno-26-11" name="__codelineno-26-11"></a>
+<a href="#__codelineno-26-12" id="__codelineno-26-12" name="__codelineno-26-12"></a><span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">neighbors</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+<a href="#__codelineno-26-13" id="__codelineno-26-13" name="__codelineno-26-13"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Similarity: </span><span class="si">{</span><span class="n">neighbor</span><span class="p">[</span><span class="s1">'similarity'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, R: </span><span class="si">{</span><span class="n">neighbor</span><span class="p">[</span><span class="s1">'realized_r'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="extended_statsneighbors-listdict-dict"><code>extended_stats(neighbors: List[Dict]) -&gt; Dict</code><a class="headerlink" href="#extended_statsneighbors-listdict-dict" title="Permanent link">¶</a></h3>
+<p>Calculate statistical expectations from similar patterns.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="kn">from</span> <span class="nn">swing_agent.vectorstore</span> <span class="kn">import</span> <span class="n">extended_stats</span>
+<a href="#__codelineno-27-2" id="__codelineno-27-2" name="__codelineno-27-2"></a>
+<a href="#__codelineno-27-3" id="__codelineno-27-3" name="__codelineno-27-3"></a><span class="n">stats</span> <span class="o">=</span> <span class="n">extended_stats</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span>
+<a href="#__codelineno-27-4" id="__codelineno-27-4" name="__codelineno-27-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Win Rate: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">'p_win'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-27-5" id="__codelineno-27-5" name="__codelineno-27-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Average R: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">'avg_R'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-27-6" id="__codelineno-27-6" name="__codelineno-27-6"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Median Hold: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">'median_hold_days'</span><span class="p">]</span><span class="si">}</span><span class="s2"> days"</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Returned Statistics:</strong>
+- <code>n</code>: Number of neighbors
+- <code>p_win</code>: Win rate (0-1)
+- <code>avg_R</code>: Average R-multiple
+- <code>avg_win_R</code>: Average winning R-multiple
+- <code>avg_loss_R</code>: Average losing R-multiple
+- <code>median_hold_bars</code>: Median holding period in bars
+- <code>median_hold_days</code>: Median holding period in days
+- <code>median_win_hold_bars</code>: Median winning trade duration
+- <code>median_loss_hold_bars</code>: Median losing trade duration
+- <code>profit_factor</code>: Gross profit / gross loss
+- <code>tp</code>: Count of take-profit exits
+- <code>sl</code>: Count of stop-loss exits
+- <code>time</code>: Count of time-based exits</p>
+<h2 id="feature-engineering">Feature Engineering<a class="headerlink" href="#feature-engineering" title="Permanent link">¶</a></h2>
+<h3 id="build_setup_vectorprice-trend-entry-prev_range_pct-gap_pct-atr_pct-session_bin-llm_conf"><code>build_setup_vector(price, trend, entry, prev_range_pct, gap_pct, atr_pct, session_bin, llm_conf)</code><a class="headerlink" href="#build_setup_vectorprice-trend-entry-prev_range_pct-gap_pct-atr_pct-session_bin-llm_conf" title="Permanent link">¶</a></h3>
+<p>Convert market state into ML feature vector.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-28-1" id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="kn">from</span> <span class="nn">swing_agent.features</span> <span class="kn">import</span> <span class="n">build_setup_vector</span>
+<a href="#__codelineno-28-2" id="__codelineno-28-2" name="__codelineno-28-2"></a>
+<a href="#__codelineno-28-3" id="__codelineno-28-3" name="__codelineno-28-3"></a><span class="n">vector</span> <span class="o">=</span> <span class="n">build_setup_vector</span><span class="p">(</span>
+<a href="#__codelineno-28-4" id="__codelineno-28-4" name="__codelineno-28-4"></a>    <span class="n">price</span><span class="o">=</span><span class="mf">185.50</span><span class="p">,</span>
+<a href="#__codelineno-28-5" id="__codelineno-28-5" name="__codelineno-28-5"></a>    <span class="n">trend</span><span class="o">=</span><span class="n">trend_state</span><span class="p">,</span>
+<a href="#__codelineno-28-6" id="__codelineno-28-6" name="__codelineno-28-6"></a>    <span class="n">entry</span><span class="o">=</span><span class="n">entry_plan</span><span class="p">,</span>
+<a href="#__codelineno-28-7" id="__codelineno-28-7" name="__codelineno-28-7"></a>    <span class="n">prev_range_pct</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span>
+<a href="#__codelineno-28-8" id="__codelineno-28-8" name="__codelineno-28-8"></a>    <span class="n">gap_pct</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span>
+<a href="#__codelineno-28-9" id="__codelineno-28-9" name="__codelineno-28-9"></a>    <span class="n">atr_pct</span><span class="o">=</span><span class="mf">0.012</span><span class="p">,</span>
+<a href="#__codelineno-28-10" id="__codelineno-28-10" name="__codelineno-28-10"></a>    <span class="n">session_bin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># 0=open, 1=mid, 2=close</span>
+<a href="#__codelineno-28-11" id="__codelineno-28-11" name="__codelineno-28-11"></a>    <span class="n">llm_conf</span><span class="o">=</span><span class="mf">0.75</span>
+<a href="#__codelineno-28-12" id="__codelineno-28-12" name="__codelineno-28-12"></a><span class="p">)</span>
+</code></pre></div>
+<h3 id="time_of_day_bucketts-pdtimestamp-str"><code>time_of_day_bucket(ts: pd.Timestamp) -&gt; str</code><a class="headerlink" href="#time_of_day_bucketts-pdtimestamp-str" title="Permanent link">¶</a></h3>
+<p>Classify timestamp into trading session.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-29-1" id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="kn">from</span> <span class="nn">swing_agent.features</span> <span class="kn">import</span> <span class="n">time_of_day_bucket</span>
+<a href="#__codelineno-29-2" id="__codelineno-29-2" name="__codelineno-29-2"></a>
+<a href="#__codelineno-29-3" id="__codelineno-29-3" name="__codelineno-29-3"></a><span class="n">bucket</span> <span class="o">=</span> <span class="n">time_of_day_bucket</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2024-01-15 10:30:00"</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"US/Eastern"</span><span class="p">))</span>
+<a href="#__codelineno-29-4" id="__codelineno-29-4" name="__codelineno-29-4"></a><span class="c1"># Returns: "open", "mid", or "close"</span>
+</code></pre></div>
+<h3 id="vol_regime_from_seriesprice-pdseries-str"><code>vol_regime_from_series(price: pd.Series) -&gt; str</code><a class="headerlink" href="#vol_regime_from_seriesprice-pdseries-str" title="Permanent link">¶</a></h3>
+<p>Classify volatility regime from price series.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-30-1" id="__codelineno-30-1" name="__codelineno-30-1"></a><span class="kn">from</span> <span class="nn">swing_agent.features</span> <span class="kn">import</span> <span class="n">vol_regime_from_series</span>
+<a href="#__codelineno-30-2" id="__codelineno-30-2" name="__codelineno-30-2"></a>
+<a href="#__codelineno-30-3" id="__codelineno-30-3" name="__codelineno-30-3"></a><span class="n">regime</span> <span class="o">=</span> <span class="n">vol_regime_from_series</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"close"</span><span class="p">])</span>
+<a href="#__codelineno-30-4" id="__codelineno-30-4" name="__codelineno-30-4"></a><span class="c1"># Returns: "L" (low), "M" (medium), or "H" (high)</span>
+</code></pre></div>
+<h2 id="data-management">Data Management<a class="headerlink" href="#data-management" title="Permanent link">¶</a></h2>
+<h3 id="load_ohlcvsymbol-interval30m-lookback_days30-pddataframe"><code>load_ohlcv(symbol, interval="30m", lookback_days=30) -&gt; pd.DataFrame</code><a class="headerlink" href="#load_ohlcvsymbol-interval30m-lookback_days30-pddataframe" title="Permanent link">¶</a></h3>
+<p>Fetch market data via Yahoo Finance.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-31-1" id="__codelineno-31-1" name="__codelineno-31-1"></a><span class="kn">from</span> <span class="nn">swing_agent.data</span> <span class="kn">import</span> <span class="n">load_ohlcv</span>
+<a href="#__codelineno-31-2" id="__codelineno-31-2" name="__codelineno-31-2"></a>
+<a href="#__codelineno-31-3" id="__codelineno-31-3" name="__codelineno-31-3"></a><span class="c1"># Fetch 30 days of 30-minute AAPL data</span>
+<a href="#__codelineno-31-4" id="__codelineno-31-4" name="__codelineno-31-4"></a><span class="n">df</span> <span class="o">=</span> <span class="n">load_ohlcv</span><span class="p">(</span><span class="s2">"AAPL"</span><span class="p">,</span> <span class="s2">"30m"</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<a href="#__codelineno-31-5" id="__codelineno-31-5" name="__codelineno-31-5"></a>
+<a href="#__codelineno-31-6" id="__codelineno-31-6" name="__codelineno-31-6"></a><span class="c1"># Available intervals: "15m", "30m", "1h", "1d"</span>
+<a href="#__codelineno-31-7" id="__codelineno-31-7" name="__codelineno-31-7"></a><span class="n">daily_data</span> <span class="o">=</span> <span class="n">load_ohlcv</span><span class="p">(</span><span class="s2">"AAPL"</span><span class="p">,</span> <span class="s2">"1d"</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Returned DataFrame:</strong>
+- Index: UTC timestamps
+- Columns: open, high, low, close, volume (lowercase)
+- Data cleaning: duplicates removed, timezone normalized</p>
+<h2 id="llm-integration">LLM Integration<a class="headerlink" href="#llm-integration" title="Permanent link">¶</a></h2>
+<h3 id="llm_extra_predictionfeatures-llmvote"><code>llm_extra_prediction(**features) -&gt; LlmVote</code><a class="headerlink" href="#llm_extra_predictionfeatures-llmvote" title="Permanent link">¶</a></h3>
+<p>Get LLM analysis of current market setup.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-32-1" id="__codelineno-32-1" name="__codelineno-32-1"></a><span class="kn">from</span> <span class="nn">swing_agent.llm_predictor</span> <span class="kn">import</span> <span class="n">llm_extra_prediction</span>
+<a href="#__codelineno-32-2" id="__codelineno-32-2" name="__codelineno-32-2"></a>
+<a href="#__codelineno-32-3" id="__codelineno-32-3" name="__codelineno-32-3"></a><span class="n">vote</span> <span class="o">=</span> <span class="n">llm_extra_prediction</span><span class="p">(</span>
+<a href="#__codelineno-32-4" id="__codelineno-32-4" name="__codelineno-32-4"></a>    <span class="n">symbol</span><span class="o">=</span><span class="s2">"AAPL"</span><span class="p">,</span>
+<a href="#__codelineno-32-5" id="__codelineno-32-5" name="__codelineno-32-5"></a>    <span class="n">price</span><span class="o">=</span><span class="mf">185.50</span><span class="p">,</span>
+<a href="#__codelineno-32-6" id="__codelineno-32-6" name="__codelineno-32-6"></a>    <span class="n">trend_label</span><span class="o">=</span><span class="s2">"up"</span><span class="p">,</span>
+<a href="#__codelineno-32-7" id="__codelineno-32-7" name="__codelineno-32-7"></a>    <span class="n">rsi_14</span><span class="o">=</span><span class="mf">62.3</span><span class="p">,</span>
+<a href="#__codelineno-32-8" id="__codelineno-32-8" name="__codelineno-32-8"></a>    <span class="n">ema_slope</span><span class="o">=</span><span class="mf">0.0156</span><span class="p">,</span>
+<a href="#__codelineno-32-9" id="__codelineno-32-9" name="__codelineno-32-9"></a>    <span class="n">fib_golden_low</span><span class="o">=</span><span class="mf">184.20</span><span class="p">,</span>
+<a href="#__codelineno-32-10" id="__codelineno-32-10" name="__codelineno-32-10"></a>    <span class="n">fib_golden_high</span><span class="o">=</span><span class="mf">186.10</span>
+<a href="#__codelineno-32-11" id="__codelineno-32-11" name="__codelineno-32-11"></a><span class="p">)</span>
+<a href="#__codelineno-32-12" id="__codelineno-32-12" name="__codelineno-32-12"></a>
+<a href="#__codelineno-32-13" id="__codelineno-32-13" name="__codelineno-32-13"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"LLM Trend: </span><span class="si">{</span><span class="n">vote</span><span class="o">.</span><span class="n">trend_label</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-32-14" id="__codelineno-32-14" name="__codelineno-32-14"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Entry Bias: </span><span class="si">{</span><span class="n">vote</span><span class="o">.</span><span class="n">entry_bias</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-32-15" id="__codelineno-32-15" name="__codelineno-32-15"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Confidence: </span><span class="si">{</span><span class="n">vote</span><span class="o">.</span><span class="n">confidence</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-32-16" id="__codelineno-32-16" name="__codelineno-32-16"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Rationale: </span><span class="si">{</span><span class="n">vote</span><span class="o">.</span><span class="n">rationale</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="llm_build_action_plansignal_json-stylebalanced-llmactionplan"><code>llm_build_action_plan(signal_json, style="balanced") -&gt; LlmActionPlan</code><a class="headerlink" href="#llm_build_action_plansignal_json-stylebalanced-llmactionplan" title="Permanent link">¶</a></h3>
+<p>Generate structured action plan for a trade signal.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-33-1" id="__codelineno-33-1" name="__codelineno-33-1"></a><span class="kn">from</span> <span class="nn">swing_agent.llm_predictor</span> <span class="kn">import</span> <span class="n">llm_build_action_plan</span>
+<a href="#__codelineno-33-2" id="__codelineno-33-2" name="__codelineno-33-2"></a>
+<a href="#__codelineno-33-3" id="__codelineno-33-3" name="__codelineno-33-3"></a><span class="n">plan</span> <span class="o">=</span> <span class="n">llm_build_action_plan</span><span class="p">(</span>
+<a href="#__codelineno-33-4" id="__codelineno-33-4" name="__codelineno-33-4"></a>    <span class="n">signal_json</span><span class="o">=</span><span class="n">signal</span><span class="o">.</span><span class="n">model_dump</span><span class="p">(),</span>
+<a href="#__codelineno-33-5" id="__codelineno-33-5" name="__codelineno-33-5"></a>    <span class="n">style</span><span class="o">=</span><span class="s2">"balanced"</span>  <span class="c1"># "conservative", "balanced", "aggressive"</span>
+<a href="#__codelineno-33-6" id="__codelineno-33-6" name="__codelineno-33-6"></a><span class="p">)</span>
+<a href="#__codelineno-33-7" id="__codelineno-33-7" name="__codelineno-33-7"></a>
+<a href="#__codelineno-33-8" id="__codelineno-33-8" name="__codelineno-33-8"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Action Plan:"</span><span class="p">)</span>
+<a href="#__codelineno-33-9" id="__codelineno-33-9" name="__codelineno-33-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">plan</span><span class="o">.</span><span class="n">action_plan</span><span class="p">)</span>
+<a href="#__codelineno-33-10" id="__codelineno-33-10" name="__codelineno-33-10"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Risk Notes:"</span><span class="p">)</span>
+<a href="#__codelineno-33-11" id="__codelineno-33-11" name="__codelineno-33-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">plan</span><span class="o">.</span><span class="n">risk_notes</span><span class="p">)</span>
+<a href="#__codelineno-33-12" id="__codelineno-33-12" name="__codelineno-33-12"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Scenarios:"</span><span class="p">)</span>
+<a href="#__codelineno-33-13" id="__codelineno-33-13" name="__codelineno-33-13"></a><span class="k">for</span> <span class="n">scenario</span> <span class="ow">in</span> <span class="n">plan</span><span class="o">.</span><span class="n">scenarios</span><span class="p">:</span>
+<a href="#__codelineno-33-14" id="__codelineno-33-14" name="__codelineno-33-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">scenario</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="storage-api">Storage API<a class="headerlink" href="#storage-api" title="Permanent link">¶</a></h2>
+<h3 id="record_signalts-tradesignal-db_path-str-str"><code>record_signal(ts: TradeSignal, db_path: str) -&gt; str</code><a class="headerlink" href="#record_signalts-tradesignal-db_path-str-str" title="Permanent link">¶</a></h3>
+<p>Store a complete trading signal in the database.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-34-1" id="__codelineno-34-1" name="__codelineno-34-1"></a><span class="kn">from</span> <span class="nn">swing_agent.storage</span> <span class="kn">import</span> <span class="n">record_signal</span>
+<a href="#__codelineno-34-2" id="__codelineno-34-2" name="__codelineno-34-2"></a>
+<a href="#__codelineno-34-3" id="__codelineno-34-3" name="__codelineno-34-3"></a><span class="n">signal_id</span> <span class="o">=</span> <span class="n">record_signal</span><span class="p">(</span><span class="n">trade_signal</span><span class="p">,</span> <span class="s2">"data/signals.sqlite"</span><span class="p">)</span>
+<a href="#__codelineno-34-4" id="__codelineno-34-4" name="__codelineno-34-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Stored signal: </span><span class="si">{</span><span class="n">signal_id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="mark_evaluationsignal_id-db_path-exit_reason-exit_price-exit_time_utc-realized_r"><code>mark_evaluation(signal_id, db_path, exit_reason, exit_price, exit_time_utc, realized_r)</code><a class="headerlink" href="#mark_evaluationsignal_id-db_path-exit_reason-exit_price-exit_time_utc-realized_r" title="Permanent link">¶</a></h3>
+<p>Update signal with trade outcome.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-35-1" id="__codelineno-35-1" name="__codelineno-35-1"></a><span class="kn">from</span> <span class="nn">swing_agent.storage</span> <span class="kn">import</span> <span class="n">mark_evaluation</span>
+<a href="#__codelineno-35-2" id="__codelineno-35-2" name="__codelineno-35-2"></a>
+<a href="#__codelineno-35-3" id="__codelineno-35-3" name="__codelineno-35-3"></a><span class="n">mark_evaluation</span><span class="p">(</span>
+<a href="#__codelineno-35-4" id="__codelineno-35-4" name="__codelineno-35-4"></a>    <span class="n">signal_id</span><span class="o">=</span><span class="s2">"abc123"</span><span class="p">,</span>
+<a href="#__codelineno-35-5" id="__codelineno-35-5" name="__codelineno-35-5"></a>    <span class="n">db_path</span><span class="o">=</span><span class="s2">"data/signals.sqlite"</span><span class="p">,</span>
+<a href="#__codelineno-35-6" id="__codelineno-35-6" name="__codelineno-35-6"></a>    <span class="n">exit_reason</span><span class="o">=</span><span class="s2">"TP"</span><span class="p">,</span>
+<a href="#__codelineno-35-7" id="__codelineno-35-7" name="__codelineno-35-7"></a>    <span class="n">exit_price</span><span class="o">=</span><span class="mf">190.80</span><span class="p">,</span>
+<a href="#__codelineno-35-8" id="__codelineno-35-8" name="__codelineno-35-8"></a>    <span class="n">exit_time_utc</span><span class="o">=</span><span class="s2">"2024-01-16T14:30:00Z"</span><span class="p">,</span>
+<a href="#__codelineno-35-9" id="__codelineno-35-9" name="__codelineno-35-9"></a>    <span class="n">realized_r</span><span class="o">=</span><span class="mf">1.61</span>
+<a href="#__codelineno-35-10" id="__codelineno-35-10" name="__codelineno-35-10"></a><span class="p">)</span>
+</code></pre></div>
+<h2 id="backtesting">Backtesting<a class="headerlink" href="#backtesting" title="Permanent link">¶</a></h2>
+<h3 id="simulate_tradedf-open_idx-side-entry-stop-target-max_hold_bars"><code>simulate_trade(df, open_idx, side, entry, stop, target, max_hold_bars)</code><a class="headerlink" href="#simulate_tradedf-open_idx-side-entry-stop-target-max_hold_bars" title="Permanent link">¶</a></h3>
+<p>Simulate a trade execution with realistic fills.</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-36-1" id="__codelineno-36-1" name="__codelineno-36-1"></a><span class="kn">from</span> <span class="nn">swing_agent.backtester</span> <span class="kn">import</span> <span class="n">simulate_trade</span>
+<a href="#__codelineno-36-2" id="__codelineno-36-2" name="__codelineno-36-2"></a><span class="kn">from</span> <span class="nn">swing_agent.models</span> <span class="kn">import</span> <span class="n">SignalSide</span>
+<a href="#__codelineno-36-3" id="__codelineno-36-3" name="__codelineno-36-3"></a>
+<a href="#__codelineno-36-4" id="__codelineno-36-4" name="__codelineno-36-4"></a><span class="n">exit_idx</span><span class="p">,</span> <span class="n">exit_reason</span><span class="p">,</span> <span class="n">exit_price</span> <span class="o">=</span> <span class="n">simulate_trade</span><span class="p">(</span>
+<a href="#__codelineno-36-5" id="__codelineno-36-5" name="__codelineno-36-5"></a>    <span class="n">df</span><span class="o">=</span><span class="n">price_data</span><span class="p">,</span>
+<a href="#__codelineno-36-6" id="__codelineno-36-6" name="__codelineno-36-6"></a>    <span class="n">open_idx</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>              <span class="c1"># Bar index for trade entry</span>
+<a href="#__codelineno-36-7" id="__codelineno-36-7" name="__codelineno-36-7"></a>    <span class="n">side</span><span class="o">=</span><span class="n">SignalSide</span><span class="o">.</span><span class="n">LONG</span><span class="p">,</span>
+<a href="#__codelineno-36-8" id="__codelineno-36-8" name="__codelineno-36-8"></a>    <span class="n">entry</span><span class="o">=</span><span class="mf">185.50</span><span class="p">,</span>
+<a href="#__codelineno-36-9" id="__codelineno-36-9" name="__codelineno-36-9"></a>    <span class="n">stop</span><span class="o">=</span><span class="mf">182.20</span><span class="p">,</span>
+<a href="#__codelineno-36-10" id="__codelineno-36-10" name="__codelineno-36-10"></a>    <span class="n">target</span><span class="o">=</span><span class="mf">190.80</span><span class="p">,</span>
+<a href="#__codelineno-36-11" id="__codelineno-36-11" name="__codelineno-36-11"></a>    <span class="n">max_hold_bars</span><span class="o">=</span><span class="mi">26</span>           <span class="c1"># 1 day = ~13 bars for 30m</span>
+<a href="#__codelineno-36-12" id="__codelineno-36-12" name="__codelineno-36-12"></a><span class="p">)</span>
+<a href="#__codelineno-36-13" id="__codelineno-36-13" name="__codelineno-36-13"></a>
+<a href="#__codelineno-36-14" id="__codelineno-36-14" name="__codelineno-36-14"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exit: </span><span class="si">{</span><span class="n">exit_reason</span><span class="si">}</span><span class="s2"> @ </span><span class="si">{</span><span class="n">exit_price</span><span class="si">}</span><span class="s2"> after </span><span class="si">{</span><span class="n">exit_idx</span><span class="o">-</span><span class="mi">100</span><span class="si">}</span><span class="s2"> bars"</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Exit Reasons:</strong>
+- <code>"TP"</code>: Take profit hit
+- <code>"SL"</code>: Stop loss hit<br/>
+- <code>"TIME"</code>: Maximum holding period reached</p>
+<h2 id="error-handling_1">Error Handling<a class="headerlink" href="#error-handling_1" title="Permanent link">¶</a></h2>
+<p>All functions include basic error handling:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-37-1" id="__codelineno-37-1" name="__codelineno-37-1"></a><span class="k">try</span><span class="p">:</span>
+<a href="#__codelineno-37-2" id="__codelineno-37-2" name="__codelineno-37-2"></a>    <span class="n">signal</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="s2">"INVALID_SYMBOL"</span><span class="p">)</span>
+<a href="#__codelineno-37-3" id="__codelineno-37-3" name="__codelineno-37-3"></a><span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a href="#__codelineno-37-4" id="__codelineno-37-4" name="__codelineno-37-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Analysis failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-37-5" id="__codelineno-37-5" name="__codelineno-37-5"></a>
+<a href="#__codelineno-37-6" id="__codelineno-37-6" name="__codelineno-37-6"></a><span class="c1"># LLM functions gracefully degrade</span>
+<a href="#__codelineno-37-7" id="__codelineno-37-7" name="__codelineno-37-7"></a><span class="k">try</span><span class="p">:</span>
+<a href="#__codelineno-37-8" id="__codelineno-37-8" name="__codelineno-37-8"></a>    <span class="n">vote</span> <span class="o">=</span> <span class="n">llm_extra_prediction</span><span class="p">(</span><span class="o">**</span><span class="n">features</span><span class="p">)</span>
+<a href="#__codelineno-37-9" id="__codelineno-37-9" name="__codelineno-37-9"></a><span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<a href="#__codelineno-37-10" id="__codelineno-37-10" name="__codelineno-37-10"></a>    <span class="n">vote</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Continue without LLM</span>
+</code></pre></div>
+<h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-38-1" id="__codelineno-38-1" name="__codelineno-38-1"></a><span class="c1"># Required for LLM features</span>
+<a href="#__codelineno-38-2" id="__codelineno-38-2" name="__codelineno-38-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">"sk-..."</span>
+<a href="#__codelineno-38-3" id="__codelineno-38-3" name="__codelineno-38-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SWING_LLM_MODEL</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="w">  </span><span class="c1"># or "gpt-4", "gpt-3.5-turbo"</span>
+</code></pre></div>
+<h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">¶</a></h2>
+<h3 id="complete-signal-generation">Complete Signal Generation<a class="headerlink" href="#complete-signal-generation" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-39-1" id="__codelineno-39-1" name="__codelineno-39-1"></a><span class="kn">from</span> <span class="nn">swing_agent.agent</span> <span class="kn">import</span> <span class="n">SwingAgent</span>
+<a href="#__codelineno-39-2" id="__codelineno-39-2" name="__codelineno-39-2"></a>
+<a href="#__codelineno-39-3" id="__codelineno-39-3" name="__codelineno-39-3"></a><span class="c1"># Initialize agent</span>
+<a href="#__codelineno-39-4" id="__codelineno-39-4" name="__codelineno-39-4"></a><span class="n">agent</span> <span class="o">=</span> <span class="n">SwingAgent</span><span class="p">(</span>
+<a href="#__codelineno-39-5" id="__codelineno-39-5" name="__codelineno-39-5"></a>    <span class="n">interval</span><span class="o">=</span><span class="s2">"30m"</span><span class="p">,</span>
+<a href="#__codelineno-39-6" id="__codelineno-39-6" name="__codelineno-39-6"></a>    <span class="n">lookback_days</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+<a href="#__codelineno-39-7" id="__codelineno-39-7" name="__codelineno-39-7"></a>    <span class="n">log_db</span><span class="o">=</span><span class="s2">"data/signals.sqlite"</span><span class="p">,</span>
+<a href="#__codelineno-39-8" id="__codelineno-39-8" name="__codelineno-39-8"></a>    <span class="n">vec_db</span><span class="o">=</span><span class="s2">"data/vec_store.sqlite"</span><span class="p">,</span>
+<a href="#__codelineno-39-9" id="__codelineno-39-9" name="__codelineno-39-9"></a>    <span class="n">use_llm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a href="#__codelineno-39-10" id="__codelineno-39-10" name="__codelineno-39-10"></a>    <span class="n">sector_symbol</span><span class="o">=</span><span class="s2">"QQQ"</span>
+<a href="#__codelineno-39-11" id="__codelineno-39-11" name="__codelineno-39-11"></a><span class="p">)</span>
+<a href="#__codelineno-39-12" id="__codelineno-39-12" name="__codelineno-39-12"></a>
+<a href="#__codelineno-39-13" id="__codelineno-39-13" name="__codelineno-39-13"></a><span class="c1"># Generate signal</span>
+<a href="#__codelineno-39-14" id="__codelineno-39-14" name="__codelineno-39-14"></a><span class="n">signal</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="s2">"AAPL"</span><span class="p">)</span>
+<a href="#__codelineno-39-15" id="__codelineno-39-15" name="__codelineno-39-15"></a>
+<a href="#__codelineno-39-16" id="__codelineno-39-16" name="__codelineno-39-16"></a><span class="c1"># Access results</span>
+<a href="#__codelineno-39-17" id="__codelineno-39-17" name="__codelineno-39-17"></a><span class="k">if</span> <span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="p">:</span>
+<a href="#__codelineno-39-18" id="__codelineno-39-18" name="__codelineno-39-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Entry: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">side</span><span class="si">}</span><span class="s2"> @ </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">entry_price</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-39-19" id="__codelineno-39-19" name="__codelineno-39-19"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Stop: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">stop_price</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-39-20" id="__codelineno-39-20" name="__codelineno-39-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Target: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">take_profit</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-39-21" id="__codelineno-39-21" name="__codelineno-39-21"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"R-Multiple: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">r_multiple</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-39-22" id="__codelineno-39-22" name="__codelineno-39-22"></a>
+<a href="#__codelineno-39-23" id="__codelineno-39-23" name="__codelineno-39-23"></a><span class="k">if</span> <span class="n">signal</span><span class="o">.</span><span class="n">expected_r</span><span class="p">:</span>
+<a href="#__codelineno-39-24" id="__codelineno-39-24" name="__codelineno-39-24"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected R: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">expected_r</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-39-25" id="__codelineno-39-25" name="__codelineno-39-25"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Win Rate: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">expected_winrate</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-39-26" id="__codelineno-39-26" name="__codelineno-39-26"></a>
+<a href="#__codelineno-39-27" id="__codelineno-39-27" name="__codelineno-39-27"></a><span class="k">if</span> <span class="n">signal</span><span class="o">.</span><span class="n">action_plan</span><span class="p">:</span>
+<a href="#__codelineno-39-28" id="__codelineno-39-28" name="__codelineno-39-28"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Action Plan: </span><span class="si">{</span><span class="n">signal</span><span class="o">.</span><span class="n">action_plan</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="custom-analysis-pipeline">Custom Analysis Pipeline<a class="headerlink" href="#custom-analysis-pipeline" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-40-1" id="__codelineno-40-1" name="__codelineno-40-1"></a><span class="kn">from</span> <span class="nn">swing_agent.data</span> <span class="kn">import</span> <span class="n">load_ohlcv</span>
+<a href="#__codelineno-40-2" id="__codelineno-40-2" name="__codelineno-40-2"></a><span class="kn">from</span> <span class="nn">swing_agent.strategy</span> <span class="kn">import</span> <span class="n">label_trend</span><span class="p">,</span> <span class="n">build_entry</span>
+<a href="#__codelineno-40-3" id="__codelineno-40-3" name="__codelineno-40-3"></a><span class="kn">from</span> <span class="nn">swing_agent.indicators</span> <span class="kn">import</span> <span class="n">fibonacci_range</span>
+<a href="#__codelineno-40-4" id="__codelineno-40-4" name="__codelineno-40-4"></a><span class="kn">from</span> <span class="nn">swing_agent.features</span> <span class="kn">import</span> <span class="n">build_setup_vector</span>
+<a href="#__codelineno-40-5" id="__codelineno-40-5" name="__codelineno-40-5"></a>
+<a href="#__codelineno-40-6" id="__codelineno-40-6" name="__codelineno-40-6"></a><span class="c1"># 1. Load data</span>
+<a href="#__codelineno-40-7" id="__codelineno-40-7" name="__codelineno-40-7"></a><span class="n">df</span> <span class="o">=</span> <span class="n">load_ohlcv</span><span class="p">(</span><span class="s2">"AAPL"</span><span class="p">,</span> <span class="s2">"30m"</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<a href="#__codelineno-40-8" id="__codelineno-40-8" name="__codelineno-40-8"></a>
+<a href="#__codelineno-40-9" id="__codelineno-40-9" name="__codelineno-40-9"></a><span class="c1"># 2. Technical analysis</span>
+<a href="#__codelineno-40-10" id="__codelineno-40-10" name="__codelineno-40-10"></a><span class="n">trend</span> <span class="o">=</span> <span class="n">label_trend</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<a href="#__codelineno-40-11" id="__codelineno-40-11" name="__codelineno-40-11"></a><span class="n">entry</span> <span class="o">=</span> <span class="n">build_entry</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">trend</span><span class="p">)</span>
+<a href="#__codelineno-40-12" id="__codelineno-40-12" name="__codelineno-40-12"></a><span class="n">fib</span> <span class="o">=</span> <span class="n">fibonacci_range</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">lookback</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<a href="#__codelineno-40-13" id="__codelineno-40-13" name="__codelineno-40-13"></a>
+<a href="#__codelineno-40-14" id="__codelineno-40-14" name="__codelineno-40-14"></a><span class="c1"># 3. Feature engineering</span>
+<a href="#__codelineno-40-15" id="__codelineno-40-15" name="__codelineno-40-15"></a><span class="n">vector</span> <span class="o">=</span> <span class="n">build_setup_vector</span><span class="p">(</span>
+<a href="#__codelineno-40-16" id="__codelineno-40-16" name="__codelineno-40-16"></a>    <span class="n">price</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">"close"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<a href="#__codelineno-40-17" id="__codelineno-40-17" name="__codelineno-40-17"></a>    <span class="n">trend</span><span class="o">=</span><span class="n">trend</span><span class="p">,</span>
+<a href="#__codelineno-40-18" id="__codelineno-40-18" name="__codelineno-40-18"></a>    <span class="n">entry</span><span class="o">=</span><span class="n">entry</span><span class="p">,</span>
+<a href="#__codelineno-40-19" id="__codelineno-40-19" name="__codelineno-40-19"></a>    <span class="n">atr_pct</span><span class="o">=</span><span class="mf">0.012</span><span class="p">,</span>
+<a href="#__codelineno-40-20" id="__codelineno-40-20" name="__codelineno-40-20"></a>    <span class="n">session_bin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<a href="#__codelineno-40-21" id="__codelineno-40-21" name="__codelineno-40-21"></a>    <span class="n">llm_conf</span><span class="o">=</span><span class="mf">0.0</span>
+<a href="#__codelineno-40-22" id="__codelineno-40-22" name="__codelineno-40-22"></a><span class="p">)</span>
+<a href="#__codelineno-40-23" id="__codelineno-40-23" name="__codelineno-40-23"></a>
+<a href="#__codelineno-40-24" id="__codelineno-40-24" name="__codelineno-40-24"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Trend: </span><span class="si">{</span><span class="n">trend</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-40-25" id="__codelineno-40-25" name="__codelineno-40-25"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Entry: </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">side</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'None'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a href="#__codelineno-40-26" id="__codelineno-40-26" name="__codelineno-40-26"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Feature Vector: </span><span class="si">{</span><span class="n">vector</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/ITlusions/ITL.SwingAgent" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2" fill="currentColor"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+<script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+<script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
+</body>
+</html>

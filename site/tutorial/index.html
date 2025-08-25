@@ -1,0 +1,1067 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Comprehensive documentation for the SwingAgent trading system" name="description"/>
+<meta content="SwingAgent Team" name="author"/>
+<link href="../getting-started/" rel="prev"/>
+<link href="../use-cases/" rel="next"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.18" name="generator"/>
+<title>Tutorial - SwingAgent Documentation</title>
+<link href="../assets/stylesheets/main.7e37652d.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#swingagent-tutorial-your-first-week-of-trading">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SwingAgent Documentation" class="md-header__button md-logo" data-md-component="logo" href=".." title="SwingAgent Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SwingAgent Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Tutorial
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ITlusions/ITL.SwingAgent" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4" fill="currentColor"></path></svg>
+</div>
+<div class="md-source__repository">
+    ITL.SwingAgent
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../getting-started/">
+          
+  
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../api-reference/">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../architecture/">
+          
+  
+  
+  Advanced
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SwingAgent Documentation" class="md-nav__button md-logo" data-md-component="logo" href=".." title="SwingAgent Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    SwingAgent Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ITlusions/ITL.SwingAgent" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4" fill="currentColor"></path></svg>
+</div>
+<div class="md-source__repository">
+    ITL.SwingAgent
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    User Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started/">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Tutorial
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Tutorial
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-1-setting-up-and-understanding-signals">
+<span class="md-ellipsis">
+      Day 1: Setting Up and Understanding Signals
+    </span>
+</a>
+<nav aria-label="Day 1: Setting Up and Understanding Signals" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#morning-setup-5-minutes">
+<span class="md-ellipsis">
+      Morning Setup (5 minutes)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#understanding-the-output">
+<span class="md-ellipsis">
+      Understanding the Output
+    </span>
+</a>
+<nav aria-label="Understanding the Output" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-this-tells-you">
+<span class="md-ellipsis">
+      What This Tells You:
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#your-decision-process">
+<span class="md-ellipsis">
+      Your Decision Process
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-2-monitoring-and-entry">
+<span class="md-ellipsis">
+      Day 2: Monitoring and Entry
+    </span>
+</a>
+<nav aria-label="Day 2: Monitoring and Entry" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#morning-check">
+<span class="md-ellipsis">
+      Morning Check
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entry-scenarios">
+<span class="md-ellipsis">
+      Entry Scenarios
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-3-position-management">
+<span class="md-ellipsis">
+      Day 3: Position Management
+    </span>
+</a>
+<nav aria-label="Day 3: Position Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#morning-check_1">
+<span class="md-ellipsis">
+      Morning Check
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#management-scenarios">
+<span class="md-ellipsis">
+      Management Scenarios
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-4-generating-new-signals">
+<span class="md-ellipsis">
+      Day 4: Generating New Signals
+    </span>
+</a>
+<nav aria-label="Day 4: Generating New Signals" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#signal-quality-assessment">
+<span class="md-ellipsis">
+      Signal Quality Assessment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-5-backtesting-and-analysis">
+<span class="md-ellipsis">
+      Day 5: Backtesting and Analysis
+    </span>
+</a>
+<nav aria-label="Day 5: Backtesting and Analysis" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#understanding-backtest-results">
+<span class="md-ellipsis">
+      Understanding Backtest Results
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#weekend-review-and-planning">
+<span class="md-ellipsis">
+      Weekend: Review and Planning
+    </span>
+</a>
+<nav aria-label="Weekend: Review and Planning" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#weekly-review-questions">
+<span class="md-ellipsis">
+      Weekly Review Questions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-week-planning">
+<span class="md-ellipsis">
+      Next Week Planning
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pro-tips-from-your-first-week">
+<span class="md-ellipsis">
+      Pro Tips from Your First Week
+    </span>
+</a>
+<nav aria-label="Pro Tips from Your First Week" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-quality-over-quantity">
+<span class="md-ellipsis">
+      1. Quality Over Quantity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-respect-the-stop-loss">
+<span class="md-ellipsis">
+      2. Respect the Stop Loss
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-use-the-action-plan">
+<span class="md-ellipsis">
+      3. Use the Action Plan
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-track-your-results">
+<span class="md-ellipsis">
+      4. Track Your Results
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-start-small">
+<span class="md-ellipsis">
+      5. Start Small
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-next">
+<span class="md-ellipsis">
+      What's Next?
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../use-cases/">
+<span class="md-ellipsis">
+    Use Cases
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../best-practices/">
+<span class="md-ellipsis">
+    Best Practices
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../faq/">
+<span class="md-ellipsis">
+    FAQ
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary/">
+<span class="md-ellipsis">
+    Glossary
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configuration/">
+<span class="md-ellipsis">
+    Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Advanced
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Advanced
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../development/">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../deployment/">
+<span class="md-ellipsis">
+    Deployment
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../testing/">
+<span class="md-ellipsis">
+    Testing
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../security/">
+<span class="md-ellipsis">
+    Security
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-1-setting-up-and-understanding-signals">
+<span class="md-ellipsis">
+      Day 1: Setting Up and Understanding Signals
+    </span>
+</a>
+<nav aria-label="Day 1: Setting Up and Understanding Signals" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#morning-setup-5-minutes">
+<span class="md-ellipsis">
+      Morning Setup (5 minutes)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#understanding-the-output">
+<span class="md-ellipsis">
+      Understanding the Output
+    </span>
+</a>
+<nav aria-label="Understanding the Output" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-this-tells-you">
+<span class="md-ellipsis">
+      What This Tells You:
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#your-decision-process">
+<span class="md-ellipsis">
+      Your Decision Process
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-2-monitoring-and-entry">
+<span class="md-ellipsis">
+      Day 2: Monitoring and Entry
+    </span>
+</a>
+<nav aria-label="Day 2: Monitoring and Entry" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#morning-check">
+<span class="md-ellipsis">
+      Morning Check
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entry-scenarios">
+<span class="md-ellipsis">
+      Entry Scenarios
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-3-position-management">
+<span class="md-ellipsis">
+      Day 3: Position Management
+    </span>
+</a>
+<nav aria-label="Day 3: Position Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#morning-check_1">
+<span class="md-ellipsis">
+      Morning Check
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#management-scenarios">
+<span class="md-ellipsis">
+      Management Scenarios
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-4-generating-new-signals">
+<span class="md-ellipsis">
+      Day 4: Generating New Signals
+    </span>
+</a>
+<nav aria-label="Day 4: Generating New Signals" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#signal-quality-assessment">
+<span class="md-ellipsis">
+      Signal Quality Assessment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#day-5-backtesting-and-analysis">
+<span class="md-ellipsis">
+      Day 5: Backtesting and Analysis
+    </span>
+</a>
+<nav aria-label="Day 5: Backtesting and Analysis" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#understanding-backtest-results">
+<span class="md-ellipsis">
+      Understanding Backtest Results
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#weekend-review-and-planning">
+<span class="md-ellipsis">
+      Weekend: Review and Planning
+    </span>
+</a>
+<nav aria-label="Weekend: Review and Planning" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#weekly-review-questions">
+<span class="md-ellipsis">
+      Weekly Review Questions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-week-planning">
+<span class="md-ellipsis">
+      Next Week Planning
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pro-tips-from-your-first-week">
+<span class="md-ellipsis">
+      Pro Tips from Your First Week
+    </span>
+</a>
+<nav aria-label="Pro Tips from Your First Week" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-quality-over-quantity">
+<span class="md-ellipsis">
+      1. Quality Over Quantity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-respect-the-stop-loss">
+<span class="md-ellipsis">
+      2. Respect the Stop Loss
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-use-the-action-plan">
+<span class="md-ellipsis">
+      3. Use the Action Plan
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-track-your-results">
+<span class="md-ellipsis">
+      4. Track Your Results
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-start-small">
+<span class="md-ellipsis">
+      5. Start Small
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-next">
+<span class="md-ellipsis">
+      What's Next?
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="swingagent-tutorial-your-first-week-of-trading">SwingAgent Tutorial: Your First Week of Trading<a class="headerlink" href="#swingagent-tutorial-your-first-week-of-trading" title="Permanent link">¶</a></h1>
+<p>This hands-on tutorial will walk you through a complete week of using SwingAgent, from generating your first signals to evaluating results.</p>
+<h2 id="day-1-setting-up-and-understanding-signals">Day 1: Setting Up and Understanding Signals<a class="headerlink" href="#day-1-setting-up-and-understanding-signals" title="Permanent link">¶</a></h2>
+<h3 id="morning-setup-5-minutes">Morning Setup (5 minutes)<a class="headerlink" href="#morning-setup-5-minutes" title="Permanent link">¶</a></h3>
+<p>Let's start by scanning a few popular stocks for potential setups:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># Scan some technology stocks</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>AAPL<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>--sector<span class="w"> </span>QQQ
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>MSFT<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>--sector<span class="w"> </span>QQQ
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>GOOGL<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>--sector<span class="w"> </span>QQQ
+</code></pre></div>
+<h3 id="understanding-the-output">Understanding the Output<a class="headerlink" href="#understanding-the-output" title="Permanent link">¶</a></h3>
+<p>Let's say SwingAgent found a signal for AAPL:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="p">{</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="w">  </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AAPL"</span><span class="p">,</span>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nt">"asof"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T15:30:00+00:00"</span><span class="p">,</span>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">"trend"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"up"</span><span class="p">,</span>
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="nt">"ema_slope"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0156</span><span class="p">,</span>
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nt">"price_above_ema"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="nt">"rsi_14"</span><span class="p">:</span><span class="w"> </span><span class="mf">62.3</span>
+<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">  </span><span class="p">},</span>
+<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">  </span><span class="nt">"entry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="nt">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span>
+<a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">    </span><span class="nt">"entry_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">185.50</span><span class="p">,</span>
+<a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">    </span><span class="nt">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="mf">182.20</span><span class="p">,</span>
+<a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">    </span><span class="nt">"take_profit"</span><span class="p">:</span><span class="w"> </span><span class="mf">190.80</span><span class="p">,</span>
+<a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="nt">"r_multiple"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.61</span><span class="p">,</span>
+<a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">    </span><span class="nt">"fib_golden_low"</span><span class="p">:</span><span class="w"> </span><span class="mf">184.20</span><span class="p">,</span>
+<a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="nt">"fib_golden_high"</span><span class="p">:</span><span class="w"> </span><span class="mf">186.10</span>
+<a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">  </span><span class="p">},</span>
+<a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">  </span><span class="nt">"confidence"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.72</span><span class="p">,</span>
+<a href="#__codelineno-1-20" id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">  </span><span class="nt">"expected_r"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">,</span>
+<a href="#__codelineno-1-21" id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">  </span><span class="nt">"expected_winrate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.58</span><span class="p">,</span>
+<a href="#__codelineno-1-22" id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">  </span><span class="nt">"mtf_alignment"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a href="#__codelineno-1-23" id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">  </span><span class="nt">"vol_regime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span><span class="p">,</span>
+<a href="#__codelineno-1-24" id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">  </span><span class="nt">"action_plan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Strong uptrend with price holding above EMA. RSI at 62 shows momentum without being overbought. Entry recommended in the Fibonacci golden pocket between $184.20-$186.10. Stop below recent swing low at $182.20 limits risk to $3.30 per share. Target $190.80 offers 1.61R reward-to-risk ratio. Monitor for entry between market open and 11 AM when volume is typically highest."</span>
+<a href="#__codelineno-1-25" id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="p">}</span>
+</code></pre></div>
+<h4 id="what-this-tells-you">What This Tells You:<a class="headerlink" href="#what-this-tells-you" title="Permanent link">¶</a></h4>
+<p><strong>The Setup:</strong>
+- AAPL is in an <strong>uptrend</strong> (trend.label = "up")
+- Price is <strong>above the moving average</strong> (price_above_ema = true)
+- <strong>Momentum is healthy</strong> (RSI = 62.3, not overbought)
+- <strong>Medium volatility</strong> environment (vol_regime = "M")</p>
+<p><strong>The Trade Plan:</strong>
+- <strong>Direction</strong>: Long (buy)
+- <strong>Entry Zone</strong>: $184.20 - $186.10 (Fibonacci golden pocket)
+- <strong>Stop Loss</strong>: $182.20 (risk = $3.30 per share if entering at $185.50)
+- <strong>Take Profit</strong>: $190.80 (reward = $5.30 per share)
+- <strong>Risk/Reward</strong>: 1.61 (risk $1 to potentially make $1.61)</p>
+<p><strong>The Confidence:</strong>
+- <strong>System Confidence</strong>: 72% (fairly high)
+- <strong>Historical Expected Return</strong>: 0.95R (historically, similar setups averaged 95% of risk as profit)
+- <strong>Win Rate</strong>: 58% (similar setups were profitable 58% of the time)</p>
+<h3 id="your-decision-process">Your Decision Process<a class="headerlink" href="#your-decision-process" title="Permanent link">¶</a></h3>
+<p>Ask yourself:
+1. <strong>Do I understand the trade?</strong> ✓ Buy AAPL between $184.20-$186.10
+2. <strong>Is the risk acceptable?</strong> If you're willing to lose $3.30 per share
+3. <strong>Does the timeframe fit?</strong> This is a 1-2 day swing trade
+4. <strong>Do I like the setup?</strong> 58% win rate with 1.61 reward-to-risk is reasonable</p>
+<h2 id="day-2-monitoring-and-entry">Day 2: Monitoring and Entry<a class="headerlink" href="#day-2-monitoring-and-entry" title="Permanent link">¶</a></h2>
+<h3 id="morning-check">Morning Check<a class="headerlink" href="#morning-check" title="Permanent link">¶</a></h3>
+<p>Check if AAPL is trading in your entry zone:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># Generate a fresh signal to see current price</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>AAPL<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>--sector<span class="w"> </span>QQQ
+</code></pre></div>
+<h3 id="entry-scenarios">Entry Scenarios<a class="headerlink" href="#entry-scenarios" title="Permanent link">¶</a></h3>
+<p><strong>Scenario A: Price is at $184.80 (in the golden pocket)</strong>
+- ✅ <strong>Enter the trade</strong>
+- Place stop at $182.20
+- Set target at $190.80
+- Position size based on your $3.30 risk per share</p>
+<p><strong>Scenario B: Price is at $187.50 (above the entry zone)</strong>
+- ❌ <strong>Skip this trade</strong>
+- The risk/reward is no longer favorable
+- Wait for the next opportunity</p>
+<p><strong>Scenario C: Price is at $180.00 (below the entry zone)</strong>
+- ⏳ <strong>Wait and watch</strong>
+- The setup may be invalidated
+- Generate a new signal to see if conditions changed</p>
+<h2 id="day-3-position-management">Day 3: Position Management<a class="headerlink" href="#day-3-position-management" title="Permanent link">¶</a></h2>
+<p>Let's say you entered AAPL at $184.80 yesterday.</p>
+<h3 id="morning-check_1">Morning Check<a class="headerlink" href="#morning-check_1" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># See how AAPL is performing</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>AAPL<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>--sector<span class="w"> </span>QQQ
+</code></pre></div>
+<h3 id="management-scenarios">Management Scenarios<a class="headerlink" href="#management-scenarios" title="Permanent link">¶</a></h3>
+<p><strong>Scenario A: AAPL is at $189.50 (near target)</strong>
+- Consider taking partial profits (sell 50% of position)
+- Move stop loss to breakeven ($184.80)
+- Let the rest run to full target</p>
+<p><strong>Scenario B: AAPL is at $183.00 (near stop)</strong>
+- Prepare to exit if it hits $182.20
+- Don't hope it will turn around
+- Stick to your plan</p>
+<p><strong>Scenario C: AAPL is at $186.20 (moving in your favor)</strong>
+- Hold the position
+- Consider moving stop to $183.50 (original entry zone low)
+- Let it run toward target</p>
+<h2 id="day-4-generating-new-signals">Day 4: Generating New Signals<a class="headerlink" href="#day-4-generating-new-signals" title="Permanent link">¶</a></h2>
+<p>Whether your AAPL trade is still active or closed, let's find new opportunities:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># Scan different sectors</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XLF<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w">  </span><span class="c1"># Financial sector ETF</span>
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>JPM<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>--sector<span class="w"> </span>XLF
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>BAC<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>--sector<span class="w"> </span>XLF
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="c1"># Try energy sector</span>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XLE<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w">  </span><span class="c1"># Energy sector ETF</span>
+<a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XOM<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>--sector<span class="w"> </span>XLE
+</code></pre></div>
+<h3 id="signal-quality-assessment">Signal Quality Assessment<a class="headerlink" href="#signal-quality-assessment" title="Permanent link">¶</a></h3>
+<p>Rate each signal:</p>
+<p><strong>High Quality Signal:</strong>
+- Confidence &gt; 70%
+- R-multiple &gt; 1.5
+- Win rate &gt; 55%
+- Clear entry zone
+- MTF alignment ≥ 2</p>
+<p><strong>Medium Quality Signal:</strong>
+- Confidence 50-70%
+- R-multiple 1.2-1.5
+- Win rate 45-55%</p>
+<p><strong>Low Quality Signal:</strong>
+- Confidence &lt; 50%
+- R-multiple &lt; 1.2
+- Win rate &lt; 45%</p>
+<h2 id="day-5-backtesting-and-analysis">Day 5: Backtesting and Analysis<a class="headerlink" href="#day-5-backtesting-and-analysis" title="Permanent link">¶</a></h2>
+<p>Let's generate some historical signals to see how the system performed:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># Generate 180 days of historical signals for AAPL (this takes a few minutes)</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>python<span class="w"> </span>scripts/backtest_generate_signals.py<span class="w"> </span>--symbol<span class="w"> </span>AAPL<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">180</span><span class="w"> </span>--warmup-bars<span class="w"> </span><span class="m">80</span><span class="w"> </span>--sector<span class="w"> </span>QQQ<span class="w"> </span>--no-llm
+</code></pre></div>
+<p>Then evaluate the historical performance:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># Evaluate all historical signals</span>
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>python<span class="w"> </span>scripts/eval_signals.py<span class="w"> </span>--max-hold-days<span class="w"> </span><span class="m">2</span>.0
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a>
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="c1"># Analyze the results</span>
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a>python<span class="w"> </span>scripts/analyze_performance.py
+</code></pre></div>
+<h3 id="understanding-backtest-results">Understanding Backtest Results<a class="headerlink" href="#understanding-backtest-results" title="Permanent link">¶</a></h3>
+<p>The analysis will show you:</p>
+<p><strong>Overall Performance:</strong>
+- Total number of signals
+- Win rate percentage
+- Average R per trade
+- Best and worst trades</p>
+<p><strong>By Volatility Regime:</strong>
+- How signals performed in Low/Medium/High volatility environments
+- Which regimes were most profitable</p>
+<p><strong>By Confidence Buckets:</strong>
+- How well the system's confidence predictions matched reality
+- Whether high-confidence signals actually performed better</p>
+<h2 id="weekend-review-and-planning">Weekend: Review and Planning<a class="headerlink" href="#weekend-review-and-planning" title="Permanent link">¶</a></h2>
+<h3 id="weekly-review-questions">Weekly Review Questions<a class="headerlink" href="#weekly-review-questions" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>What did I learn about the system?</strong></li>
+<li>Which signal types worked best?</li>
+<li>
+<p>What market conditions were most favorable?</p>
+</li>
+<li>
+<p><strong>How was my execution?</strong></p>
+</li>
+<li>Did I follow the entry rules?</li>
+<li>Did I stick to stop losses?</li>
+<li>
+<p>Did I take profits at targets?</p>
+</li>
+<li>
+<p><strong>What would I do differently?</strong></p>
+</li>
+<li>Position sizing adjustments?</li>
+<li>Different stocks or sectors?</li>
+<li>Different timeframes?</li>
+</ol>
+<h3 id="next-week-planning">Next Week Planning<a class="headerlink" href="#next-week-planning" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># Create a watchlist of sectors to monitor</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>QQQ<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w">  </span><span class="c1"># Tech</span>
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XLF<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w">  </span><span class="c1"># Finance</span>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XLE<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w">  </span><span class="c1"># Energy</span>
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XLI<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w">  </span><span class="c1"># Industrial</span>
+<a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XLV<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span><span class="w">  </span><span class="c1"># Healthcare</span>
+</code></pre></div>
+<h2 id="pro-tips-from-your-first-week">Pro Tips from Your First Week<a class="headerlink" href="#pro-tips-from-your-first-week" title="Permanent link">¶</a></h2>
+<h3 id="1-quality-over-quantity">1. Quality Over Quantity<a class="headerlink" href="#1-quality-over-quantity" title="Permanent link">¶</a></h3>
+<ul>
+<li>It's better to take one high-quality signal than three mediocre ones</li>
+<li>High confidence (&gt;70%) signals with good R-multiples (&gt;1.5) tend to work best</li>
+</ul>
+<h3 id="2-respect-the-stop-loss">2. Respect the Stop Loss<a class="headerlink" href="#2-respect-the-stop-loss" title="Permanent link">¶</a></h3>
+<ul>
+<li>Always set your stop loss before entering</li>
+<li>Never move it against you</li>
+<li>The system calculates stops based on technical levels</li>
+</ul>
+<h3 id="3-use-the-action-plan">3. Use the Action Plan<a class="headerlink" href="#3-use-the-action-plan" title="Permanent link">¶</a></h3>
+<ul>
+<li>Read the AI-generated action plan carefully</li>
+<li>It often contains important timing and context information</li>
+<li>Use it to understand the reasoning behind the signal</li>
+</ul>
+<h3 id="4-track-your-results">4. Track Your Results<a class="headerlink" href="#4-track-your-results" title="Permanent link">¶</a></h3>
+<ul>
+<li>Keep a simple trading journal</li>
+<li>Note which signals you took and why</li>
+<li>Compare your actual results to the system's expectations</li>
+</ul>
+<h3 id="5-start-small">5. Start Small<a class="headerlink" href="#5-start-small" title="Permanent link">¶</a></h3>
+<ul>
+<li>Use small position sizes while learning</li>
+<li>Focus on learning the system rather than making money initially</li>
+<li>Increase size only after you're comfortable with the process</li>
+</ul>
+<h2 id="whats-next">What's Next?<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h2>
+<p>After your first week, you might want to explore:</p>
+<ul>
+<li><strong><a href="../use-cases/">Use Cases</a></strong> - Advanced trading scenarios</li>
+<li><strong><a href="../best-practices/">Best Practices</a></strong> - Professional trading tips</li>
+<li><strong><a href="../configuration/">Configuration</a></strong> - Customizing the system</li>
+<li><strong><a href="../faq/">FAQ</a></strong> - Common questions and solutions</li>
+</ul>
+<p>Remember: The goal of this first week is to learn how SwingAgent works and develop confidence in using it. Focus on understanding the signals rather than maximizing profits.</p>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/ITlusions/ITL.SwingAgent" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2" fill="currentColor"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+<script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+<script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
+</body>
+</html>

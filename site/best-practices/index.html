@@ -1,0 +1,1374 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Comprehensive documentation for the SwingAgent trading system" name="description"/>
+<meta content="SwingAgent Team" name="author"/>
+<link href="../use-cases/" rel="prev"/>
+<link href="../faq/" rel="next"/>
+<link href="../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.18" name="generator"/>
+<title>Best Practices - SwingAgent Documentation</title>
+<link href="../assets/stylesheets/main.7e37652d.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#best-practices-for-swingagent-trading">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SwingAgent Documentation" class="md-header__button md-logo" data-md-component="logo" href=".." title="SwingAgent Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SwingAgent Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Best Practices
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="blue" data-md-color-media="" data-md-color-primary="blue" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ITlusions/ITL.SwingAgent" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4" fill="currentColor"></path></svg>
+</div>
+<div class="md-source__repository">
+    ITL.SwingAgent
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../getting-started/">
+          
+  
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../api-reference/">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../architecture/">
+          
+  
+  
+  Advanced
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SwingAgent Documentation" class="md-nav__button md-logo" data-md-component="logo" href=".." title="SwingAgent Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    SwingAgent Documentation
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ITlusions/ITL.SwingAgent" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4" fill="currentColor"></path></svg>
+</div>
+<div class="md-source__repository">
+    ITL.SwingAgent
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    User Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started/">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tutorial/">
+<span class="md-ellipsis">
+    Tutorial
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../use-cases/">
+<span class="md-ellipsis">
+    Use Cases
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Best Practices
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Best Practices
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#signal-selection-best-practices">
+<span class="md-ellipsis">
+      Signal Selection Best Practices
+    </span>
+</a>
+<nav aria-label="Signal Selection Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quality-over-quantity">
+<span class="md-ellipsis">
+      Quality Over Quantity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#signal-filtering-strategy">
+<span class="md-ellipsis">
+      Signal Filtering Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#position-sizing-guidelines">
+<span class="md-ellipsis">
+      Position Sizing Guidelines
+    </span>
+</a>
+<nav aria-label="Position Sizing Guidelines" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#base-position-size-formula">
+<span class="md-ellipsis">
+      Base Position Size Formula
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#volatility-adjustments">
+<span class="md-ellipsis">
+      Volatility Adjustments
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#confidence-adjustments">
+<span class="md-ellipsis">
+      Confidence Adjustments
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entry-execution-best-practices">
+<span class="md-ellipsis">
+      Entry Execution Best Practices
+    </span>
+</a>
+<nav aria-label="Entry Execution Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#timing-your-entries">
+<span class="md-ellipsis">
+      Timing Your Entries
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entry-zone-strategy">
+<span class="md-ellipsis">
+      Entry Zone Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#risk-management-best-practices">
+<span class="md-ellipsis">
+      Risk Management Best Practices
+    </span>
+</a>
+<nav aria-label="Risk Management Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-2-rule">
+<span class="md-ellipsis">
+      The 2% Rule
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stop-loss-discipline">
+<span class="md-ellipsis">
+      Stop-Loss Discipline
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#position-correlation-management">
+<span class="md-ellipsis">
+      Position Correlation Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profit-taking-strategies">
+<span class="md-ellipsis">
+      Profit-Taking Strategies
+    </span>
+</a>
+<nav aria-label="Profit-Taking Strategies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-50-25-25-method">
+<span class="md-ellipsis">
+      The 50-25-25 Method
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trailing-stop-strategy">
+<span class="md-ellipsis">
+      Trailing Stop Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#daily-and-weekly-routines">
+<span class="md-ellipsis">
+      Daily and Weekly Routines
+    </span>
+</a>
+<nav aria-label="Daily and Weekly Routines" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#morning-routine-15-minutes">
+<span class="md-ellipsis">
+      Morning Routine (15 minutes)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#evening-routine-10-minutes">
+<span class="md-ellipsis">
+      Evening Routine (10 minutes)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#weekly-review-30-minutes">
+<span class="md-ellipsis">
+      Weekly Review (30 minutes)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#market-condition-adaptations">
+<span class="md-ellipsis">
+      Market Condition Adaptations
+    </span>
+</a>
+<nav aria-label="Market Condition Adaptations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bull-market-best-practices">
+<span class="md-ellipsis">
+      Bull Market Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bear-market-best-practices">
+<span class="md-ellipsis">
+      Bear Market Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sideways-market-best-practices">
+<span class="md-ellipsis">
+      Sideways Market Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-techniques">
+<span class="md-ellipsis">
+      Advanced Techniques
+    </span>
+</a>
+<nav aria-label="Advanced Techniques" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sector-rotation-strategy">
+<span class="md-ellipsis">
+      Sector Rotation Strategy
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-timeframe-confluence">
+<span class="md-ellipsis">
+      Multi-Timeframe Confluence
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#earnings-season-adjustments">
+<span class="md-ellipsis">
+      Earnings Season Adjustments
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-mistakes-to-avoid">
+<span class="md-ellipsis">
+      Common Mistakes to Avoid
+    </span>
+</a>
+<nav aria-label="Common Mistakes to Avoid" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overtrading">
+<span class="md-ellipsis">
+      Overtrading
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ignoring-volatility-regimes">
+<span class="md-ellipsis">
+      Ignoring Volatility Regimes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#emotional-override">
+<span class="md-ellipsis">
+      Emotional Override
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#poor-record-keeping">
+<span class="md-ellipsis">
+      Poor Record Keeping
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#revenge-trading">
+<span class="md-ellipsis">
+      Revenge Trading
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-tracking">
+<span class="md-ellipsis">
+      Performance Tracking
+    </span>
+</a>
+<nav aria-label="Performance Tracking" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-metrics-to-monitor">
+<span class="md-ellipsis">
+      Key Metrics to Monitor
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monthly-review-questions">
+<span class="md-ellipsis">
+      Monthly Review Questions
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#psychology-and-discipline">
+<span class="md-ellipsis">
+      Psychology and Discipline
+    </span>
+</a>
+<nav aria-label="Psychology and Discipline" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#maintain-trading-discipline">
+<span class="md-ellipsis">
+      Maintain Trading Discipline
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#building-confidence">
+<span class="md-ellipsis">
+      Building Confidence
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#handling-drawdowns">
+<span class="md-ellipsis">
+      Handling Drawdowns
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../faq/">
+<span class="md-ellipsis">
+    FAQ
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary/">
+<span class="md-ellipsis">
+    Glossary
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api-reference/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../configuration/">
+<span class="md-ellipsis">
+    Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../troubleshooting/">
+<span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Advanced
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Advanced
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../architecture/">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../development/">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../deployment/">
+<span class="md-ellipsis">
+    Deployment
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../testing/">
+<span class="md-ellipsis">
+    Testing
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../security/">
+<span class="md-ellipsis">
+    Security
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#signal-selection-best-practices">
+<span class="md-ellipsis">
+      Signal Selection Best Practices
+    </span>
+</a>
+<nav aria-label="Signal Selection Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quality-over-quantity">
+<span class="md-ellipsis">
+      Quality Over Quantity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#signal-filtering-strategy">
+<span class="md-ellipsis">
+      Signal Filtering Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#position-sizing-guidelines">
+<span class="md-ellipsis">
+      Position Sizing Guidelines
+    </span>
+</a>
+<nav aria-label="Position Sizing Guidelines" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#base-position-size-formula">
+<span class="md-ellipsis">
+      Base Position Size Formula
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#volatility-adjustments">
+<span class="md-ellipsis">
+      Volatility Adjustments
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#confidence-adjustments">
+<span class="md-ellipsis">
+      Confidence Adjustments
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entry-execution-best-practices">
+<span class="md-ellipsis">
+      Entry Execution Best Practices
+    </span>
+</a>
+<nav aria-label="Entry Execution Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#timing-your-entries">
+<span class="md-ellipsis">
+      Timing Your Entries
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entry-zone-strategy">
+<span class="md-ellipsis">
+      Entry Zone Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#risk-management-best-practices">
+<span class="md-ellipsis">
+      Risk Management Best Practices
+    </span>
+</a>
+<nav aria-label="Risk Management Best Practices" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-2-rule">
+<span class="md-ellipsis">
+      The 2% Rule
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stop-loss-discipline">
+<span class="md-ellipsis">
+      Stop-Loss Discipline
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#position-correlation-management">
+<span class="md-ellipsis">
+      Position Correlation Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#profit-taking-strategies">
+<span class="md-ellipsis">
+      Profit-Taking Strategies
+    </span>
+</a>
+<nav aria-label="Profit-Taking Strategies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-50-25-25-method">
+<span class="md-ellipsis">
+      The 50-25-25 Method
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trailing-stop-strategy">
+<span class="md-ellipsis">
+      Trailing Stop Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#daily-and-weekly-routines">
+<span class="md-ellipsis">
+      Daily and Weekly Routines
+    </span>
+</a>
+<nav aria-label="Daily and Weekly Routines" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#morning-routine-15-minutes">
+<span class="md-ellipsis">
+      Morning Routine (15 minutes)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#evening-routine-10-minutes">
+<span class="md-ellipsis">
+      Evening Routine (10 minutes)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#weekly-review-30-minutes">
+<span class="md-ellipsis">
+      Weekly Review (30 minutes)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#market-condition-adaptations">
+<span class="md-ellipsis">
+      Market Condition Adaptations
+    </span>
+</a>
+<nav aria-label="Market Condition Adaptations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bull-market-best-practices">
+<span class="md-ellipsis">
+      Bull Market Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bear-market-best-practices">
+<span class="md-ellipsis">
+      Bear Market Best Practices
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sideways-market-best-practices">
+<span class="md-ellipsis">
+      Sideways Market Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-techniques">
+<span class="md-ellipsis">
+      Advanced Techniques
+    </span>
+</a>
+<nav aria-label="Advanced Techniques" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sector-rotation-strategy">
+<span class="md-ellipsis">
+      Sector Rotation Strategy
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-timeframe-confluence">
+<span class="md-ellipsis">
+      Multi-Timeframe Confluence
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#earnings-season-adjustments">
+<span class="md-ellipsis">
+      Earnings Season Adjustments
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-mistakes-to-avoid">
+<span class="md-ellipsis">
+      Common Mistakes to Avoid
+    </span>
+</a>
+<nav aria-label="Common Mistakes to Avoid" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overtrading">
+<span class="md-ellipsis">
+      Overtrading
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ignoring-volatility-regimes">
+<span class="md-ellipsis">
+      Ignoring Volatility Regimes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#emotional-override">
+<span class="md-ellipsis">
+      Emotional Override
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#poor-record-keeping">
+<span class="md-ellipsis">
+      Poor Record Keeping
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#revenge-trading">
+<span class="md-ellipsis">
+      Revenge Trading
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-tracking">
+<span class="md-ellipsis">
+      Performance Tracking
+    </span>
+</a>
+<nav aria-label="Performance Tracking" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-metrics-to-monitor">
+<span class="md-ellipsis">
+      Key Metrics to Monitor
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monthly-review-questions">
+<span class="md-ellipsis">
+      Monthly Review Questions
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#psychology-and-discipline">
+<span class="md-ellipsis">
+      Psychology and Discipline
+    </span>
+</a>
+<nav aria-label="Psychology and Discipline" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#maintain-trading-discipline">
+<span class="md-ellipsis">
+      Maintain Trading Discipline
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#building-confidence">
+<span class="md-ellipsis">
+      Building Confidence
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#handling-drawdowns">
+<span class="md-ellipsis">
+      Handling Drawdowns
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="best-practices-for-swingagent-trading">Best Practices for SwingAgent Trading<a class="headerlink" href="#best-practices-for-swingagent-trading" title="Permanent link">¶</a></h1>
+<p>This guide provides professional tips and proven strategies for getting the most out of SwingAgent while maintaining proper risk management.</p>
+<h2 id="signal-selection-best-practices">Signal Selection Best Practices<a class="headerlink" href="#signal-selection-best-practices" title="Permanent link">¶</a></h2>
+<h3 id="quality-over-quantity">Quality Over Quantity<a class="headerlink" href="#quality-over-quantity" title="Permanent link">¶</a></h3>
+<p>The most successful SwingAgent users are highly selective about which signals they trade.</p>
+<p><strong>High-Quality Signal Criteria:</strong>
+- <strong>Confidence ≥ 70%</strong>: Strong pattern match with historical data
+- <strong>R-Multiple ≥ 1.5</strong>: Favorable risk/reward ratio
+- <strong>Expected Win Rate ≥ 55%</strong>: Better than coin flip probability
+- <strong>MTF Alignment = 2</strong>: Both timeframes confirm the setup
+- <strong>Clear Entry Zone</strong>: Specific price range, not a single price point</p>
+<p><strong>Example of a Premium Signal:</strong>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="p">{</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AAPL"</span><span class="p">,</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="nt">"confidence"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.78</span><span class="p">,</span>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="nt">"entry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="nt">"r_multiple"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.82</span><span class="p">,</span>
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="nt">"fib_golden_low"</span><span class="p">:</span><span class="w"> </span><span class="mf">184.20</span><span class="p">,</span>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="nt">"fib_golden_high"</span><span class="p">:</span><span class="w"> </span><span class="mf">186.10</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="p">},</span>
+<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">  </span><span class="nt">"expected_winrate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.62</span><span class="p">,</span>
+<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">  </span><span class="nt">"mtf_alignment"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">  </span><span class="nt">"vol_regime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M"</span>
+<a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="p">}</span>
+</code></pre></div></p>
+<h3 id="signal-filtering-strategy">Signal Filtering Strategy<a class="headerlink" href="#signal-filtering-strategy" title="Permanent link">¶</a></h3>
+<p>Don't take every signal. Use this hierarchy:</p>
+<ol>
+<li><strong>Tier 1 (Take immediately)</strong>: Confidence &gt;80%, R-multiple &gt;2.0</li>
+<li><strong>Tier 2 (Take selectively)</strong>: Confidence 70-80%, R-multiple 1.5-2.0</li>
+<li><strong>Tier 3 (Consider carefully)</strong>: Confidence 60-70%, R-multiple 1.3-1.5</li>
+<li><strong>Tier 4 (Usually skip)</strong>: Below Tier 3 thresholds</li>
+</ol>
+<h2 id="position-sizing-guidelines">Position Sizing Guidelines<a class="headerlink" href="#position-sizing-guidelines" title="Permanent link">¶</a></h2>
+<h3 id="base-position-size-formula">Base Position Size Formula<a class="headerlink" href="#base-position-size-formula" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>Position Size = (Account Risk %) ÷ (Entry Price - Stop Price) × Account Value
+</code></pre></div>
+<p><strong>Example:</strong>
+- Account: $10,000
+- Risk per trade: 2%
+- Entry: $100
+- Stop: $96
+- Position Size = 2% ÷ $4 × $10,000 = 50 shares</p>
+<h3 id="volatility-adjustments">Volatility Adjustments<a class="headerlink" href="#volatility-adjustments" title="Permanent link">¶</a></h3>
+<p>Adjust your base position size based on volatility regime:</p>
+<ul>
+<li><strong>Low Volatility ("L")</strong>: +25% of base size</li>
+<li><strong>Medium Volatility ("M")</strong>: Base size</li>
+<li><strong>High Volatility ("H")</strong>: -25% of base size</li>
+</ul>
+<h3 id="confidence-adjustments">Confidence Adjustments<a class="headerlink" href="#confidence-adjustments" title="Permanent link">¶</a></h3>
+<p>Further adjust based on signal confidence:</p>
+<ul>
+<li><strong>Confidence &gt;80%</strong>: +20% of calculated size</li>
+<li><strong>Confidence 70-80%</strong>: Calculated size</li>
+<li><strong>Confidence 60-70%</strong>: -20% of calculated size</li>
+<li><strong>Confidence &lt;60%</strong>: Consider skipping</li>
+</ul>
+<h2 id="entry-execution-best-practices">Entry Execution Best Practices<a class="headerlink" href="#entry-execution-best-practices" title="Permanent link">¶</a></h2>
+<h3 id="timing-your-entries">Timing Your Entries<a class="headerlink" href="#timing-your-entries" title="Permanent link">¶</a></h3>
+<p><strong>Best Entry Times:</strong>
+- <strong>9:30-10:30 AM</strong>: High volume, clear direction establishment
+- <strong>2:00-3:00 PM</strong>: Institutional activity, trend continuation
+- <strong>Avoid</strong>: First 5 minutes (too volatile), last 30 minutes (unpredictable)</p>
+<h3 id="entry-zone-strategy">Entry Zone Strategy<a class="headerlink" href="#entry-zone-strategy" title="Permanent link">¶</a></h3>
+<p>SwingAgent provides entry ranges (e.g., $184.20-$186.10). Use this approach:</p>
+<ol>
+<li><strong>Wait for the zone</strong>: Don't chase above the high end</li>
+<li><strong>Scale in</strong>: Enter 60% at zone midpoint, 40% at favorable end</li>
+<li><strong>Use limit orders</strong>: Avoid market orders during volatile periods</li>
+<li><strong>Set stops immediately</strong>: Place stop-loss order as soon as filled</li>
+</ol>
+<p><strong>Example Entry Plan:</strong>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># Signal shows entry zone $184.20-$186.10</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="c1"># Place limit orders:</span>
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="c1"># 60% of position at $185.15 (midpoint)</span>
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="c1"># 40% of position at $184.50 (favorable end)</span>
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="c1"># Stop loss at $182.20 for all shares</span>
+</code></pre></div></p>
+<h2 id="risk-management-best-practices">Risk Management Best Practices<a class="headerlink" href="#risk-management-best-practices" title="Permanent link">¶</a></h2>
+<h3 id="the-2-rule">The 2% Rule<a class="headerlink" href="#the-2-rule" title="Permanent link">¶</a></h3>
+<p>Never risk more than 2% of your account on any single trade. This allows for a string of losses without devastating your account.</p>
+<p><strong>Why 2% Works:</strong>
+- 10 consecutive losses = -18% account drawdown (recoverable)
+- Allows for statistical edge to play out over time
+- Prevents emotional decision-making</p>
+<h3 id="stop-loss-discipline">Stop-Loss Discipline<a class="headerlink" href="#stop-loss-discipline" title="Permanent link">¶</a></h3>
+<p>SwingAgent calculates technical stop levels. Follow them religiously:</p>
+<ol>
+<li><strong>Set stops immediately</strong> upon entry</li>
+<li><strong>Never move stops against you</strong> (only in your favor)</li>
+<li><strong>Don't hope for reversals</strong> - cut losses quickly</li>
+<li><strong>Honor the stop even if</strong> you "know" the stock will bounce</li>
+</ol>
+<h3 id="position-correlation-management">Position Correlation Management<a class="headerlink" href="#position-correlation-management" title="Permanent link">¶</a></h3>
+<p>Avoid taking multiple highly correlated positions:</p>
+<p><strong>Poor Diversification:</strong>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># All tech stocks - highly correlated</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>AAPL<span class="w"> </span>long
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a>MSFT<span class="w"> </span>long<span class="w">  </span>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a>GOOGL<span class="w"> </span>long
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a>NVDA<span class="w"> </span>long
+</code></pre></div></p>
+<p><strong>Better Diversification:</strong>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c1"># Mixed sectors - lower correlation</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>AAPL<span class="w"> </span>long<span class="w"> </span><span class="o">(</span>tech<span class="o">)</span>
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>JPM<span class="w"> </span>long<span class="w"> </span><span class="o">(</span>finance<span class="o">)</span>
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>XLE<span class="w"> </span>long<span class="w"> </span><span class="o">(</span>energy<span class="o">)</span>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>WMT<span class="w"> </span>long<span class="w"> </span><span class="o">(</span>consumer<span class="w"> </span>staples<span class="o">)</span>
+</code></pre></div></p>
+<h2 id="profit-taking-strategies">Profit-Taking Strategies<a class="headerlink" href="#profit-taking-strategies" title="Permanent link">¶</a></h2>
+<h3 id="the-50-25-25-method">The 50-25-25 Method<a class="headerlink" href="#the-50-25-25-method" title="Permanent link">¶</a></h3>
+<p>This is the most popular profit-taking strategy among successful SwingAgent users:</p>
+<ul>
+<li><strong>50% at 1R</strong>: Lock in profit when trade moves in your favor by the amount you risked</li>
+<li><strong>25% at 1.5R</strong>: Take additional profits as momentum continues</li>
+<li><strong>25% at target</strong>: Let remaining position run to full target</li>
+</ul>
+<p><strong>Example:</strong>
+- Entry: $100, Stop: $96, Target: $108 (Risk: $4, Reward: $8, R-multiple: 2.0)
+- Take 50% profit at $104 (1R = $4 profit)
+- Take 25% profit at $106 (1.5R = $6 profit)
+- Let 25% run to $108 target (2R = $8 profit)</p>
+<h3 id="trailing-stop-strategy">Trailing Stop Strategy<a class="headerlink" href="#trailing-stop-strategy" title="Permanent link">¶</a></h3>
+<p>For strong trending moves, consider trailing your stop:</p>
+<ol>
+<li><strong>After 1R profit</strong>: Move stop to breakeven</li>
+<li><strong>After 1.5R profit</strong>: Move stop to +0.5R</li>
+<li><strong>After 2R profit</strong>: Move stop to +1R</li>
+</ol>
+<h2 id="daily-and-weekly-routines">Daily and Weekly Routines<a class="headerlink" href="#daily-and-weekly-routines" title="Permanent link">¶</a></h2>
+<h3 id="morning-routine-15-minutes">Morning Routine (15 minutes)<a class="headerlink" href="#morning-routine-15-minutes" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># 1. Check major market ETFs for overall direction</span>
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>SPY<span class="w"> </span>--interval<span class="w"> </span>30m
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>QQQ<span class="w"> </span>--interval<span class="w"> </span>30m
+<a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="c1"># 2. Scan your watchlist sectors</span>
+<a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XLF<span class="w"> </span>--interval<span class="w"> </span>30m
+<a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XLE<span class="w"> </span>--interval<span class="w"> </span>30m
+<a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>XLV<span class="w"> </span>--interval<span class="w"> </span>30m
+<a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a>
+<a href="#__codelineno-5-10" id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="c1"># 3. Check individual opportunities</span>
+<a href="#__codelineno-5-11" id="__codelineno-5-11" name="__codelineno-5-11"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>AAPL<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--sector<span class="w"> </span>QQQ
+<a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>MSFT<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--sector<span class="w"> </span>QQQ
+</code></pre></div>
+<h3 id="evening-routine-10-minutes">Evening Routine (10 minutes)<a class="headerlink" href="#evening-routine-10-minutes" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># Review positions and update stops</span>
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="c1"># Plan tomorrow's potential entries</span>
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="c1"># Check any pending signals that may trigger</span>
+</code></pre></div>
+<h3 id="weekly-review-30-minutes">Weekly Review (30 minutes)<a class="headerlink" href="#weekly-review-30-minutes" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># Evaluate closed trades</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>python<span class="w"> </span>scripts/eval_signals.py<span class="w"> </span>--max-hold-days<span class="w"> </span><span class="m">2</span>.0
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="c1"># Analyze overall performance</span>
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a>python<span class="w"> </span>scripts/analyze_performance.py
+<a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a>
+<a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="c1"># Review and update watchlists</span>
+<a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="c1"># Plan next week's focus sectors</span>
+</code></pre></div>
+<h2 id="market-condition-adaptations">Market Condition Adaptations<a class="headerlink" href="#market-condition-adaptations" title="Permanent link">¶</a></h2>
+<h3 id="bull-market-best-practices">Bull Market Best Practices<a class="headerlink" href="#bull-market-best-practices" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Focus on momentum signals</strong> (trend continuation)</li>
+<li><strong>Hold positions longer</strong> (closer to full targets)</li>
+<li><strong>Size up slightly</strong> on high-confidence long signals</li>
+<li><strong>Avoid shorting</strong> unless extremely high confidence</li>
+</ul>
+<h3 id="bear-market-best-practices">Bear Market Best Practices<a class="headerlink" href="#bear-market-best-practices" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Focus on mean reversion</strong> and short signals</li>
+<li><strong>Take profits faster</strong> (markets can reverse quickly)</li>
+<li><strong>Reduce position sizes</strong> (higher overall volatility)</li>
+<li><strong>Watch for false breakouts</strong> (more common in bear markets)</li>
+</ul>
+<h3 id="sideways-market-best-practices">Sideways Market Best Practices<a class="headerlink" href="#sideways-market-best-practices" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Focus on range-bound strategies</strong></li>
+<li><strong>Quick profit-taking</strong> (trends don't last long)</li>
+<li><strong>Higher selectivity</strong> (fewer quality setups)</li>
+<li><strong>Consider ETF trading</strong> (less single-stock risk)</li>
+</ul>
+<h2 id="advanced-techniques">Advanced Techniques<a class="headerlink" href="#advanced-techniques" title="Permanent link">¶</a></h2>
+<h3 id="sector-rotation-strategy">Sector Rotation Strategy<a class="headerlink" href="#sector-rotation-strategy" title="Permanent link">¶</a></h3>
+<p>Monitor sector strength weekly:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># Weekly sector strength scan</span>
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="k">for</span><span class="w"> </span>sector<span class="w"> </span><span class="k">in</span><span class="w"> </span>QQQ<span class="w"> </span>XLF<span class="w"> </span>XLE<span class="w"> </span>XLV<span class="w"> </span>XLI<span class="w"> </span>XLP<span class="w"> </span>XLRE<span class="w"> </span>XLU<span class="w"> </span>XLB<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">  </span>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span><span class="nv">$sector</span><span class="w"> </span>--interval<span class="w"> </span>1h<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">30</span>
+<a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="k">done</span>
+</code></pre></div>
+<p>Focus your individual stock picks from the strongest sectors.</p>
+<h3 id="multi-timeframe-confluence">Multi-Timeframe Confluence<a class="headerlink" href="#multi-timeframe-confluence" title="Permanent link">¶</a></h3>
+<p>For highest-probability signals, check multiple timeframes:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># Same stock, different timeframes</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>AAPL<span class="w"> </span>--interval<span class="w"> </span>15m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">10</span>
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>AAPL<span class="w"> </span>--interval<span class="w"> </span>30m<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">20</span>
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a>python<span class="w"> </span>scripts/run_swing_agent.py<span class="w"> </span>--symbol<span class="w"> </span>AAPL<span class="w"> </span>--interval<span class="w"> </span>1h<span class="w"> </span>--lookback-days<span class="w"> </span><span class="m">40</span>
+</code></pre></div>
+<p>Take positions only when 2+ timeframes agree.</p>
+<h3 id="earnings-season-adjustments">Earnings Season Adjustments<a class="headerlink" href="#earnings-season-adjustments" title="Permanent link">¶</a></h3>
+<p>During earnings season (first 3 weeks of each quarter):</p>
+<ol>
+<li><strong>Reduce position sizes</strong> by 25-50%</li>
+<li><strong>Avoid holding through earnings</strong> unless specifically trading the event</li>
+<li><strong>Focus on stocks that have already reported</strong></li>
+<li><strong>Increase stop-loss monitoring</strong> (gap risk is higher)</li>
+</ol>
+<h2 id="common-mistakes-to-avoid">Common Mistakes to Avoid<a class="headerlink" href="#common-mistakes-to-avoid" title="Permanent link">¶</a></h2>
+<h3 id="overtrading">Overtrading<a class="headerlink" href="#overtrading" title="Permanent link">¶</a></h3>
+<p><strong>Problem</strong>: Taking too many signals, especially marginal ones.
+<strong>Solution</strong>: Set daily/weekly trade limits. Quality over quantity.</p>
+<h3 id="ignoring-volatility-regimes">Ignoring Volatility Regimes<a class="headerlink" href="#ignoring-volatility-regimes" title="Permanent link">¶</a></h3>
+<p><strong>Problem</strong>: Using same position size regardless of market volatility.
+<strong>Solution</strong>: Always adjust size based on vol_regime (L/M/H).</p>
+<h3 id="emotional-override">Emotional Override<a class="headerlink" href="#emotional-override" title="Permanent link">¶</a></h3>
+<p><strong>Problem</strong>: Overriding system signals based on "gut feeling."
+<strong>Solution</strong>: Trust the system or don't trade. Consistency is key.</p>
+<h3 id="poor-record-keeping">Poor Record Keeping<a class="headerlink" href="#poor-record-keeping" title="Permanent link">¶</a></h3>
+<p><strong>Problem</strong>: Not tracking results systematically.
+<strong>Solution</strong>: Use a simple spreadsheet or the built-in evaluation tools.</p>
+<h3 id="revenge-trading">Revenge Trading<a class="headerlink" href="#revenge-trading" title="Permanent link">¶</a></h3>
+<p><strong>Problem</strong>: Increasing size after losses to "get even."
+<strong>Solution</strong>: Stick to position sizing rules. One trade doesn't affect the next.</p>
+<h2 id="performance-tracking">Performance Tracking<a class="headerlink" href="#performance-tracking" title="Permanent link">¶</a></h2>
+<h3 id="key-metrics-to-monitor">Key Metrics to Monitor<a class="headerlink" href="#key-metrics-to-monitor" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Overall Win Rate</strong>: Should match system expectations</li>
+<li><strong>Average R per Trade</strong>: Aim for &gt;0.3R over time</li>
+<li><strong>Maximum Drawdown</strong>: Keep under 10-15%</li>
+<li><strong>Trade Frequency</strong>: 3-8 trades per week typically optimal</li>
+<li><strong>Sector Performance</strong>: Which sectors work best for you?</li>
+</ol>
+<h3 id="monthly-review-questions">Monthly Review Questions<a class="headerlink" href="#monthly-review-questions" title="Permanent link">¶</a></h3>
+<ol>
+<li>Are you following entry and exit rules consistently?</li>
+<li>Is your actual win rate close to expected win rates?</li>
+<li>Are you sizing positions appropriately for volatility?</li>
+<li>Which signal types are working best for you?</li>
+<li>What can you improve next month?</li>
+</ol>
+<h2 id="psychology-and-discipline">Psychology and Discipline<a class="headerlink" href="#psychology-and-discipline" title="Permanent link">¶</a></h2>
+<h3 id="maintain-trading-discipline">Maintain Trading Discipline<a class="headerlink" href="#maintain-trading-discipline" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Pre-plan every trade</strong>: Entry, stop, target, size</li>
+<li><strong>Accept losses as part of the business</strong></li>
+<li><strong>Don't let emotions drive decisions</strong></li>
+<li><strong>Take breaks after emotional trades</strong></li>
+<li><strong>Focus on process, not profits</strong></li>
+</ul>
+<h3 id="building-confidence">Building Confidence<a class="headerlink" href="#building-confidence" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Start small</strong>: Use minimal position sizes while learning</li>
+<li><strong>Paper trade first</strong>: Practice without money at risk</li>
+<li><strong>Track your improvement</strong>: See your skills develop over time</li>
+<li><strong>Focus on consistency</strong>: Consistent profits beat home runs</li>
+</ul>
+<h3 id="handling-drawdowns">Handling Drawdowns<a class="headerlink" href="#handling-drawdowns" title="Permanent link">¶</a></h3>
+<p>Every trader experiences losing streaks:</p>
+<ol>
+<li><strong>Expect them</strong>: 5-10 consecutive losses can happen</li>
+<li><strong>Don't change the system</strong>: Maintain discipline</li>
+<li><strong>Reduce size if needed</strong>: But don't stop trading completely</li>
+<li><strong>Review but don't overthink</strong>: Learn but don't over-optimize</li>
+<li><strong>Focus on process</strong>: Trust that edge will reassert itself</li>
+</ol>
+<p>Remember: SwingAgent provides the analysis, but your discipline and consistency in following best practices will determine your long-term success.</p>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/ITlusions/ITL.SwingAgent" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2" fill="currentColor"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+<script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+<script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
+</body>
+</html>

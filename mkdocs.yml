@@ -6,14 +6,23 @@ repo_name: ITL.SwingAgent
 
 nav:
   - Home: index.md
-  - Architecture: architecture.md
-  - API Reference: api-reference.md
-  - Configuration: configuration.md
-  - Development: development.md
-  - Deployment: deployment.md
-  - Testing: testing.md
-  - Security: security.md
-  - Troubleshooting: troubleshooting.md
+  - User Guide:
+    - Getting Started: getting-started.md
+    - Tutorial: tutorial.md
+    - Use Cases: use-cases.md
+    - Best Practices: best-practices.md
+    - FAQ: faq.md
+    - Glossary: glossary.md
+  - Reference:
+    - API Reference: api-reference.md
+    - Configuration: configuration.md
+    - Troubleshooting: troubleshooting.md
+  - Advanced:
+    - Architecture: architecture.md
+    - Development: development.md
+    - Deployment: deployment.md
+    - Testing: testing.md
+    - Security: security.md
 
 theme:
   name: material
