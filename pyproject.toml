@@ -1,24 +1,47 @@
 [project]
 name = "swing-agent"
 version = "1.6.1"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 description = "1–2 day swing agent with fibs, vector priors, LLM plan, holding-time, and enriched features (MTF, RS, TOD, vol regime)."
 readme = "README.md"
 authors = [{name="You"}]
 dependencies = [
-  "pydantic>=2.6",
-  "pandas>=2.1",
-  "numpy>=1.26",
-  "yfinance>=0.2.40",
-  "openai>=1.40.0",
+  "pydantic>=2.11",
+  "pandas>=2.3",
+  "numpy>=2.3",
+  "yfinance>=0.2.65",
+  "openai>=1.101",
   "pydantic-ai-slim[openai]>=0.0.16",
-  "sqlalchemy>=2.0.0",
+  "sqlalchemy>=2.0.43",
 ]
 
 [project.optional-dependencies]
-postgresql = ["psycopg2-binary>=2.9.0"]
-mysql = ["PyMySQL>=1.0.0"]
-external-db = ["psycopg2-binary>=2.9.0", "PyMySQL>=1.0.0"]
+postgresql = ["psycopg2-binary>=2.9.10"]
+mysql = ["PyMySQL>=1.1.0"]
+external-db = ["psycopg2-binary>=2.9.10", "PyMySQL>=1.1.0"]
 
 [tool.ruff]
 line-length = 100
+target-version = "py312"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "N",  # flake8-naming
+    "UP", # pyupgrade
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.black]
+line-length = 100
+target-version = ['py312']
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true

@@ -153,7 +153,7 @@ except SwingAgentDataError as e:
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.12+
 - Git
 - Virtual environment tool (venv, conda, etc.)
 
@@ -215,7 +215,7 @@ Located in `pyproject.toml`:
 ```toml
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py312"
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings  
@@ -832,7 +832,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.12'
         
     - name: Install dependencies
       run: |

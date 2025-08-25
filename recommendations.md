@@ -12,7 +12,7 @@ The SwingAgent system is a sophisticated 1-2 day swing trading platform that dem
 - Proper data models using Pydantic v2 for type safety and validation
 - Complete signal tracking and evaluation framework with enrichments
 - Recently centralized database architecture improving maintainability
-- Good use of type hints and modern Python 3.10+ features
+- Good use of type hints and modern Python 3.12+ features
 
 **Recent Improvements (v1.6.1):**
 - ✅ Database centralization with SQLAlchemy ORM replacing raw SQL
@@ -1737,7 +1737,7 @@ def load_ohlcv(symbol: str, interval: str = "30m", lookback_days: int = 30):
 ```toml
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py312"
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
@@ -1753,10 +1753,10 @@ select = [
 
 [tool.black]
 line-length = 100
-target-version = ['py310']
+target-version = ['py312']
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.12"
 strict = true
 warn_return_any = true
 warn_unused_configs = true
@@ -1936,7 +1936,7 @@ SWING_RATE_LIMIT_ENABLED=true
 **Docker Configuration**:
 ```dockerfile
 # Dockerfile
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 COPY requirements.txt .
