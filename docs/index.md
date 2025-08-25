@@ -7,10 +7,11 @@ A sophisticated 1-2 day swing trading system that combines technical analysis, m
 SwingAgent is a comprehensive trading system designed for short-term swing trades with holding periods of 1-2 days. The system integrates multiple analytical approaches:
 
 - **Technical Analysis**: EMA trends, RSI momentum, ATR volatility, Fibonacci retracements
-- **Machine Learning**: Vector-based KNN for historical pattern matching
+- **Machine Learning**: Vector-based KNN for historical pattern matching with centralized storage
 - **LLM Integration**: OpenAI models for trade explanations and structured action plans
 - **Multi-timeframe Analysis**: 15-minute and 1-hour trend alignment
 - **Risk Management**: Systematic stop-loss and take-profit calculations
+- **Centralized Database**: SQLAlchemy ORM with support for SQLite, PostgreSQL, MySQL, and Kubernetes CNPG
 
 ## Key Features
 
@@ -20,7 +21,7 @@ SwingAgent is a comprehensive trading system designed for short-term swing trade
 - Dynamic risk-reward calculation based on ATR
 
 ### 🧠 ML Pattern Recognition
-- SQLite-based vector store for historical pattern matching
+- Centralized SQLite/PostgreSQL-based vector store for historical pattern matching
 - Cosine similarity search across feature vectors
 - Statistical expectations based on similar historical setups
 
@@ -38,6 +39,7 @@ SwingAgent is a comprehensive trading system designed for short-term swing trade
 - Complete signal database with expectations vs outcomes
 - Performance analytics by volatility regime
 - Calibration analysis for prediction accuracy
+- Centralized storage with migration tools from legacy databases
 
 ## Quick Start
 
@@ -69,8 +71,6 @@ python scripts/run_swing_agent.py \
   --symbol AAPL \
   --interval 30m \
   --lookback-days 30 \
-  --db data/signals.sqlite \
-  --vec-db data/vec_store.sqlite \
   --sector QQQ
 ```
 
@@ -82,8 +82,6 @@ python scripts/backtest_generate_signals.py \
   --interval 30m \
   --lookback-days 180 \
   --warmup-bars 80 \
-  --db data/signals.sqlite \
-  --vec-db data/vec_store.sqlite \
   --sector QQQ \
   --no-llm
 ```
@@ -92,15 +90,13 @@ python scripts/backtest_generate_signals.py \
 
 ```bash
 python scripts/eval_signals.py \
-  --db data/signals.sqlite \
   --max-hold-days 2.0
 ```
 
 #### Analyze Performance
 
 ```bash
-python scripts/analyze_performance.py \
-  --db data/signals.sqlite
+python scripts/analyze_performance.py
 ```
 
 ## System Architecture
@@ -108,15 +104,20 @@ python scripts/analyze_performance.py \
 The system is built with a modular architecture:
 
 ```
-SwingAgent
+SwingAgent v1.6.1
 ├── Core Engine
 │   ├── agent.py          # Main orchestrator
 │   ├── strategy.py       # Trend & entry logic
-│   └── indicators.py     # Technical calculations
+│   ├── indicators.py     # Technical calculations
+│   └── config.py         # Centralized configuration
+├── Database Layer
+│   ├── database.py       # SQLAlchemy session management
+│   ├── models_db.py      # Database models
+│   ├── storage.py        # Signal storage operations
+│   └── migrate.py        # Migration utilities
 ├── Machine Learning
 │   ├── features.py       # Feature engineering
-│   ├── vectorstore.py    # Pattern matching
-│   └── storage.py        # Signal database
+│   └── vectorstore.py    # Pattern matching & KNN
 ├── AI Integration
 │   └── llm_predictor.py  # OpenAI integration
 ├── Data & Backtesting
@@ -126,7 +127,10 @@ SwingAgent
     ├── run_swing_agent.py
     ├── backtest_generate_signals.py
     ├── eval_signals.py
-    └── analyze_performance.py
+    ├── analyze_performance.py
+    ├── backfill_vector_store.py
+    ├── db_info.py
+    └── test_cnpg.py
 ```
 
 ## Signal Generation Process

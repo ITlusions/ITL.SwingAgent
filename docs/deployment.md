@@ -1,10 +1,10 @@
 # Deployment Guide
 
-This guide covers production deployment strategies for the SwingAgent system.
+This guide covers production deployment strategies for the SwingAgent v1.6.1 system.
 
-## Deployment Architecture Options
+## Database Architecture Options
 
-### 1. Single Server Deployment
+### 1. SQLite Deployment (Development/Small Scale)
 
 Simple deployment for individual traders or small teams.
 
@@ -12,14 +12,14 @@ Simple deployment for individual traders or small teams.
 ┌─────────────────────────────────┐
 │         Server                  │
 │  ┌─────────────────────────────┐│
-│  │     SwingAgent              ││
+│  │     SwingAgent v1.6.1       ││
 │  │                             ││
 │  │  ┌─────────┐ ┌─────────────┐││
-│  │  │Scripts  │ │  Databases  │││
-│  │  │         │ │             │││
-│  │  │run_*    │ │signals.db   │││
-│  │  │eval_*   │ │vectors.db   │││
-│  │  │analyze_*│ │             │││
+│  │  │Scripts  │ │Centralized  │││
+│  │  │         │ │Database     │││
+│  │  │run_*    │ │             │││
+│  │  │eval_*   │ │swing_agent  │││
+│  │  │analyze_*│ │.sqlite      │││
 │  │  └─────────┘ └─────────────┘││
 │  └─────────────────────────────┘│
 │                                 │
@@ -29,9 +29,16 @@ Simple deployment for individual traders or small teams.
 └─────────────────────────────────┘
 ```
 
-### 2. Microservices Deployment
+**Configuration:**
+```bash
+# Uses default SQLite database
+export SWING_DATABASE_URL="sqlite:///data/swing_agent.sqlite"
+python scripts/run_swing_agent.py --symbol AAPL
+```
 
-Scalable deployment with separated concerns.
+### 2. PostgreSQL Deployment (Production)
+
+Scalable deployment with external PostgreSQL database.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -48,6 +55,73 @@ Scalable deployment with separated concerns.
 │              │ │  eval    │ │- Reporting │
 └──────┬───────┘ └────┬─────┘ └─────┬──────┘
        │              │             │
+       └──────────────┼─────────────┘
+                      │
+            ┌─────────▼─────────┐
+            │   PostgreSQL      │
+            │   Database        │
+            │                   │
+            │ - signals table   │
+            │ - vector_store    │
+            │   table           │
+            └───────────────────┘
+```
+
+**Configuration:**
+```bash
+export SWING_DATABASE_URL="postgresql://user:pass@db-host:5432/swing_agent"
+# or
+export SWING_DB_TYPE="postgresql"
+export SWING_DB_HOST="db-host"
+export SWING_DB_NAME="swing_agent"
+export SWING_DB_USER="swing_user"
+export SWING_DB_PASSWORD="secure_password"
+
+# Install PostgreSQL dependencies
+pip install -e ".[postgresql]"
+```
+
+### 3. Kubernetes with CloudNativePG
+
+Cloud-native deployment with CNPG operator for PostgreSQL.
+
+```yaml
+# cnpg-cluster.yaml
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: swing-postgres
+  namespace: swing-agent
+spec:
+  instances: 3
+  primaryUpdateStrategy: unsupervised
+  
+  postgresql:
+    parameters:
+      max_connections: "200"
+      shared_preload_libraries: "pg_stat_statements"
+      
+  bootstrap:
+    initdb:
+      database: swing_agent
+      owner: swing_user
+      secret:
+        name: swing-postgres-credentials
+        
+  storage:
+    size: 100Gi
+    storageClass: fast-ssd
+```
+
+**Configuration:**
+```bash
+export SWING_DB_TYPE="cnpg"
+export CNPG_CLUSTER_NAME="swing-postgres"
+export CNPG_NAMESPACE="swing-agent"
+export SWING_DB_NAME="swing_agent"
+export SWING_DB_USER="swing_user"
+export SWING_DB_PASSWORD="secure_password"
+```
 ┌──────▼──────────────▼─────────────▼──────┐
 │            Shared Data Layer             │
 │                                          │

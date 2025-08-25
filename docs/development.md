@@ -1,10 +1,10 @@
 # Development Guide
 
-Complete guide for SwingAgent development, architecture, and code quality standards.
+Complete guide for SwingAgent v1.6.1 development, architecture, and code quality standards.
 
 ## Architecture Overview
 
-SwingAgent follows a **modular, layered architecture** designed for maintainability and testability:
+SwingAgent v1.6.1 follows a **modular, layered architecture** with centralized database management:
 
 ```
 ┌─────────────────────────────────────┐
@@ -17,10 +17,21 @@ SwingAgent follows a **modular, layered architecture** designed for maintainabil
 │         Data & ML Layer             │
 │  (Vector Store + LLM + Storage)     │
 ├─────────────────────────────────────┤
+│      Database Layer (NEW)           │
+│  (SQLAlchemy ORM + Migration)       │
+├─────────────────────────────────────┤
 │        Infrastructure              │
-│  (Data Fetching + Database)         │
+│  (Data Fetching + Configuration)    │
 └─────────────────────────────────────┘
 ```
+
+### Key Architecture Changes in v1.6.1
+
+1. **Centralized Database Layer**: Single database for all storage needs
+2. **SQLAlchemy ORM**: Type-safe database operations with relationship support
+3. **Multiple Database Backends**: SQLite, PostgreSQL, MySQL, CloudNativePG
+4. **Configuration Management**: Centralized `TradingConfig` class
+5. **Migration Framework**: Automated migration from legacy databases
 
 ### Core Design Principles
 
@@ -28,6 +39,8 @@ SwingAgent follows a **modular, layered architecture** designed for maintainabil
 2. **Configurable Parameters**: All magic numbers centralized in `TradingConfig`
 3. **Comprehensive Error Handling**: Custom exceptions with detailed error context
 4. **Type Safety**: Complete type annotations throughout the codebase
+5. **Database Agnostic**: Support for multiple backends via environment configuration
+6. **Backward Compatibility**: Migration tools for legacy database formats
 5. **Documentation**: Comprehensive docstrings with examples for all public APIs
 
 ### Key Components
@@ -83,7 +96,45 @@ update_config(RSI_PERIOD=21, ATR_STOP_MULTIPLIER=1.5)
   2. Momentum continuation breakouts
   3. Mean reversion from extremes
 
-#### 4. Enhanced Error Handling
+#### 4. Database Layer (NEW in v1.6.1)
+**Files**: `src/swing_agent/database.py`, `src/swing_agent/models_db.py`, `src/swing_agent/migrate.py`
+
+Centralized database management using SQLAlchemy ORM:
+
+```python
+from swing_agent.database import get_session, init_database
+from swing_agent.models_db import Signal, VectorStore
+
+# Initialize database (creates tables if missing)
+init_database()
+
+# Use database session
+with get_session() as session:
+    signals = session.query(Signal).filter(
+        Signal.symbol == "AAPL"
+    ).order_by(Signal.created_at_utc.desc()).limit(10).all()
+```
+
+**Database Features**:
+- **Multiple Backends**: SQLite (dev), PostgreSQL/MySQL (prod), CNPG (K8s)
+- **Connection Management**: SQLAlchemy engine with connection pooling
+- **Type Safety**: Pydantic models with SQLAlchemy ORM
+- **Migration Support**: Automated migration from legacy databases
+
+**Configuration Examples**:
+```bash
+# SQLite (default)
+export SWING_DATABASE_URL="sqlite:///data/swing_agent.sqlite"
+
+# PostgreSQL  
+export SWING_DATABASE_URL="postgresql://user:pass@host:5432/swing_agent"
+
+# CloudNativePG
+export SWING_DB_TYPE="cnpg"
+export CNPG_CLUSTER_NAME="swing-postgres"
+```
+
+#### 5. Enhanced Error Handling
 **File**: `src/swing_agent/data.py`
 
 Custom `SwingAgentDataError` provides context-specific error handling:
