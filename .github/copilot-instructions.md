@@ -24,9 +24,9 @@ You are helping maintain a Python package for 1–2 day swing trading with Fib-b
 - Never let LLM change math; LLMs should **explain and plan**, not decide SL/TP.
 
 ## Common tasks (prompt me like this)
-- *“Add earnings proximity to enrichments and include it in KNN filter. Update schema and analyzer.”*
-- *“Implement peers-based relative strength and use it as a confidence bump only when > 1.05.”*
-- *“Add plot script to visualize calibration and R-distribution by vol regime.”*
+- *"Add earnings proximity to enrichments and include it in KNN filter. Update schema and analyzer."*
+- *"Implement peers-based relative strength and use it as a confidence bump only when > 1.05."*
+- *"Add plot script to visualize calibration and R-distribution by vol regime."*
 
 ## Guardrails
 - No look-ahead in backtests. When generating historical signals, slice data to the current bar.

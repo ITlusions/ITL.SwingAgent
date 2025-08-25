@@ -1,0 +1,6 @@
+pydantic>=2.6
+pandas>=2.1
+numpy>=1.26
+yfinance>=0.2.40
+openai>=1.40.0
+pydantic-ai-slim[openai]>=0.0.16
