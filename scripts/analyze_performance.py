@@ -3,7 +3,7 @@ from pathlib import Path
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--db", default="data/signals.sqlite")
+    ap.add_argument("--db", default="data/swing_agent.sqlite")
     args = ap.parse_args()
     db = Path(args.db)
     with sqlite3.connect(db) as con:
