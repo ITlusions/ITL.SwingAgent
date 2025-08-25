@@ -1,0 +1,82 @@
+site_name: SwingAgent Documentation
+site_description: Comprehensive documentation for the SwingAgent trading system
+site_author: SwingAgent Team
+repo_url: https://github.com/ITlusions/ITL.SwingAgent
+repo_name: ITL.SwingAgent
+
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - API Reference: api-reference.md
+  - Configuration: configuration.md
+  - Deployment: deployment.md
+  - Troubleshooting: troubleshooting.md
+  - Code Review & Recommendations: ../recommendations.md
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.tabs.link
+
+plugins:
+  - search
+  - mermaid2:
+      arguments:
+        theme: |
+          ^(light|dark|neutral)$
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+  - attr_list
+  - md_in_html
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ITlusions/ITL.SwingAgent
+  version:
+    provider: mike
+    default: latest
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js
