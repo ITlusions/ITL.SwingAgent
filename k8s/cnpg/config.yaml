@@ -1,0 +1,45 @@
+# SwingAgent configuration for CNPG
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: swing-config
+  namespace: default
+  labels:
+    app: swing-agent
+    component: config
+data:
+  # Database configuration
+  SWING_DB_TYPE: "cnpg"
+  CNPG_CLUSTER_NAME: "swing-postgres"
+  CNPG_NAMESPACE: "default"
+  CNPG_SERVICE_TYPE: "rw"
+  SWING_DB_NAME: "swing_agent"
+  
+  # SSL configuration
+  CNPG_SSL_MODE: "require"
+  CNPG_CONNECT_TIMEOUT: "10"
+  CNPG_APP_NAME: "swing-agent"
+  
+  # Connection pooling
+  SWING_DB_POOL_SIZE: "10"
+  SWING_DB_MAX_OVERFLOW: "20"
+  SWING_DB_POOL_TIMEOUT: "30"
+  SWING_DB_POOL_RECYCLE: "1800"
+  
+  # Optional: Enable SQL logging for debugging
+  SWING_DB_ECHO: "false"
+
+---
+# Database credentials (references the CNPG secret)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: swing-db-secret
+  namespace: default
+  labels:
+    app: swing-agent
+    component: database
+type: Opaque
+data:
+  SWING_DB_USER: c3dpbmdfdXNlcg==     # swing_user (base64)
+  SWING_DB_PASSWORD: c3dpbmdfcGFzcw== # swing_pass (base64)

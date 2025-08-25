@@ -6,6 +6,8 @@
 - Time-of-day bucket (open/mid/close)
 - Volatility regime filter for KNN priors
 - Signals DB stores expectations + LLM plan + enrichments
+- **Centralized database architecture with SQLAlchemy ORM**
+- **External database support (PostgreSQL, MySQL, etc.)**
 
 ## Quickstart
 ```bash
@@ -16,27 +18,101 @@ export OPENAI_API_KEY="sk-..."
 export SWING_LLM_MODEL="gpt-4o-mini"
 ```
 
+## Database Configuration
+
+SwingAgent now uses a centralized database architecture with SQLAlchemy ORM. By default, it uses a single SQLite file, but supports external databases for production deployments.
+
+### Default (SQLite)
+```bash
+# Uses data/swing_agent.sqlite automatically
+python scripts/run_swing_agent.py --symbol AMD
+```
+
+### External Database (PostgreSQL/MySQL)
+```bash
+# Option 1: Direct URL
+export SWING_DATABASE_URL="postgresql://user:pass@localhost:5432/swing_agent"
+
+# Option 2: Individual components
+export SWING_DB_TYPE=postgresql
+export SWING_DB_HOST=localhost
+export SWING_DB_NAME=swing_agent
+export SWING_DB_USER=your_username
+export SWING_DB_PASSWORD=your_password
+
+# Then run normally
+python scripts/run_swing_agent.py --symbol AMD
+```
+
+### CNPG (CloudNativePG) for Kubernetes
+```bash
+# For Kubernetes deployments with CNPG operator
+export SWING_DB_TYPE=cnpg
+export CNPG_CLUSTER_NAME=swing-postgres
+export CNPG_NAMESPACE=default
+export SWING_DB_NAME=swing_agent
+export SWING_DB_USER=swing_user
+export SWING_DB_PASSWORD=your_password
+
+# Test configuration
+python scripts/test_cnpg.py
+```
+
+For detailed database setup:
+- [EXTERNAL_DATABASES.md](EXTERNAL_DATABASES.md) - PostgreSQL/MySQL setup
+- [CNPG_SETUP.md](CNPG_SETUP.md) - CloudNativePG for Kubernetes
+- [k8s/cnpg/](k8s/cnpg/) - Complete Kubernetes deployment manifests
+
 ## Run live signal
 ```bash
-python scripts/run_swing_agent.py   --symbol AMD --interval 30m --lookback-days 30   --db data/signals.sqlite --vec-db data/vec_store.sqlite   --sector XLK
+python scripts/run_swing_agent.py --symbol AMD --interval 30m --lookback-days 30 --sector XLK
 ```
 
 ## Generate historical signals (no look-ahead)
 ```bash
-python scripts/backtest_generate_signals.py   --symbol AMD --interval 30m --lookback-days 180   --warmup-bars 80   --db data/signals.sqlite --vec-db data/vec_store.sqlite   --sector XLK --no-llm
+python scripts/backtest_generate_signals.py --symbol AMD --interval 30m --lookback-days 180 --warmup-bars 80 --sector XLK --no-llm
 ```
 
 ## Evaluate stored signals
 ```bash
-python scripts/eval_signals.py --db data/signals.sqlite --max-hold-days 2.0
+python scripts/eval_signals.py --max-hold-days 2.0
 ```
 
 ## Backfill vector store from signal history
 ```bash
-PYTHONPATH=src python scripts/backfill_vector_store.py   --signals-db data/signals.sqlite --vec-db data/vec_store.sqlite
+python scripts/backfill_vector_store.py
 ```
 
 ## Performance snapshot
 ```bash
-python scripts/analyze_performance.py --db data/signals.sqlite
+python scripts/analyze_performance.py
+```
+
+## Database Migration
+
+### From Separate Files to Centralized Database
+```bash
+# Migrate existing separate SQLite files to centralized database
+python -m swing_agent.migrate --data-dir data/
+```
+
+### From SQLite to External Database
+```bash
+# First set up external database connection
+export SWING_DATABASE_URL="postgresql://user:pass@localhost:5432/swing_agent"
+
+# Migrate from centralized SQLite to external database
+python -m swing_agent.migrate --sqlite-to-external "$SWING_DATABASE_URL"
+```
+
+## Database Utilities
+```bash
+# Show current database configuration
+python scripts/db_info.py --info
+
+# Test database connection
+python scripts/db_info.py --test
+
+# Initialize database tables
+python scripts/db_info.py --init
 ```

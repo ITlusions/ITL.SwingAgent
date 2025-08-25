@@ -1,0 +1,143 @@
+# SwingAgent deployment using CNPG
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swing-agent
+  namespace: default
+  labels:
+    app: swing-agent
+    component: application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: swing-agent
+  template:
+    metadata:
+      labels:
+        app: swing-agent
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+      - name: swing-agent
+        image: swing-agent:latest  # Replace with your image
+        ports:
+        - containerPort: 8080
+          name: http
+        envFrom:
+        - configMapRef:
+            name: swing-config
+        - secretRef:
+            name: swing-db-secret
+        
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        
+        # Health checks with database connectivity
+        livenessProbe:
+          exec:
+            command:
+            - python
+            - -c
+            - |
+              from swing_agent.database import get_database_info
+              info = get_database_info()
+              if not info['is_cnpg']:
+                  raise Exception('Not connected to CNPG')
+              print(f"Connected to CNPG cluster: {info.get('cnpg_cluster')}")
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 10
+          failureThreshold: 3
+        
+        readinessProbe:
+          exec:
+            command:
+            - python
+            - -c
+            - |
+              from swing_agent.database import get_database_config
+              db = get_database_config()
+              with db.get_session() as session:
+                  result = session.execute('SELECT 1')
+                  print('Database connection ready')
+          initialDelaySeconds: 15
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 2
+        
+        # Optional: Volume mounts for SSL certificates
+        # volumeMounts:
+        # - name: ssl-certs
+        #   mountPath: /ssl
+        #   readOnly: true
+      
+      # Optional: SSL certificate volume
+      # volumes:
+      # - name: ssl-certs
+      #   secret:
+      #     secretName: cnpg-ssl-certs
+      
+      # Pod affinity to avoid scheduling on same node as database
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 50
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  cnpg.io/cluster: swing-postgres
+              topologyKey: kubernetes.io/hostname
+
+---
+# Service for SwingAgent
+apiVersion: v1
+kind: Service
+metadata:
+  name: swing-agent-service
+  namespace: default
+  labels:
+    app: swing-agent
+spec:
+  selector:
+    app: swing-agent
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: http
+  type: ClusterIP
+
+---
+# Horizontal Pod Autoscaler (optional)
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: swing-agent-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: swing-agent
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

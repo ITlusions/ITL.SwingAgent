@@ -37,8 +37,8 @@ def compute_context(df: pd.DataFrame, asof_iso: str):
 
 def main():
     ap = argparse.ArgumentParser(description="Backfill vec_store.sqlite from signals.sqlite (includes vol_regime payload).")
-    ap.add_argument("--signals-db", default="data/signals.sqlite")
-    ap.add_argument("--vec-db", default="data/vec_store.sqlite")
+    ap.add_argument("--signals-db", default="data/swing_agent.sqlite")
+    ap.add_argument("--vec-db", default="data/swing_agent.sqlite")
     args = ap.parse_args()
     sigdb = Path(args.signals_db)
     if not sigdb.exists(): print(f"Signals DB not found: {sigdb}"); exit(1)

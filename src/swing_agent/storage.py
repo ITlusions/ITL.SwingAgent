@@ -1,10 +1,112 @@
 from __future__ import annotations
-import sqlite3, json
+import json
 from pathlib import Path
 from uuid import uuid4
 from datetime import datetime
+from typing import Union, Optional
 from .models import TradeSignal
+from .database import get_database_config, init_database, get_session
+from .models_db import Signal
 
+
+def _ensure_db(db_path: Union[str, Path]):
+    """Ensure database exists. For backward compatibility, convert file path to database URL."""
+    if isinstance(db_path, (str, Path)):
+        path = Path(db_path)
+        if path.suffix == '.sqlite':
+            # Extract directory to use as centralized database location
+            data_dir = path.parent
+            data_dir.mkdir(parents=True, exist_ok=True)
+            # Use centralized database regardless of the input path
+            database_url = f"sqlite:///{data_dir / 'swing_agent.sqlite'}"
+            init_database(database_url)
+        else:
+            # Assume it's a database URL
+            init_database(str(db_path))
+    else:
+        init_database()
+
+
+def record_signal(ts: TradeSignal, db_path: Union[str, Path]) -> str:
+    """Record a trade signal to the database using SQLAlchemy."""
+    _ensure_db(db_path)
+    
+    sid = str(uuid4())
+    
+    with get_session() as session:
+        signal = Signal(
+            id=sid,
+            created_at_utc=datetime.utcnow(),
+            symbol=ts.symbol,
+            timeframe=ts.timeframe,
+            asof=ts.asof,
+            trend_label=ts.trend.label.value,
+            ema_slope=float(ts.trend.ema_slope),
+            price_above_ema=1 if ts.trend.price_above_ema else 0,
+            rsi14=float(ts.trend.rsi_14),
+            side=ts.entry.side.value if ts.entry else None,
+            entry_price=ts.entry.entry_price if ts.entry else None,
+            stop_price=ts.entry.stop_price if ts.entry else None,
+            take_profit=ts.entry.take_profit if ts.entry else None,
+            r_multiple=ts.entry.r_multiple if ts.entry else None,
+            fib_golden_low=ts.entry.fib_golden_low if ts.entry else None,
+            fib_golden_high=ts.entry.fib_golden_high if ts.entry else None,
+            fib_target_1=ts.entry.fib_target_1 if ts.entry else None,
+            fib_target_2=ts.entry.fib_target_2 if ts.entry else None,
+            confidence=float(ts.confidence),
+            reasoning=ts.reasoning,
+            llm_vote=ts.llm_vote,
+            llm_explanation=ts.llm_explanation,
+            expected_r=ts.expected_r,
+            expected_winrate=ts.expected_winrate,
+            expected_hold_bars=ts.expected_hold_bars,
+            expected_hold_days=ts.expected_hold_days,
+            expected_win_hold_bars=ts.expected_win_hold_bars,
+            expected_loss_hold_bars=ts.expected_loss_hold_bars,
+            action_plan=ts.action_plan,
+            risk_notes=ts.risk_notes,
+            scenarios=ts.scenarios,
+            mtf_15m_trend=ts.mtf_15m_trend,
+            mtf_1h_trend=ts.mtf_1h_trend,
+            mtf_alignment=ts.mtf_alignment,
+            rs_sector_20=ts.rs_sector_20,
+            rs_spy_20=ts.rs_spy_20,
+            sector_symbol=ts.sector_symbol,
+            tod_bucket=ts.tod_bucket,
+            atr_pct=ts.atr_pct,
+            vol_regime=ts.vol_regime
+        )
+        
+        session.add(signal)
+        session.commit()
+    
+    return sid
+
+
+def mark_evaluation(
+    signal_id: str, 
+    *, 
+    db_path: Union[str, Path], 
+    exit_reason: str, 
+    exit_price: Optional[float], 
+    exit_time_utc: Optional[str], 
+    realized_r: Optional[float]
+):
+    """Mark a signal as evaluated with exit information."""
+    _ensure_db(db_path)
+    
+    with get_session() as session:
+        signal = session.query(Signal).filter(Signal.id == signal_id).first()
+        if signal:
+            signal.evaluated = 1
+            signal.exit_reason = exit_reason
+            signal.exit_price = exit_price
+            signal.exit_time_utc = exit_time_utc
+            signal.realized_r = realized_r
+            session.commit()
+
+
+# Keep the old SCHEMA for reference/migration purposes
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS signals (
   id TEXT PRIMARY KEY,
@@ -59,54 +161,3 @@ CREATE TABLE IF NOT EXISTS signals (
   realized_r REAL
 );
 """
-
-def _ensure_db(db_path: Path):
-    db_path.parent.mkdir(parents=True, exist_ok=True)
-    with sqlite3.connect(db_path) as con:
-        con.executescript(SCHEMA)
-
-def record_signal(ts: TradeSignal, db_path: str | Path) -> str:
-    db_path = Path(db_path); _ensure_db(db_path)
-    sid = str(uuid4())
-    with sqlite3.connect(db_path) as con:
-        con.execute("""
-            INSERT INTO signals (
-              id, created_at_utc, symbol, timeframe, asof,
-              trend_label, ema_slope, price_above_ema, rsi14,
-              side, entry_price, stop_price, take_profit, r_multiple,
-              fib_golden_low, fib_golden_high, fib_target_1, fib_target_2,
-              confidence, reasoning, llm_vote_json, llm_explanation,
-              expected_r, expected_winrate, expected_hold_bars, expected_hold_days,
-              expected_win_hold_bars, expected_loss_hold_bars,
-              action_plan, risk_notes, scenarios_json,
-              mtf_15m_trend, mtf_1h_trend, mtf_alignment, rs_sector_20, rs_spy_20, sector_symbol,
-              tod_bucket, atr_pct, vol_regime
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-        """, (
-            sid, datetime.utcnow().isoformat(timespec="seconds"),
-            ts.symbol, ts.timeframe, ts.asof,
-            ts.trend.label.value, float(ts.trend.ema_slope), 1 if ts.trend.price_above_ema else 0, float(ts.trend.rsi_14),
-            (ts.entry.side.value if ts.entry else None),
-            (ts.entry.entry_price if ts.entry else None),
-            (ts.entry.stop_price if ts.entry else None),
-            (ts.entry.take_profit if ts.entry else None),
-            (ts.entry.r_multiple if ts.entry else None),
-            (ts.entry.fib_golden_low if ts.entry else None),
-            (ts.entry.fib_golden_high if ts.entry else None),
-            (ts.entry.fib_target_1 if ts.entry else None),
-            (ts.entry.fib_target_2 if ts.entry else None),
-            float(ts.confidence), ts.reasoning,
-            json.dumps(ts.llm_vote) if ts.llm_vote else None, ts.llm_explanation,
-            ts.expected_r, ts.expected_winrate, ts.expected_hold_bars, ts.expected_hold_days,
-            ts.expected_win_hold_bars, ts.expected_loss_hold_bars,
-            ts.action_plan, ts.risk_notes,
-            json.dumps(ts.scenarios) if ts.scenarios else None,
-            ts.mtf_15m_trend, ts.mtf_1h_trend, ts.mtf_alignment, ts.rs_sector_20, ts.rs_spy_20, ts.sector_symbol,
-            ts.tod_bucket, ts.atr_pct, ts.vol_regime
-        ))
-    return sid
-
-def mark_evaluation(signal_id: str, *, db_path: str | Path, exit_reason: str, exit_price: float | None, exit_time_utc: str | None, realized_r: float | None):
-    db_path = Path(db_path); _ensure_db(db_path)
-    with sqlite3.connect(db_path) as con:
-        con.execute("UPDATE signals SET evaluated=1, exit_reason=?, exit_price=?, exit_time_utc=?, realized_r=? WHERE id=?", (exit_reason, exit_price, exit_time_utc, realized_r, signal_id))

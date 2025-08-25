@@ -1,0 +1,85 @@
+# Custom monitoring queries for CNPG PostgreSQL
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: swing-postgres-queries
+  namespace: default
+  labels:
+    app: swing-agent
+    component: monitoring
+data:
+  queries.yaml: |
+    swing_agent_queries:
+      query: |
+        SELECT 
+          schemaname,
+          tablename,
+          n_tup_ins as inserts,
+          n_tup_upd as updates,
+          n_tup_del as deletes,
+          n_live_tup as live_tuples,
+          n_dead_tup as dead_tuples
+        FROM pg_stat_user_tables 
+        WHERE schemaname = 'public'
+      metrics:
+        - schemaname:
+            usage: "LABEL"
+            description: "Schema name"
+        - tablename:
+            usage: "LABEL"
+            description: "Table name"
+        - inserts:
+            usage: "COUNTER"
+            description: "Number of rows inserted"
+        - updates:
+            usage: "COUNTER"
+            description: "Number of rows updated"
+        - deletes:
+            usage: "COUNTER"
+            description: "Number of rows deleted"
+        - live_tuples:
+            usage: "GAUGE"
+            description: "Number of live tuples"
+        - dead_tuples:
+            usage: "GAUGE"
+            description: "Number of dead tuples"
+    
+    swing_agent_connections:
+      query: |
+        SELECT 
+          datname as database,
+          application_name,
+          state,
+          COUNT(*) as count
+        FROM pg_stat_activity 
+        WHERE datname = 'swing_agent'
+        GROUP BY datname, application_name, state
+      metrics:
+        - database:
+            usage: "LABEL"
+            description: "Database name"
+        - application_name:
+            usage: "LABEL"
+            description: "Application name"
+        - state:
+            usage: "LABEL"
+            description: "Connection state"
+        - count:
+            usage: "GAUGE"
+            description: "Number of connections"
+    
+    swing_agent_database_size:
+      query: |
+        SELECT 
+          pg_database.datname as database,
+          pg_size_pretty(pg_database_size(pg_database.datname)) as size_pretty,
+          pg_database_size(pg_database.datname) as size_bytes
+        FROM pg_database 
+        WHERE datname = 'swing_agent'
+      metrics:
+        - database:
+            usage: "LABEL"
+            description: "Database name"
+        - size_bytes:
+            usage: "GAUGE"
+            description: "Database size in bytes"

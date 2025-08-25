@@ -32,7 +32,17 @@ def _rel_strength(df_sym: pd.DataFrame, df_bench: pd.DataFrame, lookback: int = 
 class SwingAgent:
     def __init__(self, interval: str="30m", lookback_days: int=30, log_db: str|None=None, vec_db: str|None=None, use_llm: bool=True, llm_extras: bool=True, sector_symbol: str="XLK"):
         self.interval=interval; self.lookback_days=lookback_days
-        self.log_db=log_db; self.vec_db=vec_db
+        
+        # Use centralized database by default - both signals and vectors in same file
+        if log_db is None and vec_db is None:
+            # Default to centralized database
+            self.log_db = "data/swing_agent.sqlite"
+            self.vec_db = "data/swing_agent.sqlite"
+        else:
+            # Backward compatibility - use provided paths but ensure they point to centralized db
+            self.log_db = log_db or "data/swing_agent.sqlite"
+            self.vec_db = vec_db or "data/swing_agent.sqlite"
+            
         self.use_llm=use_llm; self.llm_extras=llm_extras
         self.sector_symbol = sector_symbol
 

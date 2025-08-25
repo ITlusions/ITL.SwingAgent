@@ -11,7 +11,10 @@ This guide covers all configuration options for the SwingAgent system.
 export OPENAI_API_KEY="sk-..."                # Your OpenAI API key
 export SWING_LLM_MODEL="gpt-4o-mini"          # LLM model selection
 
-# Optional: Database paths (if not specified via command line)
+# Optional: Centralized database path  
+export SWING_DATABASE_URL="sqlite:///data/swing_agent.sqlite"
+
+# Legacy environment variables (for migration)
 export SWING_SIGNALS_DB="data/signals.sqlite"  
 export SWING_VECTOR_DB="data/vec_store.sqlite"
 ```
@@ -69,16 +72,18 @@ Historical data period for analysis.
   - 1d: 180-365 days
 
 #### `log_db` (str | None)
-Path to signals SQLite database.
-- **Default**: None (no storage)
-- **Format**: "path/to/signals.sqlite"
+Path to centralized database file.
+- **Default**: "data/swing_agent.sqlite" (centralized database)
+- **Format**: "path/to/swing_agent.sqlite" 
 - **Auto-creation**: Database and tables created if missing
+- **Note**: Same file as vec_db in centralized setup
 
 #### `vec_db` (str | None)
-Path to vector store SQLite database.
-- **Default**: None (no ML expectations)
-- **Format**: "path/to/vec_store.sqlite"
+Path to centralized database file (same as log_db).
+- **Default**: "data/swing_agent.sqlite" (centralized database)
+- **Format**: "path/to/swing_agent.sqlite"
 - **Impact**: Enables historical pattern matching and statistical expectations
+- **Note**: Same file as log_db in centralized setup
 
 #### `use_llm` (bool)
 Enable OpenAI LLM integration.
@@ -265,6 +270,45 @@ max_hold_bars = max_hold_days * bars_per_day[interval]
 
 ## Database Configuration
 
+### Centralized Database (v1.6.1+)
+
+Starting with v1.6.1, SwingAgent uses a **centralized SQLite database** instead of separate files:
+
+- **Default**: `data/swing_agent.sqlite` 
+- **Contains**: Both signals and vector store tables in one file
+- **Technology**: SQLAlchemy ORM instead of raw sqlite3
+- **Benefits**: 
+  - Simplified data management
+  - Better query performance with proper indexes
+  - Easier backup and deployment
+  - Type-safe database operations
+
+```python
+# Modern usage - centralized database
+agent = SwingAgent(
+    log_db="data/swing_agent.sqlite",    # Same file
+    vec_db="data/swing_agent.sqlite",    # Same file
+)
+
+# Or simply use defaults (recommended)
+agent = SwingAgent()  # Uses data/swing_agent.sqlite automatically
+```
+
+### Migration from Legacy Setup
+
+If you have existing separate database files, use the migration utility:
+
+```bash
+# Migrate from separate files to centralized database
+python -m swing_agent.migrate --data-dir data/
+
+# Or migrate specific files
+python -m swing_agent.migrate \
+    --data-dir data/ \
+    --signals-file old_signals.sqlite \
+    --vectors-file old_vectors.sqlite
+```
+
 ### Signals Database Schema
 
 The signals database automatically creates tables with the following key settings:
@@ -438,9 +482,12 @@ class TradingConfig:
     DEFAULT_LOOKBACK = 30
     DEFAULT_SECTOR = "XLK"
     
-    # Database paths
-    SIGNALS_DB = "data/signals.sqlite"
-    VECTOR_DB = "data/vec_store.sqlite"
+    # Database paths - Now centralized!
+    CENTRALIZED_DB = "data/swing_agent.sqlite"  # Single database for both signals and vectors
+    
+    # Legacy paths (for migration only)
+    SIGNALS_DB = "data/signals.sqlite"  # Old signals database
+    VECTOR_DB = "data/vec_store.sqlite"  # Old vector database
     
     # Risk management
     MAX_HOLD_DAYS = 2.0
@@ -461,8 +508,8 @@ def create_agent(symbol_type="tech"):
     return SwingAgent(
         interval=TradingConfig.DEFAULT_INTERVAL,
         lookback_days=TradingConfig.DEFAULT_LOOKBACK,
-        log_db=TradingConfig.SIGNALS_DB,
-        vec_db=TradingConfig.VECTOR_DB,
+        log_db=TradingConfig.CENTRALIZED_DB,
+        vec_db=TradingConfig.CENTRALIZED_DB,
         use_llm=bool(TradingConfig.OPENAI_API_KEY),
         llm_extras=TradingConfig.ENABLE_LLM_EXTRAS,
         sector_symbol=sector_map.get(symbol_type, TradingConfig.DEFAULT_SECTOR)

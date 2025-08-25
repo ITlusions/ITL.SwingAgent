@@ -22,7 +22,7 @@ def bars_per_day(interval: str) -> int:
 
 def main():
     ap = argparse.ArgumentParser(description="Evaluate stored signals and update vector payload with hold times.")
-    ap.add_argument("--db", default="data/signals.sqlite")
+    ap.add_argument("--db", default="data/swing_agent.sqlite")
     ap.add_argument("--max-hold-days", type=float, default=2.0)
     args = ap.parse_args()
     db = Path(args.db); db.parent.mkdir(parents=True, exist_ok=True)
@@ -60,7 +60,7 @@ def main():
             hold_minutes = max(0, (pd.Timestamp(exit_time) - pd.Timestamp(asof)).total_seconds() / 60.0)
             bph = {"15m": 4, "30m": 2, "1h": 1, "1d": 1/6.5}.get(tf, 2)
             hold_bars = int(round((hold_minutes / 60.0) * bph))
-            update_vector_payload(db_path=str(db).replace("signals.sqlite", "vec_store.sqlite"), vid=f"{symbol}-{asof}", merge={"hold_minutes": hold_minutes, "hold_bars": hold_bars, "exit_reason": reason})
+            update_vector_payload(db_path=str(db), vid=f"{symbol}-{asof}", merge={"hold_minutes": hold_minutes, "hold_bars": hold_bars, "exit_reason": reason})
         except Exception:
             pass
 
