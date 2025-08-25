@@ -1,6 +1,6 @@
 # External Database Configuration
 
-SwingAgent supports external databases including PostgreSQL and MySQL for production deployments. This guide covers setup and configuration options.
+SwingAgent supports external databases including PostgreSQL, MySQL, and CNPG (CloudNativePG) for production deployments. This guide covers setup and configuration options.
 
 ## Quick Start
 
@@ -18,6 +18,28 @@ export SWING_DB_PASSWORD=your_password
 # Or use a direct database URL
 export SWING_DATABASE_URL="postgresql+psycopg2://user:pass@localhost:5432/swing_agent"
 ```
+
+### CNPG (CloudNativePG) Setup
+
+For Kubernetes deployments with CNPG operator:
+
+```bash
+# Set CNPG environment variables
+export SWING_DB_TYPE=cnpg
+export CNPG_CLUSTER_NAME=swing-postgres
+export CNPG_NAMESPACE=default
+export CNPG_SERVICE_TYPE=rw
+export SWING_DB_NAME=swing_agent
+export SWING_DB_USER=swing_user
+export SWING_DB_PASSWORD=your_password
+
+# Optional SSL configuration
+export CNPG_SSL_MODE=require
+export CNPG_CONNECT_TIMEOUT=10
+export CNPG_APP_NAME=swing-agent
+```
+
+See [CNPG_SETUP.md](CNPG_SETUP.md) for detailed CNPG deployment instructions.
 
 ### MySQL Setup
 
@@ -41,12 +63,26 @@ export SWING_DATABASE_URL="mysql+pymysql://user:pass@localhost:3306/swing_agent"
 | Variable | Description | Default | Example |
 |----------|-------------|---------|---------|
 | `SWING_DATABASE_URL` | Complete database URL | SQLite file | `postgresql://user:pass@host:5432/db` |
-| `SWING_DB_TYPE` | Database type | `sqlite` | `postgresql`, `mysql` |
+| `SWING_DB_TYPE` | Database type | `sqlite` | `postgresql`, `mysql`, `cnpg` |
 | `SWING_DB_HOST` | Database host | `localhost` | `db.example.com` |
 | `SWING_DB_PORT` | Database port | DB-specific | `5432`, `3306` |
 | `SWING_DB_NAME` | Database name | - | `swing_agent` |
 | `SWING_DB_USER` | Database username | - | `swing_user` |
 | `SWING_DB_PASSWORD` | Database password | - | `secure_password` |
+
+### CNPG Specific Variables
+
+| Variable | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `CNPG_CLUSTER_NAME` | CNPG cluster name | - | `swing-postgres` |
+| `CNPG_NAMESPACE` | Kubernetes namespace | `default` | `production` |
+| `CNPG_SERVICE_TYPE` | Service type | `rw` | `rw`, `ro` |
+| `CNPG_SSL_MODE` | SSL mode | `require` | `require`, `prefer`, `disable` |
+| `CNPG_SSL_CERT` | Client certificate path | - | `/ssl/client.crt` |
+| `CNPG_SSL_KEY` | Client key path | - | `/ssl/client.key` |
+| `CNPG_SSL_CA` | CA certificate path | - | `/ssl/ca.crt` |
+| `CNPG_CONNECT_TIMEOUT` | Connection timeout (sec) | `10` | `30` |
+| `CNPG_APP_NAME` | Application name | `swing-agent` | `my-app` |
 
 ### Connection Pooling
 

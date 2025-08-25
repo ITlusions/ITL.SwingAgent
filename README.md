@@ -44,7 +44,24 @@ export SWING_DB_PASSWORD=your_password
 python scripts/run_swing_agent.py --symbol AMD
 ```
 
-For detailed external database setup, see [EXTERNAL_DATABASES.md](EXTERNAL_DATABASES.md).
+### CNPG (CloudNativePG) for Kubernetes
+```bash
+# For Kubernetes deployments with CNPG operator
+export SWING_DB_TYPE=cnpg
+export CNPG_CLUSTER_NAME=swing-postgres
+export CNPG_NAMESPACE=default
+export SWING_DB_NAME=swing_agent
+export SWING_DB_USER=swing_user
+export SWING_DB_PASSWORD=your_password
+
+# Test configuration
+python scripts/test_cnpg.py
+```
+
+For detailed database setup:
+- [EXTERNAL_DATABASES.md](EXTERNAL_DATABASES.md) - PostgreSQL/MySQL setup
+- [CNPG_SETUP.md](CNPG_SETUP.md) - CloudNativePG for Kubernetes
+- [k8s/cnpg/](k8s/cnpg/) - Complete Kubernetes deployment manifests
 
 ## Run live signal
 ```bash
