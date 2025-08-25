@@ -1,0 +1,18 @@
+[project]
+name = "swing-agent"
+version = "1.6.1"
+requires-python = ">=3.10"
+description = "1–2 day swing agent with fibs, vector priors, LLM plan, holding-time, and enriched features (MTF, RS, TOD, vol regime)."
+readme = "README.md"
+authors = [{name="You"}]
+dependencies = [
+  "pydantic>=2.6",
+  "pandas>=2.1",
+  "numpy>=1.26",
+  "yfinance>=0.2.40",
+  "openai>=1.40.0",
+  "pydantic-ai-slim[openai]>=0.0.16",
+]
+
+[tool.ruff]
+line-length = 100
