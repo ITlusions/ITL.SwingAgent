@@ -6,7 +6,7 @@ Complete API documentation for all SwingAgent components.
 
 ### SwingAgent
 
-Main orchestrator class that coordinates all system components.
+Main orchestrator class that coordinates all system components using a modular, well-structured approach.
 
 ```python
 class SwingAgent:
@@ -25,29 +25,93 @@ class SwingAgent:
 **Parameters:**
 - `interval`: Trading timeframe ("15m", "30m", "1h", "1d")
 - `lookback_days`: Historical data period for analysis
-- `log_db`: Path to signals SQLite database
-- `vec_db`: Path to vector store SQLite database  
+- `log_db`: Path to signals SQLite database (uses centralized db if None)
+- `vec_db`: Path to vector store SQLite database (uses centralized db if None)
 - `use_llm`: Enable OpenAI LLM integration
-- `llm_extras`: Enable additional LLM features
-- `sector_symbol`: Sector ETF for relative strength (fallback: SPY)
+- `llm_extras`: Enable additional LLM features (action plans, risk scenarios)
+- `sector_symbol`: Sector ETF for relative strength analysis (default: XLK)
 
 **Methods:**
 
 #### `analyze(symbol: str) -> TradeSignal`
-Generate a trading signal for the given symbol.
+Generate a comprehensive trading signal for the given symbol.
 
 ```python
 agent = SwingAgent(interval="30m", lookback_days=30)
 signal = agent.analyze("AAPL")
+print(f"Signal: {signal.entry.side if signal.entry else 'No setup'}")
+print(f"Confidence: {signal.confidence:.1%}")
 ```
 
 #### `analyze_df(symbol: str, df: pd.DataFrame) -> TradeSignal`
-Generate a signal using pre-loaded market data.
+Generate a signal using pre-loaded market data. This method orchestrates the entire analysis pipeline:
+
+1. **Market Context Building** - Volatility, gaps, time of day, relative strength
+2. **Technical Analysis** - Trend labeling and entry plan generation
+3. **Multi-timeframe Analysis** - Trend alignment across 15m, 30m, 1h timeframes
+4. **ML Expectations** - Vector similarity analysis for statistical priors
+5. **LLM Insights** - AI-generated analysis and action plans
+6. **Signal Assembly** - Final signal creation and persistence
 
 ```python
 df = load_ohlcv("AAPL", "30m", 30)
 signal = agent.analyze_df("AAPL", df)
 ```
+
+## Configuration Management
+
+### TradingConfig
+
+Centralized configuration class that eliminates magic numbers throughout the codebase.
+
+```python
+from swing_agent.config import get_config, update_config
+
+# Get current configuration
+config = get_config()
+print(f"EMA slope threshold: {config.EMA_SLOPE_THRESHOLD_UP}")
+print(f"RSI trend threshold: {config.RSI_TREND_UP_MIN}")
+
+# Update configuration parameters
+update_config(
+    EMA_SLOPE_THRESHOLD_UP=0.015,  # More sensitive trend detection
+    RSI_PERIOD=21,                 # Longer RSI period
+    ATR_STOP_MULTIPLIER=1.5       # Tighter stops
+)
+```
+
+**Key Configuration Groups:**
+
+- **Trend Detection**: EMA slope thresholds, RSI levels
+- **Risk Management**: ATR multipliers, stop/target ratios
+- **Fibonacci Analysis**: Lookback periods, golden pocket levels  
+- **Volatility Regimes**: Lookback periods, percentile thresholds
+- **Confidence Scoring**: Base levels, bonus factors
+- **Vector Analysis**: KNN parameters, similarity thresholds
+
+## Error Handling
+
+Enhanced error handling with custom exceptions and detailed error messages:
+
+```python
+from swing_agent.data import SwingAgentDataError
+
+try:
+    signal = agent.analyze("INVALID_SYMBOL")
+except SwingAgentDataError as e:
+    print(f"Data error for {e.symbol}: {e}")
+    # Handle specific data issues (invalid symbol, no data, etc.)
+except RuntimeError as e:
+    print(f"Analysis failed: {e}")
+    # Handle general analysis errors
+```
+
+**Common Error Scenarios:**
+- Invalid or delisted symbols
+- Insufficient historical data
+- Network connectivity issues
+- Rate limiting from data providers
+- Market closure during data requests
 
 ## Data Models
 
@@ -332,24 +396,36 @@ class FibRange:
 ## Strategy Functions
 
 ### `label_trend(df: pd.DataFrame) -> TrendState`
-Classify market trend based on EMA slope, price position, and RSI.
+Classify market trend based on EMA slope, price position, and RSI using configurable thresholds.
 
 ```python
 from swing_agent.strategy import label_trend
 
 trend = label_trend(df)
-print(f"Trend: {trend.label}, RSI: {trend.rsi_14}")
+print(f"Trend: {trend.label}, RSI: {trend.rsi_14:.1f}")
+print(f"EMA Slope: {trend.ema_slope:.4f}")
+print(f"Price above EMA: {trend.price_above_ema}")
 ```
 
 **Trend Classification Logic:**
-- **STRONG_UP**: EMA slope > 0.02, price above EMA, RSI ≥ 60
-- **UP**: EMA slope > 0.01, price above EMA, RSI ≥ 60  
-- **STRONG_DOWN**: EMA slope < -0.02, price below EMA, RSI ≤ 40
-- **DOWN**: EMA slope < -0.01, price below EMA, RSI ≤ 40
-- **SIDEWAYS**: All other conditions
+Uses three main trend categories with configurable thresholds from `TradingConfig`:
+
+1. **Strong/Up Trends**:
+   - EMA20 slope > `EMA_SLOPE_THRESHOLD_UP` (default: 0.01)
+   - Price above EMA20
+   - RSI ≥ `RSI_TREND_UP_MIN` (default: 60)
+   - **STRONG_UP** if slope > `EMA_SLOPE_THRESHOLD_STRONG` (default: 0.02)
+
+2. **Strong/Down Trends**:
+   - EMA20 slope < `EMA_SLOPE_THRESHOLD_DOWN` (default: -0.01)
+   - Price below EMA20
+   - RSI ≤ `RSI_TREND_DOWN_MAX` (default: 40)
+   - **STRONG_DOWN** if slope < `EMA_SLOPE_THRESHOLD_STRONG_DOWN` (default: -0.02)
+
+3. **SIDEWAYS**: All other conditions
 
 ### `build_entry(df: pd.DataFrame, trend: TrendState) -> Optional[EntryPlan]`
-Generate entry plan based on trend and Fibonacci analysis.
+Generate entry plan using three main strategies with configurable risk management.
 
 ```python
 from swing_agent.strategy import build_entry, label_trend
@@ -358,10 +434,40 @@ trend = label_trend(df)
 entry = build_entry(df, trend)
 
 if entry:
-    print(f"Entry: {entry.side} @ {entry.entry_price}")
-    print(f"Stop: {entry.stop_price}, Target: {entry.take_profit}")
-    print(f"R-Multiple: {entry.r_multiple}")
+    print(f"Strategy: {entry.comment}")
+    print(f"Entry: {entry.side.value} @ {entry.entry_price:.2f}")
+    print(f"Stop: {entry.stop_price:.2f}, Target: {entry.take_profit:.2f}")
+    print(f"R-Multiple: {entry.r_multiple:.2f}")
+    print(f"Golden Pocket: {entry.fib_golden_low:.2f} - {entry.fib_golden_high:.2f}")
 ```
+
+**Entry Strategies:**
+
+1. **Fibonacci Golden Pocket Pullbacks** (Highest Probability):
+   - Triggers when price is within 61.8%-65% retracement of recent swing
+   - **LONG**: In uptrend, price pullback to golden pocket
+   - **SHORT**: In downtrend, price pullback to golden pocket
+   - Stop: Golden pocket boundary + `ATR_STOP_BUFFER` × ATR (default: 0.2)
+   - Target: Previous swing point or Fibonacci extension
+
+2. **Momentum Continuation Breakouts**:
+   - **LONG**: In uptrend, breakout above previous high
+   - **SHORT**: In downtrend, breakdown below previous low
+   - Stop: Entry ± `ATR_STOP_MULTIPLIER` × ATR (default: 1.2)
+   - Target: Fibonacci extension or `ATR_TARGET_MULTIPLIER` × ATR (default: 2.0)
+
+3. **Mean Reversion from Extremes**:
+   - Triggers in sideways markets only
+   - **LONG**: RSI < `RSI_OVERSOLD_THRESHOLD` (default: 35)
+   - **SHORT**: RSI > `RSI_OVERBOUGHT_THRESHOLD` (default: 65)
+   - Stop: `ATR_MEAN_REVERSION_STOP` × ATR (default: 1.0)
+   - Target: `ATR_MEAN_REVERSION_TARGET` × ATR (default: 1.5)
+
+**Risk Management Features:**
+- All stops and targets use ATR-based calculations
+- R-multiple automatically calculated for each setup
+- Fibonacci levels included for context and additional targets
+- Configuration allows easy tuning of all parameters
 
 ## Vector Store API
 
