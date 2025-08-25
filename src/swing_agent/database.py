@@ -6,6 +6,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 from typing import Generator, Optional, Dict, Any
+from contextlib import contextmanager
 from urllib.parse import urlparse
 from sqlalchemy import create_engine, Engine
 from sqlalchemy.orm import sessionmaker, Session, DeclarativeBase
@@ -289,6 +290,7 @@ class DatabaseConfig:
         """Create all tables in the database."""
         Base.metadata.create_all(self.engine)
     
+    @contextmanager
     def get_session(self) -> Generator[Session, None, None]:
         """Get a database session with automatic cleanup."""
         session = self.session_factory()
@@ -386,6 +388,7 @@ def get_database_config(database_url: Optional[str] = None) -> DatabaseConfig:
     return _db_config
 
 
+@contextmanager
 def get_session() -> Generator[Session, None, None]:
     """Get a database session from the global configuration.
     
@@ -409,7 +412,8 @@ def get_session() -> Generator[Session, None, None]:
         any exception is raised.
     """
     db_config = get_database_config()
-    yield from db_config.get_session()
+    with db_config.get_session() as session:
+        yield session
 
 
 def init_database(database_url: Optional[str] = None):
