@@ -57,6 +57,128 @@ Complete trading signal with technical analysis, ML expectations, and LLM insigh
 
 ```python
 class TradeSignal(BaseModel):
+    symbol: str
+    timeframe: Literal["15m", "30m", "1h", "1d"] = "30m"
+    asof: str  # Timestamp of analysis
+    trend: TrendState  # Technical trend analysis
+    entry: Optional[EntryPlan] = None  # Entry plan if signal found
+    confidence: float = 0.0  # Overall signal confidence 0-1
+    reasoning: str = ""  # Analysis reasoning
+    
+    # ML-derived expectations from vector similarity
+    expected_r: Optional[float] = None  # Expected R-multiple return
+    expected_winrate: Optional[float] = None  # Win rate from similar patterns
+    expected_source: Optional[str] = None  # Source of expectations
+    expected_notes: Optional[str] = None  # Additional context
+    
+    # Holding time priors from historical patterns
+    expected_hold_bars: Optional[int] = None  # Expected bars to hold
+    expected_hold_days: Optional[float] = None  # Expected days to hold
+    expected_win_hold_bars: Optional[int] = None  # Bars for winning trades
+    expected_loss_hold_bars: Optional[int] = None  # Bars for losing trades
+    
+    # LLM insights and action planning
+    llm_vote: Optional[Dict[str, Any]] = None  # LLM trend/bias assessment
+    llm_explanation: Optional[str] = None  # LLM reasoning
+    action_plan: Optional[str] = None  # Execution checklist
+    risk_notes: Optional[str] = None  # Risk and invalidation scenarios
+    scenarios: Optional[List[str]] = None  # Possible outcomes
+    
+    # Market context enrichments
+    mtf_15m_trend: Optional[str] = None  # 15-minute trend
+    mtf_1h_trend: Optional[str] = None  # 1-hour trend
+    mtf_alignment: Optional[int] = None  # Multi-timeframe alignment score
+    rs_sector_20: Optional[float] = None  # Relative strength vs sector
+    rs_spy_20: Optional[float] = None  # Relative strength vs SPY
+    sector_symbol: Optional[str] = None  # Sector ETF symbol
+    tod_bucket: Optional[str] = None  # Time of day ("open", "mid", "close")
+    atr_pct: Optional[float] = None  # ATR as percentage of price
+    vol_regime: Optional[str] = None  # Volatility regime ("L", "M", "H")
+```
+
+**Example Usage:**
+```python
+agent = SwingAgent()
+signal = agent.analyze("AAPL")
+
+print(f"Symbol: {signal.symbol}")
+print(f"Trend: {signal.trend.label.value}")
+print(f"Confidence: {signal.confidence:.2f}")
+
+if signal.entry:
+    print(f"Entry: {signal.entry.side.value} at ${signal.entry.entry_price:.2f}")
+    print(f"Stop: ${signal.entry.stop_price:.2f}")
+    print(f"Target: ${signal.entry.take_profit:.2f}")
+    print(f"R-Multiple: {signal.entry.r_multiple:.2f}")
+
+if signal.expected_r:
+    print(f"Expected Return: {signal.expected_r:.2f}R")
+    print(f"Expected Win Rate: {signal.expected_winrate:.1%}")
+```
+
+### TrendState
+
+Technical trend analysis with key momentum indicators.
+
+```python
+class TrendState(BaseModel):
+    label: TrendLabel  # Classified trend direction
+    ema_slope: float  # EMA20 slope as percentage
+    price_above_ema: bool  # Current price vs EMA20
+    rsi_14: float  # 14-period RSI value (0-100)
+```
+
+**TrendLabel Classifications:**
+- `STRONG_UP`: Strong uptrend (slope > 2%, RSI ≥ 60, price above EMA)  
+- `UP`: Uptrend (slope > 1%, RSI ≥ 60, price above EMA)
+- `SIDEWAYS`: Consolidation or unclear direction
+- `DOWN`: Downtrend (slope < -1%, RSI ≤ 40, price below EMA)
+- `STRONG_DOWN`: Strong downtrend (slope < -2%, RSI ≤ 40, price below EMA)
+
+### EntryPlan  
+
+Trade entry specification with risk management levels.
+
+```python
+class EntryPlan(BaseModel):
+    side: SignalSide  # "long", "short", or "none"
+    entry_price: float  # Specific entry price level
+    stop_price: float  # Stop loss price for risk management
+    take_profit: float  # Initial profit target
+    r_multiple: float  # Risk/reward ratio (target/risk)
+    comment: str  # Strategy description and context
+    
+    # Fibonacci analysis context
+    fib_golden_low: Optional[float] = None  # 0.618 retracement level
+    fib_golden_high: Optional[float] = None  # 0.65 retracement level  
+    fib_target_1: Optional[float] = None  # 1.272 extension target
+    fib_target_2: Optional[float] = None  # 1.618 extension target
+```
+
+**Entry Strategy Categories:**
+1. **Fibonacci Golden Pocket**: Pullback to 0.618-0.65 retracement zone
+2. **Momentum Continuation**: Breakout above/below prior swing extremes
+3. **Mean Reversion**: RSI extreme reversals in sideways markets
+
+**Risk Management Validation:**
+```python
+# Long trade validation
+if entry.side == "long":
+    assert entry.stop_price < entry.entry_price
+    assert entry.take_profit > entry.entry_price
+    
+# Short trade validation  
+if entry.side == "short":
+    assert entry.stop_price > entry.entry_price
+    assert entry.take_profit < entry.entry_price
+```
+
+### TradeSignal
+
+Complete trading signal with technical analysis, ML expectations, and LLM insights.
+
+```python
+class TradeSignal(BaseModel):
     # Core identification
     symbol: str
     timeframe: Literal["15m", "30m", "1h", "1d"] = "30m"

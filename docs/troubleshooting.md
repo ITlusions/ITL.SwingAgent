@@ -747,21 +747,257 @@ def collect_debug_info():
 collect_debug_info()
 ```
 
-### Common Support Channels
+### Additional Troubleshooting Scenarios
 
-1. **GitHub Issues**: For bugs and feature requests
-   - Include debug information
-   - Provide minimal reproduction steps
-   - Include error logs and stack traces
+#### Database Migration Issues
 
-2. **Documentation**: Check all documentation files
-   - README.md for overview
-   - docs/ directory for detailed guides
-   - instructions.md for development notes
+**Problem**: Error migrating from separate SQLite files to centralized database.
 
-3. **Code Review**: For understanding implementation
-   - All source code is in src/swing_agent/
-   - Start with agent.py for main flow
-   - Check models.py for data structures
+```bash
+Error: duplicate column name: id
+```
 
-This troubleshooting guide should help resolve most common issues. When reporting problems, always include the debug information and specific error messages.
+**Solutions**:
+```bash
+# Check current database schema
+python -c "
+from swing_agent.database import get_session
+with get_session() as session:
+    result = session.execute('PRAGMA table_info(signals)').fetchall()
+    print('Signals table columns:', result)
+"
+
+# If migration fails, backup and recreate
+mv data/swing_agent.sqlite data/swing_agent_backup.sqlite
+python -m swing_agent.migrate --data-dir data/ --force-recreate
+```
+
+#### Vector Store Performance Issues
+
+**Problem**: Slow vector similarity search with large datasets.
+
+**Solutions**:
+```python
+# Check vector store size
+from swing_agent.vectorstore import get_vector_count
+count = get_vector_count("data/swing_agent.sqlite")
+print(f"Vector count: {count}")
+
+# If >10,000 vectors, consider pruning old vectors
+from swing_agent.vectorstore import prune_old_vectors
+prune_old_vectors("data/swing_agent.sqlite", keep_days=365)
+
+# Or rebuild with performance indexes
+python scripts/backfill_vector_store.py --rebuild-indexes
+```
+
+#### Configuration Conflicts
+
+**Problem**: Environment variables not taking effect.
+
+**Solutions**:
+```bash
+# Check environment variable precedence
+python -c "
+import os
+from swing_agent.database import get_database_config
+config = get_database_config()
+print('Database URL:', config.database_url)
+print('Environment SWING_DATABASE_URL:', os.getenv('SWING_DATABASE_URL'))
+"
+
+# Clear any cached configurations
+rm -rf __pycache__
+rm -rf src/swing_agent/__pycache__
+```
+
+#### Memory Usage Issues
+
+**Problem**: High memory usage during backtesting.
+
+**Solutions**:
+```python
+# Monitor memory usage
+import psutil
+import os
+
+def monitor_memory():
+    process = psutil.Process(os.getpid())
+    memory_mb = process.memory_info().rss / 1024 / 1024
+    print(f"Memory usage: {memory_mb:.1f} MB")
+
+# Reduce batch size for large backtests
+python scripts/backtest_generate_signals.py --batch-size 100 --symbol AAPL
+```
+
+#### LLM Rate Limiting
+
+**Problem**: OpenAI API rate limits during batch processing.
+
+**Solutions**:
+```python
+# Add rate limiting
+import time
+from functools import wraps
+
+def rate_limit(calls_per_minute=60):
+    def decorator(func):
+        last_called = [0.0]
+        
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            elapsed = time.time() - last_called[0]
+            left_to_wait = 60.0 / calls_per_minute - elapsed
+            if left_to_wait > 0:
+                time.sleep(left_to_wait)
+            ret = func(*args, **kwargs)
+            last_called[0] = time.time()
+            return ret
+        return wrapper
+    return decorator
+
+# Apply to LLM functions
+@rate_limit(calls_per_minute=30)
+def llm_with_rate_limit(**features):
+    return llm_extra_prediction(**features)
+```
+
+### Development Troubleshooting
+
+#### IDE Setup Issues
+
+**Problem**: VSCode/PyCharm not recognizing swing_agent imports.
+
+**Solutions**:
+```bash
+# Install in development mode
+pip install -e .
+
+# Set Python interpreter to virtual environment
+# VSCode: Ctrl+Shift+P -> "Python: Select Interpreter"
+# PyCharm: File -> Settings -> Project -> Python Interpreter
+
+# Add src to Python path in IDE settings
+export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+```
+
+#### Testing Framework Issues
+
+**Problem**: Tests not discovering or running properly.
+
+**Solutions**:
+```bash
+# Ensure pytest is installed
+pip install pytest pytest-cov
+
+# Run from project root
+cd /path/to/ITL.SwingAgent
+pytest tests/
+
+# Check test discovery
+pytest --collect-only
+
+# If modules not found, install package
+pip install -e .
+```
+
+#### Git and Version Control
+
+**Problem**: Large database files in git history.
+
+**Solutions**:
+```bash
+# Add to .gitignore if not already there
+echo "data/*.sqlite" >> .gitignore
+echo "logs/" >> .gitignore
+echo "__pycache__/" >> .gitignore
+
+# Remove from git history (careful!)
+git filter-branch --force --index-filter \
+'git rm --cached --ignore-unmatch data/*.sqlite' \
+--prune-empty --tag-name-filter cat -- --all
+```
+
+### Performance Optimization Troubleshooting
+
+#### Slow Data Fetching
+
+**Problem**: yfinance data fetching is slow or unreliable.
+
+**Solutions**:
+```python
+# Add caching for development
+import functools
+import pickle
+from pathlib import Path
+
+@functools.lru_cache(maxsize=128)
+def cached_load_ohlcv(symbol, interval, lookback_days):
+    cache_file = Path(f"cache/{symbol}_{interval}_{lookback_days}.pkl")
+    
+    if cache_file.exists():
+        # Check if cache is recent (< 1 hour)
+        import time
+        if time.time() - cache_file.stat().st_mtime < 3600:
+            with open(cache_file, 'rb') as f:
+                return pickle.load(f)
+    
+    # Fetch fresh data
+    df = load_ohlcv(symbol, interval, lookback_days)
+    
+    # Cache for next time
+    cache_file.parent.mkdir(exist_ok=True)
+    with open(cache_file, 'wb') as f:
+        pickle.dump(df, f)
+    
+    return df
+```
+
+#### Database Performance
+
+**Problem**: Slow database queries with large signal history.
+
+**Solutions**:
+```sql
+-- Add indexes for common queries
+CREATE INDEX IF NOT EXISTS idx_signals_symbol_asof ON signals(symbol, asof);
+CREATE INDEX IF NOT EXISTS idx_signals_created_at ON signals(created_at_utc);
+CREATE INDEX IF NOT EXISTS idx_vectorstore_symbol_ts ON vec_store(symbol, ts_utc);
+
+-- Analyze query performance
+EXPLAIN QUERY PLAN SELECT * FROM signals WHERE symbol = 'AAPL' ORDER BY asof DESC LIMIT 10;
+```
+
+### Common Error Messages and Solutions
+
+#### Import Errors
+
+```
+ModuleNotFoundError: No module named 'swing_agent'
+```
+**Solution**: Install package with `pip install -e .`
+
+#### Database Errors
+
+```
+sqlalchemy.exc.OperationalError: no such table: signals
+```
+**Solution**: Initialize database with `python -m swing_agent.database --init`
+
+#### API Errors
+
+```
+openai.error.AuthenticationError: Invalid API key
+```
+**Solution**: Check `OPENAI_API_KEY` environment variable
+
+#### Permission Errors
+
+```
+PermissionError: [Errno 13] Permission denied: 'data/swing_agent.sqlite'
+```
+**Solution**: Check file permissions with `ls -la data/` and fix with `chmod 600 data/swing_agent.sqlite`
+
+### Debug Information Collection
+
+Create a comprehensive debug script to gather system information:

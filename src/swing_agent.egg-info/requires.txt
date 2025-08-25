@@ -5,3 +5,13 @@ yfinance>=0.2.40
 openai>=1.40.0
 pydantic-ai-slim[openai]>=0.0.16
 sqlalchemy>=2.0.0
+
+[external-db]
+psycopg2-binary>=2.9.0
+PyMySQL>=1.0.0
+
+[mysql]
+PyMySQL>=1.0.0
+
+[postgresql]
+psycopg2-binary>=2.9.0
