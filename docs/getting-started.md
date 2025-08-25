@@ -15,7 +15,7 @@ SwingAgent is an automated swing trading system designed for 1-2 day trades. It 
 
 Before you begin, make sure you have:
 
-- **Python 3.10 or higher** installed on your computer
+- **Python 3.12 or higher** installed on your computer
 - **Basic familiarity with trading concepts** (entry, stop-loss, take-profit)
 - **Optional**: OpenAI API key for enhanced AI features
 

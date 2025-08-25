@@ -19,7 +19,7 @@ You are helping maintain a Python package for 1–2 day swing trading with Fib-b
   - `analyze_performance.py` — simple calibration & bucket stats
 
 ## Coding style
-- Python 3.10+, type hints, Pydantic v2 models.
+- Python 3.12+, type hints, Pydantic v2 models.
 - Keep the **feature vector** compact; put extra context in `payload_json` in the vector DB.
 - Never let LLM change math; LLMs should **explain and plan**, not decide SL/TP.
 

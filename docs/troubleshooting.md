@@ -93,16 +93,16 @@ kubectl get secret swing-postgres-credentials -n swing-agent -o yaml
 
 ```bash
 python -c "import sys; print(sys.version)"
-# Should show Python 3.10 or higher
+# Should show Python 3.12 or higher
 ```
 
 **Solutions**:
 ```bash
-# Install Python 3.10+
-sudo apt install python3.10 python3.10-venv python3.10-dev
+# Install Python 3.12+
+sudo apt install python3.12 python3.12-venv python3.12-dev
 
 # Create virtual environment with correct Python
-python3.10 -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 
 # Verify version in virtual environment

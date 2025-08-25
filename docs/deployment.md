@@ -180,7 +180,7 @@ Enterprise deployment with auto-scaling and monitoring.
 ```bash
 # System requirements
 - Ubuntu 20.04+ / CentOS 8+ / RHEL 8+
-- Python 3.10+
+- Python 3.12+
 - 4GB RAM minimum, 8GB recommended
 - 50GB storage for databases
 - Internet connectivity for APIs
@@ -195,7 +195,7 @@ Enterprise deployment with auto-scaling and monitoring.
 sudo apt update && sudo apt upgrade -y
 
 # Install Python and dependencies
-sudo apt install python3.10 python3.10-venv python3.10-dev \
+sudo apt install python3.12 python3.12-venv python3.12-dev \
                  git curl sqlite3 supervisor nginx -y
 
 # Create application user
@@ -214,7 +214,7 @@ git clone https://github.com/ITlusions/ITL.SwingAgent.git
 cd ITL.SwingAgent
 
 # Create virtual environment
-python3.10 -m venv venv
+python3.12 -m venv venv
 source venv/bin/activate
 
 # Install application
@@ -392,7 +392,7 @@ crontab -e
 
 ```dockerfile
 # Dockerfile
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
