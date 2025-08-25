@@ -52,7 +52,7 @@ def _fit_model(db_path: Path) -> Optional[IsotonicRegression]:
     except sqlite3.Error:
         return None
 
-    if len(df) < 20:
+    if len(df) < MIN_SAMPLE_SIZE:
         return None
 
     y = (df["realized_r"] > 0).astype(float).to_numpy()
