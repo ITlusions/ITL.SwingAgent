@@ -49,7 +49,7 @@ def _fit_model(db_path: Path) -> Optional[IsotonicRegression]:
     try:
         with sqlite3.connect(db_path) as con:
             df = pd.read_sql_query(query, con)
-    except Exception:
+    except sqlite3.Error:
         return None
 
     if len(df) < 20:
