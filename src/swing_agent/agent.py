@@ -12,6 +12,7 @@ from .llm_predictor import llm_extra_prediction, llm_build_action_plan
 from .features import build_setup_vector, time_of_day_bucket, vol_regime_from_series
 from .vectorstore import add_vector, knn, extended_stats, filter_neighbors
 from .storage import record_signal
+from .calibration import calibrated_winrate
 
 def _clip01(x: float) -> float:
     """Clip a value to the range [0, 1].
@@ -665,7 +666,13 @@ class SwingAgent:
             llm_explanation=llm_insights.get("llm_explanation"),
             expected_r=(round(ml_expectations["expected_r"], 3) 
                        if ml_expectations["expected_r"] is not None else None),
-            expected_winrate=ml_expectations["expected_winrate"],
+            expected_winrate=(
+                calibrated_winrate(
+                    ml_expectations["expected_winrate"], self.log_db
+                )
+                if ml_expectations["expected_winrate"] is not None
+                else None
+            ),
             expected_source=("vector_knn/v1.6.1" if self.vec_db is not None else None),
             expected_notes=("E[R]=p*avg_win+(1-p)*avg_loss; med hold from KNN neighbors (filtered by vol_regime)." 
                           if self.vec_db is not None else None),

@@ -47,6 +47,5 @@ def main() -> None:
     train_incremental(X, y, Path(args.model))
     print(f"Trained model on {len(y)} samples")
 
-
 if __name__ == "__main__":
     main()
