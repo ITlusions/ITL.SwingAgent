@@ -1,12 +1,14 @@
 from __future__ import annotations
-from typing import Optional
+
 import numpy as np
 import pandas as pd
-from .models import TrendState, EntryPlan, TrendLabel
-from .indicators import ema, rsi, atr, bollinger_width
-from .config import get_config
 
-def fib_position(price: float, gp_low: Optional[float], gp_high: Optional[float]) -> float:
+from .config import get_config
+from .indicators import bollinger_width
+from .models import EntryPlan, TrendLabel, TrendState
+
+
+def fib_position(price: float, gp_low: float | None, gp_high: float | None) -> float:
     """Calculate relative position within Fibonacci golden pocket.
     
     Args:
@@ -36,7 +38,7 @@ def time_of_day_bucket(ts: pd.Timestamp) -> str:
     mins = hour * 60 + minute
     open_mins = 9 * 60 + 30  # 9:30 AM
     close_mins = 16 * 60     # 4:00 PM
-    
+
     if mins <= open_mins + 90:  # First 90 minutes
         return "open"
     if mins >= close_mins - 60:  # Last 60 minutes
@@ -54,21 +56,21 @@ def vol_regime_from_series(price: pd.Series) -> str:
         str: Volatility regime - "L" (low), "M" (medium), or "H" (high).
     """
     cfg = get_config()
-    
+
     # Calculate Bollinger Band width
     bw = bollinger_width(price, length=20, ndev=2.0)
-    recent = (bw.dropna().iloc[-cfg.VOL_REGIME_LOOKBACK:] 
-             if len(bw.dropna()) >= cfg.VOL_REGIME_LOOKBACK 
+    recent = (bw.dropna().iloc[-cfg.VOL_REGIME_LOOKBACK:]
+             if len(bw.dropna()) >= cfg.VOL_REGIME_LOOKBACK
              else bw.dropna())
-    
+
     if recent.empty:
         return "M"
-    
+
     # Determine regime using configuration percentiles
     q_low = recent.quantile(cfg.VOL_LOW_PERCENTILE)
     q_high = recent.quantile(cfg.VOL_HIGH_PERCENTILE)
     now = recent.iloc[-1]
-    
+
     if now <= q_low:
         return "L"
     elif now >= q_high:
@@ -76,9 +78,9 @@ def vol_regime_from_series(price: pd.Series) -> str:
     else:
         return "M"
 
-def build_setup_vector(*, price: float, trend: TrendState, entry: Optional[EntryPlan], 
-                      prev_range_pct: float = 0.0, gap_pct: float = 0.0, 
-                      atr_pct: float = 0.0, session_bin: int = 0, 
+def build_setup_vector(*, price: float, trend: TrendState, entry: EntryPlan | None,
+                      prev_range_pct: float = 0.0, gap_pct: float = 0.0,
+                      atr_pct: float = 0.0, session_bin: int = 0,
                       llm_conf: float = 0.0) -> np.ndarray:
     """Build normalized feature vector for ML pattern matching.
     
@@ -102,26 +104,26 @@ def build_setup_vector(*, price: float, trend: TrendState, entry: Optional[Entry
     t_up = 1.0 if trend.label in (TrendLabel.UP, TrendLabel.STRONG_UP) else 0.0
     t_down = 1.0 if trend.label in (TrendLabel.DOWN, TrendLabel.STRONG_DOWN) else 0.0
     t_side = 1.0 if trend.label == TrendLabel.SIDEWAYS else 0.0
-    
+
     # Session encoding (binary features for open/close vs mid)
     sb0 = 1.0 if session_bin in (0, 2) else 0.0  # Open or close session
     sb1 = 1.0 if session_bin in (1, 2) else 0.0  # Mid or close session
-    
+
     # Fibonacci position and golden pocket status
     fib_pos = fib_position(
-        price, 
-        getattr(entry, "fib_golden_low", None), 
+        price,
+        getattr(entry, "fib_golden_low", None),
         getattr(entry, "fib_golden_high", None)
     )
-    
+
     in_golden = 0.0
-    if (entry and entry.fib_golden_low and entry.fib_golden_high and 
+    if (entry and entry.fib_golden_low and entry.fib_golden_high and
         entry.fib_golden_low <= price <= entry.fib_golden_high):
         in_golden = 1.0
-    
+
     # Risk-reward ratio (capped at 5.0 for normalization)
     r_mult = float(getattr(entry, "r_multiple", 0.0) or 0.0)
-    
+
     # Build feature vector
     vec = np.array([
         float(trend.ema_slope),          # EMA slope (momentum)
@@ -141,7 +143,7 @@ def build_setup_vector(*, price: float, trend: TrendState, entry: Optional[Entry
         llm_conf,                        # LLM confidence
         1.0                              # Constant term
     ], dtype=float)
-    
+
     # L2 normalization for cosine similarity
     norm = np.linalg.norm(vec)
     return vec if norm == 0 else vec / norm

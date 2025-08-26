@@ -7,7 +7,7 @@ risk checks.
 
 from __future__ import annotations
 
-from typing import Iterable, Optional
+from collections.abc import Iterable
 
 
 def sized_quantity(
@@ -15,7 +15,7 @@ def sized_quantity(
     entry: float,
     stop: float,
     max_risk_pct: float = 0.01,
-    atr: Optional[float] = None,
+    atr: float | None = None,
     k_atr: float = 0.5,
 ) -> int:
     """Calculate position size given account equity and stop distance.

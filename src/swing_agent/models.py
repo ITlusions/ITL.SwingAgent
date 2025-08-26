@@ -1,7 +1,10 @@
 from __future__ import annotations
+
 from enum import Enum
-from typing import Literal, Optional, Dict, Any, List
+from typing import Any, Literal
+
 from pydantic import BaseModel, Field
+
 
 class TrendLabel(str, Enum):
     STRONG_UP = "strong_up"
@@ -22,10 +25,10 @@ class EntryPlan(BaseModel):
     take_profit: float = Field(..., gt=0)
     r_multiple: float = Field(..., gt=0)
     comment: str = ""
-    fib_golden_low: Optional[float] = None
-    fib_golden_high: Optional[float] = None
-    fib_target_1: Optional[float] = None
-    fib_target_2: Optional[float] = None
+    fib_golden_low: float | None = None
+    fib_golden_high: float | None = None
+    fib_target_1: float | None = None
+    fib_target_2: float | None = None
 
 class TrendState(BaseModel):
     label: TrendLabel
@@ -38,7 +41,7 @@ class TradeSignal(BaseModel):
     timeframe: Literal["15m", "30m", "1h", "1d"] = "30m"
     asof: str
     trend: TrendState
-    entry: Optional[EntryPlan] = None
+    entry: EntryPlan | None = None
     confidence: float = 0.0
     reasoning: str = ""
 
@@ -55,19 +58,19 @@ class TradeSignal(BaseModel):
     expected_loss_hold_bars: int | None = None
 
     # LLM transparency & plan
-    llm_vote: Optional[Dict[str, Any]] = None
-    llm_explanation: Optional[str] = None
-    action_plan: Optional[str] = None
-    risk_notes: Optional[str] = None
-    scenarios: Optional[List[str]] = None
+    llm_vote: dict[str, Any] | None = None
+    llm_explanation: str | None = None
+    action_plan: str | None = None
+    risk_notes: str | None = None
+    scenarios: list[str] | None = None
 
     # enrichments
-    mtf_15m_trend: Optional[str] = None
-    mtf_1h_trend: Optional[str] = None
-    mtf_alignment: Optional[int] = None
-    rs_sector_20: Optional[float] = None
-    rs_spy_20: Optional[float] = None
-    sector_symbol: Optional[str] = None
-    tod_bucket: Optional[str] = None
-    atr_pct: Optional[float] = None
-    vol_regime: Optional[str] = None
+    mtf_15m_trend: str | None = None
+    mtf_1h_trend: str | None = None
+    mtf_alignment: int | None = None
+    rs_sector_20: float | None = None
+    rs_spy_20: float | None = None
+    sector_symbol: str | None = None
+    tod_bucket: str | None = None
+    atr_pct: float | None = None
+    vol_regime: str | None = None
