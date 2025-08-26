@@ -72,4 +72,4 @@ tmp/
 temp/
 
 # Documentation build
-site/
+site/src/swing_agent.egg-info/

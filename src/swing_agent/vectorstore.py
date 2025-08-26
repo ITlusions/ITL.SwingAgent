@@ -104,7 +104,26 @@ def add_vector(
 
 
 def update_vector_payload(db_path: Union[str, Path], *, vid: str, merge: Dict[str, Any]):
-    """Update vector payload by merging with existing data."""
+    """Update vector payload by merging with existing data.
+    
+    Merges additional metadata into an existing vector's payload without 
+    affecting the core vector data or trading outcomes.
+    
+    Args:
+        db_path: Database path or URL (converted to centralized database).
+        vid: Vector identifier to update.
+        merge: Dictionary of key-value pairs to merge into payload.
+        
+    Example:
+        >>> update_vector_payload(
+        ...     "data/vec_store.sqlite",
+        ...     vid="AAPL-2024-01-15T15:30:00Z", 
+        ...     merge={"earnings_proximity": 5, "sector_rs": 1.15}
+        ... )
+        
+    Note:
+        If vector ID doesn't exist, the operation silently succeeds without error.
+    """
     _ensure_db(db_path)
     
     with get_session() as session:
@@ -117,7 +136,28 @@ def update_vector_payload(db_path: Union[str, Path], *, vid: str, merge: Dict[st
 
 
 def cosine(u: np.ndarray, v: np.ndarray) -> float:
-    """Calculate cosine similarity between two vectors."""
+    """Calculate cosine similarity between two normalized feature vectors.
+    
+    Computes the cosine of the angle between two vectors, providing a similarity
+    measure independent of vector magnitude. Used for finding similar market setups.
+    
+    Args:
+        u: First feature vector.
+        v: Second feature vector.
+        
+    Returns:
+        float: Cosine similarity in range [-1, 1]. Values closer to 1 indicate 
+        higher similarity, 0 indicates orthogonality, -1 indicates opposite.
+        
+    Example:
+        >>> vec1 = np.array([1.0, 0.5, 0.8])
+        >>> vec2 = np.array([0.9, 0.6, 0.7]) 
+        >>> similarity = cosine(vec1, vec2)
+        >>> print(f"Similarity: {similarity:.3f}")
+        
+    Note:
+        Returns 0.0 if either vector has zero norm to handle edge cases gracefully.
+    """
     nu = float(np.linalg.norm(u))
     nv = float(np.linalg.norm(v))
     if nu == 0 or nv == 0:
@@ -200,6 +240,32 @@ def knn(
 
 
 def filter_neighbors(neighbors: List[Dict[str, Any]], *, vol_regime: Optional[str] = None) -> List[Dict[str, Any]]:
+    """Filter neighbor results by market conditions and metadata.
+    
+    Applies optional filters to KNN results to find patterns from similar
+    market environments. Improves prediction accuracy by matching context.
+    
+    Args:
+        neighbors: List of neighbor dicts from knn() function.
+        vol_regime: Optional volatility regime filter ("L", "M", "H").
+        
+    Returns:
+        List[Dict]: Filtered neighbors matching the specified criteria.
+        
+    Example:
+        >>> all_neighbors = knn(db_path, query_vec=vector, k=100)
+        >>> similar_vol = filter_neighbors(
+        ...     all_neighbors, 
+        ...     vol_regime="M"  # Only medium volatility setups
+        ... )
+        >>> if len(similar_vol) >= 10:
+        ...     stats = extended_stats(similar_vol)
+        ...     print(f"Win rate in similar vol: {stats['win_rate']:.1%}")
+        
+    Note:
+        Additional filters can be added by modifying the payload matching logic.
+        Returns empty list if no neighbors match the filtering criteria.
+    """
     """Filter neighbors by volatility regime."""
     if not neighbors or not vol_regime:
         return neighbors
@@ -209,7 +275,43 @@ def filter_neighbors(neighbors: List[Dict[str, Any]], *, vol_regime: Optional[st
 
 
 def extended_stats(neighbors: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Calculate extended statistics from neighbors."""
+    """Calculate comprehensive trading statistics from neighbor vectors.
+    
+    Computes detailed performance metrics from similar historical patterns
+    to estimate expected outcomes for the current setup. Used for ML-based
+    trade validation and outcome prediction.
+    
+    Args:
+        neighbors: List of neighbor vectors with realized outcomes from knn().
+        
+    Returns:
+        Dict containing comprehensive trading statistics:
+        - n: Number of neighbors with valid realized_r values
+        - p_win: Win probability [0, 1] (realized_r > 0)
+        - avg_R: Average R-multiple across all trades
+        - avg_win_R: Average R-multiple for winning trades only
+        - avg_loss_R: Average R-multiple for losing trades only  
+        - median_hold_bars: Median holding period in bars
+        - median_hold_days: Median holding period in days
+        - median_win_hold_bars: Median hold time for winners
+        - median_loss_hold_bars: Median hold time for losers
+        - profit_factor: Gross profit / gross loss ratio
+        - tp: Number of take profit exits
+        - sl: Number of stop loss exits
+        - time: Number of time-based exits
+        
+    Example:
+        >>> neighbors = knn(db_path, query_vec=vector, k=50)
+        >>> stats = extended_stats(neighbors)
+        >>> print(f"Win Rate: {stats['p_win']:.1%}")
+        >>> print(f"Avg R: {stats['avg_R']:.2f}")
+        >>> print(f"Profit Factor: {stats['profit_factor']:.2f}")
+        >>> print(f"Median Hold: {stats['median_hold_days']:.1f} days")
+        
+    Note:
+        Returns zero values for all metrics if no neighbors have valid outcomes.
+        Only includes neighbors with non-None realized_r values in calculations.
+    """
     if not neighbors:
         return {
             "n": 0,

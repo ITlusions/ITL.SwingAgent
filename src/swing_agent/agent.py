@@ -56,15 +56,39 @@ def _context_from_df(df: pd.DataFrame) -> Dict[str, Any]:
 
 def _rel_strength(df_sym: pd.DataFrame, df_bench: pd.DataFrame, 
                  lookback: int = None) -> float:
-    """Calculate relative strength vs benchmark.
+    """Calculate relative strength ratio vs benchmark over lookback period.
+    
+    Measures how well a symbol has performed relative to a benchmark
+    (sector ETF or SPY) over the specified period. Values > 1.0 indicate
+    outperformance, < 1.0 indicate underperformance.
     
     Args:
-        df_sym: Symbol price data.
-        df_bench: Benchmark price data.
-        lookback: Lookback period (uses config default if None).
+        df_sym: Symbol OHLCV price DataFrame.
+        df_bench: Benchmark OHLCV price DataFrame.
+        lookback: Number of days to calculate relative performance over.
+                 Uses config RS_LOOKBACK_DAYS if None.
         
     Returns:
-        float: Relative strength ratio, or NaN if insufficient data.
+        float: Relative strength ratio. 
+               - > 1.0: Symbol outperforming benchmark
+               - = 1.0: Symbol matching benchmark performance  
+               - < 1.0: Symbol underperforming benchmark
+               - NaN: Insufficient data or calculation error
+               
+    Example:
+        >>> df_aapl = load_ohlcv("AAPL", "30m", 30)
+        >>> df_spy = load_ohlcv("SPY", "30m", 30)
+        >>> rs = _rel_strength(df_aapl, df_spy, lookback=20)
+        >>> if rs > 1.05:
+        ...     print("AAPL strongly outperforming SPY")
+        >>> elif rs < 0.95:
+        ...     print("AAPL underperforming SPY")
+        >>> else:
+        ...     print("AAPL performance in line with SPY")
+        
+    Note:
+        Calculation: (symbol_return / benchmark_return) over lookback period.
+        Used for sector rotation and momentum analysis in signal generation.
     """
     if df_bench is None:
         return float("nan")

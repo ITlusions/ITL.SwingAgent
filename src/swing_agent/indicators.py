@@ -126,13 +126,32 @@ class FibRange:
 def recent_swing(df: pd.DataFrame, lookback: int = 40) -> Tuple[float, float, bool]:
     """Find most recent swing high and low within lookback period.
     
+    Identifies significant price swings for Fibonacci analysis by finding
+    the absolute highest and lowest points within the specified lookback.
+    Direction is determined by which extreme occurred first.
+    
     Args:
-        df: OHLC DataFrame.
-        lookback: Number of bars to look back for swings.
+        df: OHLC DataFrame with required columns ['high', 'low'].
+        lookback: Number of bars to scan for swing extremes.
         
     Returns:
-        Tuple of (swing_low, swing_high, direction_up).
-        direction_up is True if low occurred before high (uptrend).
+        Tuple containing:
+        - swing_low: Absolute lowest price in lookback period
+        - swing_high: Absolute highest price in lookback period  
+        - direction_up: True if low occurred before high (uptrend swing)
+        
+    Example:
+        >>> df = load_ohlcv("AAPL", "30m", 50)
+        >>> low, high, up = recent_swing(df, lookback=40)
+        >>> print(f"Swing: {low:.2f} to {high:.2f}")
+        >>> print(f"Direction: {'UP' if up else 'DOWN'}")
+        >>> swing_size = ((high - low) / low) * 100
+        >>> print(f"Swing size: {swing_size:.1f}%")
+        
+    Note:
+        For edge case where high == low (no meaningful swing), 
+        returns (low, high, True) to default to upward direction.
+        Used internally by fibonacci_range() for level calculations.
     """
     window = df.iloc[-lookback:]
     hi_idx = window["high"].idxmax()
@@ -145,9 +164,44 @@ def recent_swing(df: pd.DataFrame, lookback: int = 40) -> Tuple[float, float, bo
 
 
 def fibonacci_range(df: pd.DataFrame, lookback: int = 40) -> FibRange:
-    """Calculate Fibonacci retracement and extension levels.
+    """Calculate Fibonacci retracement and extension levels from recent swing.
     
-    Finds the most recent swing and calculates Fibonacci levels based on
+    Identifies the most significant swing high/low within the lookback period
+    and calculates comprehensive Fibonacci levels for entry, stop, and target
+    analysis. Core component of the golden pocket strategy.
+    
+    Args:
+        df: OHLC DataFrame with minimum lookback bars of data.
+            Must contain columns: ['high', 'low']
+        lookback: Number of bars to scan for swing points (default: 40).
+        
+    Returns:
+        FibRange: Object containing:
+            - start: Swing start price (low for uptrend, high for downtrend)
+            - end: Swing end price (high for uptrend, low for downtrend)  
+            - dir_up: True if uptrend (low to high), False if downtrend
+            - levels: Dict of all Fibonacci levels by name
+            - golden_low: Lower golden pocket boundary (0.618 level)
+            - golden_high: Upper golden pocket boundary (0.65 level)
+            
+    Example:
+        >>> df = load_ohlcv("AAPL", "30m", 50)
+        >>> fib = fibonacci_range(df, lookback=40)
+        >>> print(f"Direction: {'UP' if fib.dir_up else 'DOWN'}")
+        >>> print(f"Golden Pocket: {fib.golden_low:.2f} - {fib.golden_high:.2f}")
+        >>> print(f"61.8% level: {fib.levels['0.618']:.2f}")
+        >>> print(f"127.2% extension: {fib.levels['1.272']:.2f}")
+        >>> 
+        >>> # Check if current price is in golden pocket
+        >>> current = df["close"].iloc[-1]
+        >>> in_gp = fib.golden_low <= current <= fib.golden_high
+        >>> print(f"In golden pocket: {in_gp}")
+        
+    Note:
+        Golden pocket (61.8%-65% retracement) is the highest probability
+        entry zone for pullback strategies. Extensions (127.2%, 161.8%) 
+        provide target levels for breakout strategies.
+    """
     the swing range. For uptrends, retracements are calculated from the high.
     For downtrends, retracements are calculated from the low.
     
