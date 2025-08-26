@@ -76,19 +76,24 @@ def main() -> None:
         print("No training data found.")
         return
     features, y_cls, y_reg = dataset
-    x_train, x_test, y_cls_train, y_cls_test, y_reg_train, y_reg_test = train_test_split(
-        features, y_cls, y_reg, test_size=0.2, random_state=42
+    # Split for classification
+    x_cls_train, x_cls_test, y_cls_train, y_cls_test = train_test_split(
+        features, y_cls, test_size=0.2, random_state=args.random_state, stratify=y_cls
+    )
+    # Split for regression
+    x_reg_train, x_reg_test, y_reg_train, y_reg_test = train_test_split(
+        features, y_reg, test_size=0.2, random_state=args.random_state
     )
 
     cls_model = LogisticRegression(max_iter=1000)
-    cls_model.fit(x_train, y_cls_train)
-    cls_pred = cls_model.predict(x_test)
+    cls_model.fit(x_cls_train, y_cls_train)
+    cls_pred = cls_model.predict(x_cls_test)
     acc = accuracy_score(y_cls_test, cls_pred)
     print(f"Classification accuracy: {acc:.3f}")
 
     reg_model = LinearRegression()
-    reg_model.fit(x_train, y_reg_train)
-    reg_pred = reg_model.predict(x_test)
+    reg_model.fit(x_reg_train, y_reg_train)
+    reg_pred = reg_model.predict(x_reg_test)
     mse = mean_squared_error(y_reg_test, reg_pred)
     print(f"Regression MSE: {mse:.3f}")
 
