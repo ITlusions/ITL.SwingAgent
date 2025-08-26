@@ -1,11 +1,37 @@
-import argparse, sqlite3
+import argparse, sqlite3, json
 from pathlib import Path
+import numpy as np
 import pandas as pd
 import yfinance as yf
 
 from swing_agent.backtester import simulate_trade
 from swing_agent.data import VALID_INTERVALS
 from swing_agent.vectorstore import update_vector_payload
+
+TRAIN_PATH = Path("data/training_dataset.npz")
+
+
+def _fetch_vector(db_path: Path, vid: str):
+    with sqlite3.connect(db_path) as con:
+        row = con.execute("SELECT vec_json FROM vector_store WHERE id=?", (vid,)).fetchone()
+    if row and row[0]:
+        try:
+            return np.array(json.loads(row[0]), dtype=float)
+        except Exception:
+            return None
+    return None
+
+
+def _append_training(vec: np.ndarray, outcome: float):
+    TRAIN_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if TRAIN_PATH.exists():
+        data = np.load(TRAIN_PATH, allow_pickle=True)
+        X = np.vstack([data["X"], vec])
+        y = np.concatenate([data["y"], [outcome]])
+    else:
+        X = np.array([vec], dtype=float)
+        y = np.array([outcome], dtype=float)
+    np.savez(TRAIN_PATH, X=X, y=y)
 
 def fetch_ohlcv(symbol: str, start_iso: str, interval: str, days_ahead: int = 5) -> pd.DataFrame:
     start = pd.Timestamp(start_iso).tz_convert("UTC")
@@ -63,6 +89,10 @@ def main():
             update_vector_payload(db_path=str(db), vid=f"{symbol}-{asof}", merge={"hold_minutes": hold_minutes, "hold_bars": hold_bars, "exit_reason": reason})
         except Exception:
             pass
+
+        vec = _fetch_vector(db, f"{symbol}-{asof}")
+        if vec is not None:
+            _append_training(vec, float(r_mult))
 
         print(f"[{symbol} {asof}] -> {reason} @ {exit_price:.2f} (R={r_mult:.2f})")
 
