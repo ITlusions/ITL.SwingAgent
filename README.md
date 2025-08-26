@@ -149,6 +149,13 @@ python scripts/backfill_vector_store.py
 python scripts/analyze_performance.py
 ```
 
+## Train ML models
+```bash
+python scripts/train_ml_model.py --db data/swing_agent.sqlite
+```
+Generates baseline classification and regression models from the vector store and saves them to `models/`.
+
+
 ## Database Migration
 
 ### From Separate Files to Centralized Database
