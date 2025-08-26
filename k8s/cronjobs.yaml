@@ -82,3 +82,21 @@ spec:
             image: itlusions/swing-agent:latest
             command: ["sh", "-c", "python scripts/eval_signals.py && python scripts/analyze_performance.py"]
           restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: swing-agent-train
+spec:
+  schedule: "0 2 * * *"
+  timeZone: "Europe/Amsterdam"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: train
+            image: itlusions/swing-agent:latest
+            command: ["python", "scripts/train_ml_model.py"]
+          restartPolicy: OnFailure
