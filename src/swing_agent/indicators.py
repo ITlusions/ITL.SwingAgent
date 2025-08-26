@@ -1,8 +1,9 @@
 from __future__ import annotations
-from typing import Dict, Tuple, Union
+
+from dataclasses import dataclass
+
 import numpy as np
 import pandas as pd
-from dataclasses import dataclass
 
 
 def ema(series: pd.Series, span: int) -> pd.Series:
@@ -89,7 +90,7 @@ def ema_slope(series: pd.Series, span: int = 20, lookback: int = 6) -> float:
 
 
 # Fibonacci retracement and extension levels
-FIBS: Dict[str, float] = {
+FIBS: dict[str, float] = {
     "0.236": 0.236,
     "0.382": 0.382,
     "0.5": 0.5,
@@ -118,12 +119,12 @@ class FibRange:
     start: float
     end: float
     dir_up: bool
-    levels: Dict[str, float]
+    levels: dict[str, float]
     golden_low: float
     golden_high: float
 
 
-def recent_swing(df: pd.DataFrame, lookback: int = 40) -> Tuple[float, float, bool]:
+def recent_swing(df: pd.DataFrame, lookback: int = 40) -> tuple[float, float, bool]:
     """Find most recent swing high and low within lookback period.
     
     Identifies significant price swings for Fibonacci analysis by finding
@@ -202,24 +203,9 @@ def fibonacci_range(df: pd.DataFrame, lookback: int = 40) -> FibRange:
         entry zone for pullback strategies. Extensions (127.2%, 161.8%) 
         provide target levels for breakout strategies.
     """
-    the swing range. For uptrends, retracements are calculated from the high.
-    For downtrends, retracements are calculated from the low.
-    
-    Args:
-        df: OHLC DataFrame with at least 'lookback' bars.
-        lookback: Number of bars to analyze for swing points.
-        
-    Returns:
-        FibRange: Complete Fibonacci analysis with levels and golden pocket.
-        
-    Examples:
-        >>> fib = fibonacci_range(df, lookback=40)
-        >>> print(f"Golden pocket: {fib.golden_low:.2f} - {fib.golden_high:.2f}")
-        >>> print(f"1.272 extension: {fib.levels['1.272']:.2f}")
-    """
     lo, hi, dir_up = recent_swing(df, lookback)
     rng = hi - lo if hi != lo else 1e-9
-    
+
     # Calculate Fibonacci levels based on trend direction
     if dir_up:
         # Uptrend: retracements from high, extensions above high
@@ -228,11 +214,11 @@ def fibonacci_range(df: pd.DataFrame, lookback: int = 40) -> FibRange:
         # Downtrend: retracements from low, extensions below low
         levels = {k: hi - v * rng for k, v in FIBS.items()}
         levels["1.0"] = lo  # 100% retracement goes to the swing low
-    
+
     # Golden pocket is between 61.8% and 65% retracement
     gp_low = min(levels["0.618"], levels["0.65"])
     gp_high = max(levels["0.618"], levels["0.65"])
-    
+
     return FibRange(
         start=lo if dir_up else hi,
         end=hi if dir_up else lo,

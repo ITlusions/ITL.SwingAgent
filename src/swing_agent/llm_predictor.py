@@ -1,22 +1,25 @@
 from __future__ import annotations
+
 import os
-from typing import Literal, Optional, List
+from typing import Literal
+
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIModel
 
+
 class LlmVote(BaseModel):
     trend_label: Literal["strong_up","up","sideways","down","strong_down"]
     entry_bias: Literal["long","short","none"] = "none"
-    entry_window_low: Optional[float] = Field(default=None, gt=0)
-    entry_window_high: Optional[float] = Field(default=None, gt=0)
+    entry_window_low: float | None = Field(default=None, gt=0)
+    entry_window_high: float | None = Field(default=None, gt=0)
     confidence: float = Field(ge=0, le=1)
     rationale: str
 
 class LlmActionPlan(BaseModel):
     action_plan: str
     risk_notes: str
-    scenarios: List[str] = []
+    scenarios: list[str] = []
     tone: Literal["conservative","balanced","aggressive"] = "balanced"
 
 def _make_agent(model_name: str, system_prompt: str, out_model):

@@ -1,14 +1,16 @@
 from __future__ import annotations
+
 import json
 from pathlib import Path
-from typing import List, Dict, Any, Optional, Union
+from typing import Any
+
 import numpy as np
-from sqlalchemy import func
-from .database import get_database_config, init_database, get_session
+
+from .database import get_session, init_database
 from .models_db import VectorStore
 
 
-def _ensure_db(db: Union[str, Path]):
+def _ensure_db(db: str | Path):
     """Ensure database exists. For backward compatibility, convert file path to database URL."""
     if isinstance(db, (str, Path)):
         path = Path(db)
@@ -27,16 +29,16 @@ def _ensure_db(db: Union[str, Path]):
 
 
 def add_vector(
-    db_path: Union[str, Path], 
-    *, 
-    vid: str, 
-    ts_utc: str, 
-    symbol: str, 
-    timeframe: str, 
-    vec: np.ndarray, 
-    realized_r: Optional[float], 
-    exit_reason: Optional[str], 
-    payload: Optional[Dict[str, Any]]
+    db_path: str | Path,
+    *,
+    vid: str,
+    ts_utc: str,
+    symbol: str,
+    timeframe: str,
+    vec: np.ndarray,
+    realized_r: float | None,
+    exit_reason: str | None,
+    payload: dict[str, Any] | None
 ):
     """Add a feature vector to the centralized vector store.
     
@@ -74,7 +76,7 @@ def add_vector(
     """
     _ensure_db(db_path)
     v = vec.astype(float).tolist()
-    
+
     with get_session() as session:
         vector = VectorStore(
             id=vid,
@@ -86,7 +88,7 @@ def add_vector(
             exit_reason=exit_reason,
             payload=payload
         )
-        
+
         # Use merge to handle INSERT OR REPLACE behavior
         existing = session.query(VectorStore).filter(VectorStore.id == vid).first()
         if existing:
@@ -99,11 +101,11 @@ def add_vector(
             existing.payload = payload
         else:
             session.add(vector)
-        
+
         session.commit()
 
 
-def update_vector_payload(db_path: Union[str, Path], *, vid: str, merge: Dict[str, Any]):
+def update_vector_payload(db_path: str | Path, *, vid: str, merge: dict[str, Any]):
     """Update vector payload by merging with existing data.
     
     Merges additional metadata into an existing vector's payload without 
@@ -125,7 +127,7 @@ def update_vector_payload(db_path: Union[str, Path], *, vid: str, merge: Dict[st
         If vector ID doesn't exist, the operation silently succeeds without error.
     """
     _ensure_db(db_path)
-    
+
     with get_session() as session:
         vector = session.query(VectorStore).filter(VectorStore.id == vid).first()
         if vector:
@@ -166,12 +168,12 @@ def cosine(u: np.ndarray, v: np.ndarray) -> float:
 
 
 def knn(
-    db_path: Union[str, Path], 
-    *, 
-    query_vec: np.ndarray, 
-    k: int = 50, 
-    symbol: Optional[str] = None
-) -> List[Dict[str, Any]]:
+    db_path: str | Path,
+    *,
+    query_vec: np.ndarray,
+    k: int = 50,
+    symbol: str | None = None
+) -> list[dict[str, Any]]:
     """Find k nearest neighbors using cosine similarity search.
     
     Performs vector similarity search in the centralized database to find
@@ -211,18 +213,18 @@ def knn(
     """
     _ensure_db(db_path)
     rows = []
-    
+
     with get_session() as session:
         query = session.query(VectorStore)
         if symbol:
             query = query.filter(VectorStore.symbol == symbol)
-        
+
         vectors = query.all()
-        
+
         for vector in vectors:
             vec = np.array(json.loads(vector.vec_json), dtype=float)
             sim = cosine(query_vec, vec)
-            
+
             rows.append({
                 "id": vector.id,
                 "ts_utc": vector.ts_utc,
@@ -233,13 +235,13 @@ def knn(
                 "exit_reason": vector.exit_reason,
                 "payload": vector.payload
             })
-    
+
     # Sort by similarity in descending order and return top k
     rows.sort(key=lambda x: x["similarity"], reverse=True)
     return rows[:k]
 
 
-def filter_neighbors(neighbors: List[Dict[str, Any]], *, vol_regime: Optional[str] = None) -> List[Dict[str, Any]]:
+def filter_neighbors(neighbors: list[dict[str, Any]], *, vol_regime: str | None = None) -> list[dict[str, Any]]:
     """Filter neighbor results by market conditions and metadata.
     
     Applies optional filters to KNN results to find patterns from similar
@@ -269,12 +271,12 @@ def filter_neighbors(neighbors: List[Dict[str, Any]], *, vol_regime: Optional[st
     """Filter neighbors by volatility regime."""
     if not neighbors or not vol_regime:
         return neighbors
-    
+
     filt = [n for n in neighbors if (n.get("payload") or {}).get("vol_regime") == vol_regime]
     return filt if len(filt) >= max(10, int(0.4*len(neighbors))) else neighbors
 
 
-def extended_stats(neighbors: List[Dict[str, Any]]) -> Dict[str, Any]:
+def extended_stats(neighbors: list[dict[str, Any]]) -> dict[str, Any]:
     """Calculate comprehensive trading statistics from neighbor vectors.
     
     Computes detailed performance metrics from similar historical patterns
@@ -328,20 +330,20 @@ def extended_stats(neighbors: List[Dict[str, Any]]) -> Dict[str, Any]:
             "sl": 0,
             "time": 0
         }
-    
+
     rs = [x["realized_r"] for x in neighbors if x["realized_r"] is not None]
     wins = [r for r in rs if r > 0]
     losses = [r for r in rs if r <= 0]
-    
+
     p_win = (len(wins) / len(rs)) if rs else 0.0
     avg_win = float(np.mean(wins)) if wins else 0.0
     avg_loss = float(np.mean(losses)) if losses else 0.0
     avg_R = float(np.mean(rs)) if rs else 0.0
-    
+
     profit_factor = (sum(wins) / abs(sum(losses))) if losses and sum(losses) != 0 else (
         float("inf") if sum(wins) > 0 else 0.0
     )
-    
+
     def collect(key):
         vals = []
         for x in neighbors:
@@ -349,24 +351,25 @@ def extended_stats(neighbors: List[Dict[str, Any]]) -> Dict[str, Any]:
             if v is not None:
                 vals.append(float(v))
         return vals
-    
+
     all_b = collect("hold_bars")
     win_b = []
     loss_b = []
-    
+
     for x in neighbors:
         hb = (x.get("payload") or {}).get("hold_bars")
         r = x.get("realized_r")
         if hb is None or r is None:
             continue
         (win_b if r > 0 else loss_b).append(float(hb))
-    
+
     med_all = int(np.median(all_b)) if all_b else None
     med_win = int(np.median(win_b)) if win_b else None
     med_loss = int(np.median(loss_b)) if loss_b else None
-    
-    bars_to_days = lambda b: None if b is None else round(b / 13.0, 2)
-    
+
+    def bars_to_days(b):
+        return None if b is None else round(b / 13.0, 2)
+
     return {
         "n": len(neighbors),
         "p_win": round(p_win, 3),
@@ -377,7 +380,11 @@ def extended_stats(neighbors: List[Dict[str, Any]]) -> Dict[str, Any]:
         "median_hold_days": bars_to_days(med_all),
         "median_win_hold_bars": med_win,
         "median_loss_hold_bars": med_loss,
-        "profit_factor": (round(profit_factor, 3) if profit_factor != float('inf') else float('inf')),
+        "profit_factor": (
+            round(profit_factor, 3) 
+            if profit_factor != float('inf') 
+            else float('inf')
+        ),
         "tp": sum(1 for x in neighbors if x.get("exit_reason") == "TP"),
         "sl": sum(1 for x in neighbors if x.get("exit_reason") == "SL"),
         "time": sum(1 for x in neighbors if x.get("exit_reason") == "TIME")

@@ -1,15 +1,18 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import Tuple
+
 import pandas as pd
+
 from .models import SignalSide
+
 
 @dataclass
 class TradeResult:
     symbol: str; open_time: pd.Timestamp; close_time: pd.Timestamp; side: str
     entry: float; stop: float; target: float; exit_price: float; exit_reason: str; r_multiple: float
 
-def simulate_trade(df: pd.DataFrame, open_idx: int, side: SignalSide, entry: float, stop: float, target: float, max_hold_bars: int) -> Tuple[int, str, float]:
+def simulate_trade(df: pd.DataFrame, open_idx: int, side: SignalSide, entry: float, stop: float, target: float, max_hold_bars: int) -> tuple[int, str, float]:
     """Simulate trade execution with stop loss, take profit, and time exit logic.
     
     Executes a simulated trade through historical price data to determine

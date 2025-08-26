@@ -3,14 +3,17 @@ Centralized database configuration and session management using SQLAlchemy.
 Supports both local SQLite and external databases (PostgreSQL, MySQL, etc.).
 """
 from __future__ import annotations
+
 import os
-from pathlib import Path
-from typing import Generator, Optional, Dict, Any
+from collections.abc import Generator
 from contextlib import contextmanager
+from pathlib import Path
+from typing import Any
 from urllib.parse import urlparse
-from sqlalchemy import create_engine, Engine
-from sqlalchemy.orm import sessionmaker, Session, DeclarativeBase
-from sqlalchemy.pool import StaticPool, QueuePool
+
+from sqlalchemy import Engine, create_engine
+from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+from sqlalchemy.pool import QueuePool, StaticPool
 
 
 class Base(DeclarativeBase):
@@ -42,7 +45,7 @@ def create_mysql_url(
     return f"mysql+{driver}://{username}:{password}@{host}:{port}/{database}"
 
 
-def create_cnpg_url() -> Optional[str]:
+def create_cnpg_url() -> str | None:
     """Create CNPG (CloudNativePG) database URL from environment variables.
     
     CNPG provides multiple connection methods:
@@ -64,47 +67,47 @@ def create_cnpg_url() -> Optional[str]:
     cluster_name = os.getenv("CNPG_CLUSTER_NAME") or os.getenv("SWING_CNPG_CLUSTER")
     if not cluster_name:
         return None
-    
+
     namespace = os.getenv("CNPG_NAMESPACE") or os.getenv("SWING_CNPG_NAMESPACE", "default")
     service_type = os.getenv("CNPG_SERVICE_TYPE") or os.getenv("SWING_CNPG_SERVICE", "rw")
-    
+
     # Build CNPG service hostname
     host = f"{cluster_name}-{service_type}.{namespace}.svc.cluster.local"
-    
+
     # Get database connection details
     database = os.getenv("SWING_DB_NAME")
     username = os.getenv("SWING_DB_USER")
     password = os.getenv("SWING_DB_PASSWORD")
     port = int(os.getenv("SWING_DB_PORT", "5432"))
-    
+
     if not all([database, username, password]):
         return None
-    
+
     # SSL configuration
     ssl_mode = os.getenv("CNPG_SSL_MODE") or os.getenv("SWING_CNPG_SSL_MODE", "require")
-    
+
     # Build PostgreSQL URL with SSL parameters
     base_url = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{database}"
-    
+
     # Add SSL parameters
     ssl_params = f"?sslmode={ssl_mode}"
-    
+
     # Add certificate paths if provided
     ssl_cert = os.getenv("CNPG_SSL_CERT") or os.getenv("SWING_CNPG_SSL_CERT")
     ssl_key = os.getenv("CNPG_SSL_KEY") or os.getenv("SWING_CNPG_SSL_KEY")
     ssl_ca = os.getenv("CNPG_SSL_CA") or os.getenv("SWING_CNPG_SSL_CA")
-    
+
     if ssl_cert:
         ssl_params += f"&sslcert={ssl_cert}"
     if ssl_key:
         ssl_params += f"&sslkey={ssl_key}"
     if ssl_ca:
         ssl_params += f"&sslrootcert={ssl_ca}"
-    
+
     return base_url + ssl_params
 
 
-def from_env_config() -> Optional[str]:
+def from_env_config() -> str | None:
     """Create database URL from environment variables.
     
     Supports multiple configuration patterns:
@@ -126,77 +129,77 @@ def from_env_config() -> Optional[str]:
     direct_url = os.getenv("SWING_DATABASE_URL")
     if direct_url:
         return direct_url
-    
+
     # Build from components
     db_type = os.getenv("SWING_DB_TYPE", "").lower()
     if not db_type:
         return None
-    
+
     if db_type in ["postgresql", "postgres"]:
         host = os.getenv("SWING_DB_HOST")
         database = os.getenv("SWING_DB_NAME")
         username = os.getenv("SWING_DB_USER")
         password = os.getenv("SWING_DB_PASSWORD")
         port = int(os.getenv("SWING_DB_PORT", "5432"))
-        
+
         if all([host, database, username, password]):
             return create_postgresql_url(host, database, username, password, port)
-    
+
     elif db_type == "cnpg":
         # CNPG specific configuration
         return create_cnpg_url()
-    
+
     elif db_type == "mysql":
         host = os.getenv("SWING_DB_HOST")
         database = os.getenv("SWING_DB_NAME")
         username = os.getenv("SWING_DB_USER")
         password = os.getenv("SWING_DB_PASSWORD")
         port = int(os.getenv("SWING_DB_PORT", "3306"))
-        
+
         if all([host, database, username, password]):
             return create_mysql_url(host, database, username, password, port)
-    
+
     return None
 
 
 class DatabaseConfig:
     """Centralized database configuration supporting SQLite and external databases."""
-    
-    def __init__(self, database_url: Optional[str] = None):
+
+    def __init__(self, database_url: str | None = None):
         # Default to a single SQLite file in data directory
         if database_url is None:
             database_url = self._get_default_database_url()
-        
+
         self.database_url = database_url
-        self._engine: Optional[Engine] = None
-        self._session_factory: Optional[sessionmaker] = None
+        self._engine: Engine | None = None
+        self._session_factory: sessionmaker | None = None
         self._db_type = self._detect_database_type()
-    
+
     def _get_default_database_url(self) -> str:
         """Get default database URL from environment or fallback to SQLite."""
         # Check for environment configuration first
         env_url = from_env_config()
         if env_url:
             return env_url
-        
+
         # Fallback to local SQLite
         data_dir = Path("data")
         data_dir.mkdir(parents=True, exist_ok=True)
         database_path = data_dir / "swing_agent.sqlite"
         return f"sqlite:///{database_path}"
-    
+
     def _detect_database_type(self) -> str:
         """Detect database type from URL."""
         parsed = urlparse(self.database_url)
         scheme = parsed.scheme.split('+')[0]  # Handle cases like postgresql+psycopg2
-        
+
         # Check if this is a CNPG cluster connection
         if scheme == "postgresql" and parsed.hostname and "svc.cluster.local" in parsed.hostname:
             return "cnpg"
-        
+
         return scheme
-    
-    def _get_sqlite_config(self) -> Dict[str, Any]:
+
+    def _get_sqlite_config(self) -> dict[str, Any]:
         """Get SQLite-specific configuration."""
         return {
             "poolclass": StaticPool,
@@ -206,8 +209,8 @@ class DatabaseConfig:
             },
             "echo": os.getenv("SWING_DB_ECHO", "").lower() == "true"
         }
-    
-    def _get_postgresql_config(self) -> Dict[str, Any]:
+
+    def _get_postgresql_config(self) -> dict[str, Any]:
         """Get PostgreSQL-specific configuration."""
         return {
             "poolclass": QueuePool,
@@ -218,8 +221,8 @@ class DatabaseConfig:
             "pool_pre_ping": True,
             "echo": os.getenv("SWING_DB_ECHO", "").lower() == "true"
         }
-    
-    def _get_mysql_config(self) -> Dict[str, Any]:
+
+    def _get_mysql_config(self) -> dict[str, Any]:
         """Get MySQL-specific configuration."""
         return {
             "poolclass": QueuePool,
@@ -230,8 +233,8 @@ class DatabaseConfig:
             "pool_pre_ping": True,
             "echo": os.getenv("SWING_DB_ECHO", "").lower() == "true"
         }
-    
-    def _get_cnpg_config(self) -> Dict[str, Any]:
+
+    def _get_cnpg_config(self) -> dict[str, Any]:
         """Get CNPG (CloudNativePG) specific configuration."""
         return {
             "poolclass": QueuePool,
@@ -248,8 +251,8 @@ class DatabaseConfig:
                 "application_name": os.getenv("CNPG_APP_NAME", "swing-agent"),
             }
         }
-    
-    def _get_engine_config(self) -> Dict[str, Any]:
+
+    def _get_engine_config(self) -> dict[str, Any]:
         """Get database-specific engine configuration."""
         if self._db_type == "sqlite":
             return self._get_sqlite_config()
@@ -270,7 +273,7 @@ class DatabaseConfig:
                 "pool_pre_ping": True,
                 "echo": os.getenv("SWING_DB_ECHO", "").lower() == "true"
             }
-    
+
     @property
     def engine(self) -> Engine:
         """Get the database engine."""
@@ -278,18 +281,18 @@ class DatabaseConfig:
             config = self._get_engine_config()
             self._engine = create_engine(self.database_url, **config)
         return self._engine
-    
+
     @property
     def session_factory(self) -> sessionmaker:
         """Get the session factory."""
         if self._session_factory is None:
             self._session_factory = sessionmaker(bind=self.engine)
         return self._session_factory
-    
+
     def create_all_tables(self):
         """Create all tables in the database."""
         Base.metadata.create_all(self.engine)
-    
+
     @contextmanager
     def get_session(self) -> Generator[Session, None, None]:
         """Get a database session with automatic cleanup."""
@@ -302,27 +305,27 @@ class DatabaseConfig:
             raise
         finally:
             session.close()
-    
+
     def ensure_db(self):
         """Ensure database and tables exist."""
         self.create_all_tables()
-    
+
     @property
     def is_sqlite(self) -> bool:
         """Check if using SQLite database."""
         return self._db_type == "sqlite"
-    
+
     @property
     def is_external(self) -> bool:
         """Check if using external database (non-SQLite)."""
         return self._db_type != "sqlite"
-    
+
     @property
     def is_cnpg(self) -> bool:
         """Check if using CNPG (CloudNativePG) database."""
         return self._db_type == "cnpg"
-    
-    def get_database_info(self) -> Dict[str, Any]:
+
+    def get_database_info(self) -> dict[str, Any]:
         """Get information about the current database configuration."""
         parsed = urlparse(self.database_url)
         info = {
@@ -335,7 +338,7 @@ class DatabaseConfig:
             "is_cnpg": self.is_cnpg,
             "url_masked": self._mask_credentials(self.database_url)
         }
-        
+
         # Add CNPG specific information
         if self.is_cnpg and parsed.hostname:
             hostname_parts = parsed.hostname.split('.')
@@ -345,9 +348,9 @@ class DatabaseConfig:
                     info["cnpg_cluster"] = '-'.join(cluster_parts[:-1])
                     info["cnpg_service"] = cluster_parts[-1]
                     info["cnpg_namespace"] = hostname_parts[1]
-        
+
         return info
-    
+
     def _mask_credentials(self, url: str) -> str:
         """Mask credentials in database URL for logging."""
         parsed = urlparse(url)
@@ -361,10 +364,10 @@ class DatabaseConfig:
 
 
 # Global database instance
-_db_config: Optional[DatabaseConfig] = None
+_db_config: DatabaseConfig | None = None
 
 
-def get_database_config(database_url: Optional[str] = None) -> DatabaseConfig:
+def get_database_config(database_url: str | None = None) -> DatabaseConfig:
     """Get the global database configuration.
     
     Returns a singleton DatabaseConfig instance that manages the centralized
@@ -416,7 +419,7 @@ def get_session() -> Generator[Session, None, None]:
         yield session
 
 
-def init_database(database_url: Optional[str] = None):
+def init_database(database_url: str | None = None):
     """Initialize the database with tables and configuration.
     
     Creates all necessary database tables if they don't exist. This is 
@@ -446,7 +449,7 @@ def init_database(database_url: Optional[str] = None):
     db_config.ensure_db()
 
 
-def get_database_info() -> Dict[str, Any]:
+def get_database_info() -> dict[str, Any]:
     """Get information about the current database configuration."""
     db_config = get_database_config()
     return db_config.get_database_info()

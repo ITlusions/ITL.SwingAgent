@@ -1,15 +1,15 @@
 from __future__ import annotations
-import json
+
+from datetime import datetime
 from pathlib import Path
 from uuid import uuid4
-from datetime import datetime
-from typing import Union, Optional
+
+from .database import get_session, init_database
 from .models import TradeSignal
-from .database import get_database_config, init_database, get_session
 from .models_db import Signal
 
 
-def _ensure_db(db_path: Union[str, Path]):
+def _ensure_db(db_path: str | Path):
     """Ensure database exists. For backward compatibility, convert file path to database URL."""
     if isinstance(db_path, (str, Path)):
         path = Path(db_path)
@@ -27,7 +27,7 @@ def _ensure_db(db_path: Union[str, Path]):
         init_database()
 
 
-def record_signal(ts: TradeSignal, db_path: Union[str, Path]) -> str:
+def record_signal(ts: TradeSignal, db_path: str | Path) -> str:
     """Record a complete trade signal to the centralized database.
     
     Persists all signal components including trend analysis, entry plan,
@@ -62,9 +62,9 @@ def record_signal(ts: TradeSignal, db_path: Union[str, Path]) -> str:
         Created timestamp is automatically set to current UTC time.
     """
     _ensure_db(db_path)
-    
+
     sid = str(uuid4())
-    
+
     with get_session() as session:
         signal = Signal(
             id=sid,
@@ -108,21 +108,21 @@ def record_signal(ts: TradeSignal, db_path: Union[str, Path]) -> str:
             atr_pct=ts.atr_pct,
             vol_regime=ts.vol_regime
         )
-        
+
         session.add(signal)
         session.commit()
-    
+
     return sid
 
 
 def mark_evaluation(
-    signal_id: str, 
-    *, 
-    db_path: Union[str, Path], 
-    exit_reason: str, 
-    exit_price: Optional[float], 
-    exit_time_utc: Optional[str], 
-    realized_r: Optional[float]
+    signal_id: str,
+    *,
+    db_path: str | Path,
+    exit_reason: str,
+    exit_price: float | None,
+    exit_time_utc: str | None,
+    realized_r: float | None
 ):
     """Mark a signal as evaluated with actual trading outcome results.
     
@@ -154,7 +154,7 @@ def mark_evaluation(
         Used by eval_signals.py script for batch outcome evaluation.
     """
     _ensure_db(db_path)
-    
+
     with get_session() as session:
         signal = session.query(Signal).filter(Signal.id == signal_id).first()
         if signal:

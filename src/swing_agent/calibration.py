@@ -13,9 +13,8 @@ unchanged.
 
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Optional
 import sqlite3
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -23,12 +22,14 @@ from sklearn.isotonic import IsotonicRegression
 
 __all__ = ["calibrated_winrate", "load_calibrator"]
 
+# Minimum sample size for calibration model
+MIN_SAMPLE_SIZE = 30
 
-_model: Optional[IsotonicRegression] = None
-_model_db: Optional[Path] = None
+_model: IsotonicRegression | None = None
+_model_db: Path | None = None
 
 
-def _fit_model(db_path: Path) -> Optional[IsotonicRegression]:
+def _fit_model(db_path: Path) -> IsotonicRegression | None:
     """Fit an isotonic regression model from historical signals.
 
     Parameters
@@ -62,7 +63,7 @@ def _fit_model(db_path: Path) -> Optional[IsotonicRegression]:
     return model
 
 
-def load_calibrator(db_path: str | Path = "data/swing_agent.sqlite") -> Optional[IsotonicRegression]:
+def load_calibrator(db_path: str | Path = "data/swing_agent.sqlite") -> IsotonicRegression | None:
     """Load (or fit) the calibration model for the given database."""
     global _model, _model_db
     db = Path(db_path)
