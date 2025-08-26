@@ -39,8 +39,14 @@ def load_dataset(db_path: str) -> tuple[np.ndarray, np.ndarray, np.ndarray] | No
             vec = np.array(json.loads(row.vec_json), dtype=float)
             reason = row.exit_reason
             if not reason and row.payload:
-                if isinstance(row.payload, dict):
-                    reason = row.payload.get("exit_reason")
+                payload = row.payload
+                if isinstance(payload, str):
+                    try:
+                        payload = json.loads(payload)
+                    except Exception:
+                        payload = None
+                if isinstance(payload, dict):
+                    reason = payload.get("exit_reason")
             if row.realized_r is None or reason is None:
                 continue
             reason_upper = reason.upper()
