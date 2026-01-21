@@ -12,6 +12,9 @@
 ## Quick Start for New Users
 
 ### 1. Installation
+
+**Note**: SwingAgent uses standard Python packaging (pip/wheel). If you're looking for information about MSI or ZIP installers, see [Packaging Formats Explained](docs/packaging-formats.md).
+
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -e .
