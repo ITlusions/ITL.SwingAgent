@@ -17,6 +17,7 @@ nav:
     - API Reference: api-reference.md
     - Configuration: configuration.md
     - Troubleshooting: troubleshooting.md
+    - Packaging Formats: packaging-formats.md
   - Advanced:
     - Architecture: architecture.md
     - Development: development.md
