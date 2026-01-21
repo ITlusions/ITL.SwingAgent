@@ -28,6 +28,9 @@
 ### Q: Do I need to keep my computer running all the time?
 **A:** No. SwingAgent generates signals when you run it - it's not a continuously running system. Most traders run it once or twice per day to scan for new opportunities.
 
+### Q: Does SwingAgent provide MSI or ZIP installation packages?
+**A:** No. SwingAgent is a Python package that uses standard Python packaging (pip/wheel). It doesn't use Windows-specific installers like MSI or ZIP archives. Installation is done via `pip install -e .` which works across all platforms. For more information about different packaging formats, see [Packaging Formats Explained](packaging-formats.md).
+
 ## Understanding Signals
 
 ### Q: What does the "confidence" score mean?

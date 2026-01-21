@@ -198,6 +198,9 @@ SwingAgent v1.6.1
 - **[Security](security.md)** - Security best practices
 - **[Troubleshooting](troubleshooting.md)** - Common issues and solutions
 
+### Reference
+- **[Packaging Formats](packaging-formats.md)** - Explanation of MSI/ZIP vs Python packaging
+
 ## License
 
 This project is provided as-is for educational and research purposes.
